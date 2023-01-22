@@ -1,0 +1,1769 @@
+openapi: 3.0.0
+info:
+  description: "Professor grading is an application for grading/rating professors classes at  Salesian Polytechnic University"
+  version: "1.0.0"
+  title: "Professor Grading App"
+  termsOfService: "http://swagger.io/terms/"
+  contact:
+    email: "kaguirres2@est.ups.edu.ec"
+  license:
+    name: "2022 UPS. All Rights Reserved"
+    url: "https://www.ups.edu.ec/"
+
+tags:
+- name: "Authentication"
+  description: "Authenticate to the application"
+- name: "Account"
+  description: "User account information"
+- name: "Students"
+  description: "UPS Students"
+- name: "Enrollments"
+  description: "Classes enrollments"
+- name: "Degrees"
+  description: "Degrees on UPS"
+- name: "Subjects"
+  description: "Degrees Subjects offered"
+- name: "Classes"
+  description: "Classes imparted on the academic period"
+- name: "Grades"
+  description: "Classes ratings given by students"
+- name: "Class Inspections"
+  description: "Class inspections requests"
+- name: "Tutorships"
+  description: "Tutorships on the academic period"
+- name: "Password reset"
+  description: "Password recovery"
+
+servers:
+  - url: "http://localhost:8080/v1"
+    description: "Development"
+
+paths:
+  /auth/sign-in:
+    post:
+      tags:
+      - "Authentication"
+      summary: ""
+      description: ""
+      operationId: "signIn"
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: "philip.mclaren@gmail.com"
+                password:
+                  type: string
+                  example: "QgK5PQMzijnzX4B"
+              required:
+                - email
+                - password
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+        401:
+          description: "Unauthorized. Invalid authentication credentials"
+        400:
+          description: "Bad request. Invalid email format / password length"
+
+  /auth/sign-out:
+    delete:
+      tags:
+      - "Authentication"
+      summary: ""
+      description: ""
+      operationId: "signOut"
+      security:
+        - BearerAuth: []
+      responses:
+        200:
+          description: "OK"
+        401:
+          description: "Unauthorized. Invalid credentials"
+
+  /account:
+     get:
+      tags:
+      - "Account"
+      summary: ""
+      description: ""
+      operationId: "getAccountInformation"
+      security:
+        - BearerAuth: []
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/account"
+        401:
+          description: "Unauthorized"
+
+  /account/password-reset:
+    put:
+      tags:
+      - "Account"
+      summary: ""
+      description: ""
+      operationId: "updateAccountPassword"
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                old_password:
+                  type: string
+                  example: "***************"
+                  minLength: 10
+                new_password:
+                  type: string
+                  example: "***************"
+                  minLength: 10
+                password_confirmation:
+                  type: string
+                  example: "***************"
+                  minLength: 10
+              required:
+                - old_password
+                - new_password
+                - password_confirmation
+      security:
+        - BearerAuth: []
+      responses:
+        200:
+          description: "OK"
+        400:
+          description: "Bad request"
+        401:
+          description: "Unauthorized"
+
+  /password-reset:
+    post:
+      tags:
+      - "Password reset"
+      summary: "An email is sent for updating password"
+      description: ""
+      operationId: "forgotPassword"
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: "pmclaren2@est.ups.edu.ec"
+              required:
+                - email
+      responses:
+        201:
+          description: "Email sent for recovering password"
+        400:
+          description: "Bad request"
+
+  /password-reset/{token}:
+    put:
+      tags:
+      - "Password reset"
+      summary: "Change user password"
+      description: ""
+      operationId: "updateForgottenPassword"
+      parameters:
+      - in: "path"
+        name: "token"
+        description: "Token"
+        required: true
+        schema:
+          type: string
+          example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                new_password:
+                  type: string
+                  example: "***************"
+                  minLength: 10
+                password_confirmation:
+                  type: string
+                  example: "***************"
+                  minLength: 10
+              required:
+                - new_password
+                - password_confirmation
+      responses:
+        200:
+          description: "OK. Password updated"
+        400:
+          description: "Bad request"
+
+  /students:
+    post:
+      tags:
+      - "Students"
+      summary: ""
+      description: ""
+      operationId: "createStudent"
+      security:
+        - BearerAuth: []
+      requestBody:
+        description: "Student information"
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                fullname:
+                  type: string
+                  example: "Philip McLaren"
+                institutional_email:
+                  type: string
+                  example: "pmclaren2@est.ups.edu.ec"
+                personal_email:
+                  type: string
+                  example: "philip.mclaren2@gmail.com"
+                identification_card:
+                  type: string
+                  example: "0937491273"
+                mobile_number:
+                  type: string
+                  example: "09876540865"
+                landline_number:
+                  type: string
+                  example: "2069472"
+                degrees:
+                  type: array
+                  items:
+                    type: string
+                    example: "6704f23a-2a3f-461b-8741-b3e2605dba93"
+                  minLength: 1
+              required:
+                - fullname
+                - institutional_email
+                - identification_card
+                - mobile_number
+                - degrees
+      responses:
+        201:
+          description: "Created"
+        400:
+          description: "Bad request"
+        401:
+          description: "Unauthorized"
+
+    get:
+      tags:
+      - "Students"
+      summary: ""
+      description: ""
+      operationId: "getStudents"
+      security:
+        - BearerAuth: []
+      parameters:
+      - in: "query"
+        name: "filters[identification_card]"
+        description: "Student identification card"
+        schema:
+          type: string
+          example: "09876540865"
+      - in: "query"
+        name: "filters[degrees]"
+        description: "Students degree"
+        required: true
+        schema:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+            example: "6c231ab0-43dc-499d-ae12-5ace7232a12d"
+      - in: "query"
+        name: "page"
+        description: "Pagination page to fetch"
+        schema:
+          type: number
+          example: 1
+      - in: "query"
+        name: "limit"
+        description: "Pagination limit"
+        schema:
+          type: number
+          example: 6
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  _links:
+                    type: object
+                    properties:
+                      self:
+                        type: object
+                        properties:
+                          href:
+                            type: string
+                            example: "http://localhost:8080/v1/students?page=2&limit=6"
+                  _embedded:
+                    type: object
+                    properties:
+                      students:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/student"
+                  pagination:
+                    type: object
+                    properties:
+                      total:
+                        type: integer
+                        example: 48
+                      count:
+                        type: integer
+                        example: 6
+                      per_page:
+                        type: integer
+                        example: 6
+                      current_page:
+                        type: integer
+                        example: 2
+                      total_pages:
+                        type: integer
+                        example: 8
+                      _links:
+                        type: object
+                        properties:
+                          previous:
+                            type: string
+                            example: "http://localhost:8080/v1/students?page=1&limit=6"
+                          next:
+                            type: string
+                            example: "http://localhost:8080/v1/students?page=3&limit=6"
+        400:
+          description: "Bad request"
+        401:
+          description: "Unauthorized"
+
+  /students/{student}:
+    get:
+      tags:
+      - "Students"
+      summary: ""
+      description: ""
+      operationId: "getStudent"
+      security:
+        - BearerAuth: []
+      parameters:
+      - in: "path"
+        name: "student"
+        description: "Student identifier"
+        required: true
+        schema:
+          type: string
+          example: "859f74b4-9a6c-4608-90c8-49ad259d7361"
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/student"
+        400:
+          description: "Bad request"
+        404:
+          description: "Student not found"
+        401:
+          description: "Unauthorized"
+
+  /students/{student}/enrollments:
+    get:
+      tags:
+      - "Students"
+      summary: ""
+      description: ""
+      operationId: "getStudentEnrollments"
+      security:
+        - BearerAuth: []
+      parameters:
+      - in: "path"
+        name: "student"
+        description: "Student identifier"
+        required: true
+        schema:
+          type: string
+          example: "859f74b4-9a6c-4608-90c8-49ad259d7361"
+      - in: "query"
+        name: "include"
+        description: "Related Resources to be included in the response"
+        schema:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+            enum:
+              - "classes"
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  _links:
+                    type: object
+                    properties:
+                      self:
+                        type: object
+                        properties:
+                          href:
+                            type: string
+                            example: "http://localhost:8080/v1/students/859f74b4-9a6c-4608-90c8-49ad259d7361/enrollments"
+                  _embedded:
+                    type: object
+                    properties:
+                      enrollments:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/enrollment"
+        400:
+          description: "Bad request"
+        401:
+          description: "Unauthorized"
+
+  /enrollments:
+    post:
+      tags:
+      - "Enrollments"
+      summary: ""
+      description: ""
+      operationId: "createEnrollment"
+      security:
+        - BearerAuth: []
+      requestBody:
+        description: "Enrollment information"
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                student_id:
+                  type: string
+                  example: "859f74b4-9a6c-4608-90c8-49ad259d7361"
+                classes:
+                  type: array
+                  uniqueItems: true
+                  minLength: 1
+                  items:
+                    type: string
+                    example: "894d0925-d026-42c1-b7ca-f954aef5201b"
+                degree_id:
+                  type: string
+                  example: "6704f23a-2a3f-461b-8741-b3e2605dba93"
+              required:
+                - student_id
+                - classes
+                - degree_id
+      responses:
+        201:
+          description: "Created"
+        400:
+          description: "Bad request"
+        401:
+          description: "Unauthorized"
+
+    get:
+      tags:
+      - "Enrollments"
+      summary: ""
+      description: ""
+      operationId: "getEnrollments"
+      security:
+        - BearerAuth: []
+      parameters:
+      - in: "query"
+        name: "filters[students]"
+        description: "Students identifiers"
+        schema:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+            example: "bce19a85-f630-4cbd-a2fe-772b6415b0c5"
+      - in: "query"
+        name: "filters[degrees]"
+        description: "Students degree"
+        required: true
+        schema:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+            example: "6c231ab0-43dc-499d-ae12-5ace7232a12d"
+      - in: "query"
+        name: "include"
+        description: "Related Resources to be included in the response"
+        schema:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+            enum:
+              - "classes"
+      - in: "query"
+        name: "page"
+        description: "Pagination page to fetch"
+        schema:
+          type: number
+          example: 1
+      - in: "query"
+        name: "limit"
+        description: "Pagination limit"
+        schema:
+          type: number
+          example: 6
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  _links:
+                    type: object
+                    properties:
+                      self:
+                        type: object
+                        properties:
+                          href:
+                            type: string
+                            example: "http://localhost:8080/v1/enrollments?page=2&limit=6"
+                  _embedded:
+                    type: object
+                    properties:
+                      enrollments:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/enrollment"
+                  pagination:
+                    type: object
+                    properties:
+                      total:
+                        type: integer
+                        example: 48
+                      count:
+                        type: integer
+                        example: 6
+                      per_page:
+                        type: integer
+                        example: 6
+                      current_page:
+                        type: integer
+                        example: 2
+                      total_pages:
+                        type: integer
+                        example: 8
+                      _links:
+                        type: object
+                        properties:
+                          previous:
+                            type: string
+                            example: "http://localhost:8080/v1/enrollments?page=1&limit=6"
+                          next:
+                            type: string
+                            example: "http://localhost:8080/v1/enrollments?page=3&limit=6"
+        400:
+          description: "Bad request"
+        401:
+          description: "Unauthorized"
+
+  /enrollments/files:
+    post:
+      tags:
+      - "Enrollments"
+      summary: "Create enrollments from excel file"
+      description: ""
+      operationId: "createEnrollmentsFromFile"
+      security:
+       - BearerAuth: []
+      requestBody:
+        description: "Enrollments excel file"
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                enrollments:
+                  type: string
+                  format: binary
+              required:
+                - enrollments
+      responses:
+        202:
+          description: "Accepted"
+        400:
+          description: "Bad request"
+        401:
+          description: "Unauthorized"
+
+  /enrollments/{enrollment}:
+    get:
+      tags:
+      - "Enrollments"
+      summary: ""
+      description: ""
+      operationId: "getEnrollment"
+      security:
+        - BearerAuth: []
+      parameters:
+      - in: "path"
+        name: "enrollment"
+        description: "Enrollment identifier"
+        required: true
+        schema:
+          type: string
+          example: "9e537e5d-a45f-4fd0-80cd-6e1e17e61b7a"
+      - in: "query"
+        name: "include"
+        description: "Related Resources to be included in the response"
+        schema:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+            enum:
+              - "classes"
+              - "other"
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/enrollment"
+        400:
+          description: "Bad request"
+        404:
+          description: "Enrollment not found"
+        401:
+          description: "Unauthorized"
+
+    put:
+      tags:
+      - "Enrollments"
+      summary: ""
+      description: ""
+      operationId: "updateEnrollment"
+      security:
+        - BearerAuth: []
+      parameters:
+      - in: "path"
+        name: "enrollment"
+        description: "Enrollment identifier"
+        required: true
+        schema:
+          type: string
+          example: "9e537e5d-a45f-4fd0-80cd-6e1e17e61b7a"
+      requestBody:
+        description: "Enrollment information"
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                classes:
+                  type: array
+                  uniqueItems: true
+                  items:
+                    type: string
+                    example: "894d0925-d026-42c1-b7ca-f954aef5201b"
+              required:
+                - classes
+      responses:
+        200:
+          description: "Enrollment updated"
+        400:
+          description: "Bad request"
+        404:
+          description: "Enrollment not found"
+        401:
+          description: "Unauthorized"
+
+  /degrees:
+    get:
+      tags:
+      - "Degrees"
+      summary: ""
+      description: ""
+      operationId: "getDegrees"
+      security:
+        - BearerAuth: []
+      parameters:
+      - in: "query"
+        name: "filters[name]"
+        description: "Degree name"
+        required: true
+        schema:
+          type: string
+          example: "Computer Science"
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  _links:
+                    type: object
+                    properties:
+                      self:
+                        type: object
+                        properties:
+                          href:
+                            type: string
+                            example: "http://localhost:8080/v1/degrees"
+                  _embedded:
+                    type: object
+                    properties:
+                      degrees:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/degree"
+        400:
+          description: "Bad request"
+        401:
+          description: "Unauthorized"
+
+  /subjects:
+    get:
+      tags:
+      - "Subjects"
+      summary: ""
+      description: ""
+      operationId: "getSubjects"
+      security:
+        - BearerAuth: []
+      parameters:
+      - in: "query"
+        name: "filters[degrees]"
+        description: "Degrees identifiers"
+        schema:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+            example: "6704f23a-2a3f-461b-8741-b3e2605dba93"
+      - in: "query"
+        name: "filters[name]"
+        description: "Subject name pattern"
+        required: true
+        schema:
+          type: string
+          minLength: 9
+          example: "Artificial Int"
+      - in: "query"
+        name: "filters[code]"
+        description: "Subject code"
+        schema:
+          type: string
+          example: "C-CT-ITE-004"
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  _links:
+                    type: object
+                    properties:
+                      self:
+                        type: object
+                        properties:
+                          href:
+                            type: string
+                            example: "http://localhost:8080/v1/subjects"
+                  _embedded:
+                    type: object
+                    properties:
+                      subjects:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/subject"
+        400:
+          description: "Bad request"
+        401:
+          description: "Unauthorized"
+
+  /classes:
+    get:
+      tags:
+      - "Classes"
+      summary: ""
+      description: ""
+      operationId: "getClasses"
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: "query"
+          name: "filters[subjects]"
+          description: "Subjects identifiers"
+          required: true
+          schema:
+            type: array
+            uniqueItems: true
+            items:
+              type: string
+              example: "cbb22896-7cf9-4da7-9690-ede1a9847ea7"
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  _links:
+                    type: object
+                    properties:
+                      self:
+                        type: object
+                        properties:
+                          href:
+                            type: string
+                            example: "http://localhost:8080/v1/classes"
+                  _embedded:
+                    type: object
+                    properties:
+                      classes:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/class"
+        400:
+          description: "Bad request"
+        401:
+          description: "Unauthorized"
+
+  /grades:
+    post:
+      tags:
+      - "Grades"
+      summary: ""
+      description: ""
+      operationId: "gradeClass"
+      security:
+        - BearerAuth: []
+      requestBody:
+        description: "Grade information"
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                class_id:
+                  type: string
+                  example: "894d0925-d026-42c1-b7ca-f954aef5201b"
+                rating:
+                  type: number
+                  example: 3
+                comment:
+                  type: string
+                  example: "Such a good class"
+                attended_to_class:
+                  type: boolean
+                  example: true
+              required:
+                - class_id
+                - rating
+                - comment
+                - attended_to_class
+      responses:
+        201:
+          description: "Created"
+        400:
+          description: "Bad request"
+        401:
+          description: "Unauthorized"
+
+    get:
+      tags:
+      - "Grades"
+      summary: ""
+      description: ""
+      operationId: "getGrades"
+      security:
+        - BearerAuth: []
+      parameters:
+      - in: "query"
+        name: "page"
+        description: "Pagination page to fetch"
+        required: true
+        schema:
+          type: number
+          example: 1
+      - in: "query"
+        name: "limit"
+        description: "Pagination limit"
+        required: true
+        schema:
+          type: number
+          example: 6
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  _links:
+                    type: object
+                    properties:
+                      self:
+                        type: object
+                        properties:
+                          href:
+                            type: string
+                            example: "http://localhost:8080/v1/grades?page=2&limit=6"
+                  _embedded:
+                    type: object
+                    properties:
+                      grades:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/grade"
+                  pagination:
+                    type: object
+                    properties:
+                      total:
+                        type: integer
+                        example: 48
+                      count:
+                        type: integer
+                        example: 6
+                      per_page:
+                        type: integer
+                        example: 6
+                      current_page:
+                        type: integer
+                        example: 2
+                      total_pages:
+                        type: integer
+                        example: 8
+                      _links:
+                        type: object
+                        properties:
+                          previous:
+                            type: string
+                            example: "http://localhost:8080/v1/grades?page=1&limit=6"
+                          next:
+                            type: string
+                            example: "http://localhost:8080/v1/grades?page=3&limit=6"
+        400:
+          description: "Bad request"
+        401:
+          description: "Unauthorized"
+
+  /class-inspections:
+    post:
+      tags:
+      - "Class Inspections"
+      summary: ""
+      description: ""
+      operationId: "requestClassInspection"
+      security:
+        - BearerAuth: []
+      requestBody:
+        description: "Class inspection information"
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                class_id:
+                  type: string
+                  example: "894d0925-d026-42c1-b7ca-f954aef5201b"
+                reason:
+                  type: string
+                  example: "Professor is arriving too late on Mondays"
+                description:
+                  type: string
+                  example: "Please, take action on the matter"
+              required:
+                - class_id
+                - reason
+                - description
+      responses:
+        201:
+          description: "Created"
+        400:
+          description: "Bad request"
+        401:
+          description: "Unauthorized"
+
+    get:
+      tags:
+      - "Class Inspections"
+      summary: ""
+      description: ""
+      operationId: "getClassInspections"
+      security:
+        - BearerAuth: []
+      parameters:
+      - in: "query"
+        name: "filters[professor_id]"
+        description: "Professor identifier"
+        schema:
+          type: string
+          example: "03c18134-1856-4f29-b874-1ecd229491d8"
+      - in: "query"
+        name: "filters[statuses]"
+        description: "Professor identifier"
+        schema:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+            enum:
+              - REQUESTED
+              - INSPECTED
+              - REJECTED
+      - in: "query"
+        name: "include"
+        description: "Related Resources to be included in the response"
+        schema:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+            enum:
+              - "class"
+      - in: "query"
+        name: "page"
+        description: "Pagination page to fetch"
+        required: true
+        schema:
+          type: number
+          example: 1
+      - in: "query"
+        name: "limit"
+        description: "Pagination limit"
+        required: true
+        schema:
+          type: number
+          example: 6
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  _links:
+                    type: object
+                    properties:
+                      self:
+                        type: object
+                        properties:
+                          href:
+                            type: string
+                            example: "http://localhost:8080/v1/class-inspections?page=2&limit=6"
+                  _embedded:
+                    type: object
+                    properties:
+                      class_inspections:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/class-inspection"
+                  pagination:
+                    type: object
+                    properties:
+                      total:
+                        type: integer
+                        example: 48
+                      count:
+                        type: integer
+                        example: 6
+                      per_page:
+                        type: integer
+                        example: 6
+                      current_page:
+                        type: integer
+                        example: 2
+                      total_pages:
+                        type: integer
+                        example: 8
+                      _links:
+                        type: object
+                        properties:
+                          previous:
+                            type: string
+                            example: "http://localhost:8080/v1/class-inspections?page=1&limit=6"
+                          next:
+                            type: string
+                            example: "http://localhost:8080/v1/class-inspections?page=3&limit=6"
+        400:
+          description: "Bad request"
+        401:
+          description: "Unauthorized"
+
+  /class-inspections/{class-inspection}:
+    get:
+      tags:
+      - "Class Inspections"
+      summary: ""
+      description: ""
+      operationId: "getClassInspection"
+      parameters:
+      - in: "path"
+        name: "class-inspection"
+        description: "Class inspection identifier"
+        required: true
+        schema:
+          type: string
+          example: "ea6e110a-c866-49ff-9948-93b231ba9157"
+      - in: "query"
+        name: "include"
+        description: "Related Resources to be included in the response"
+        schema:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+            enum:
+              - "class"
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/class-inspection"
+        400:
+          description: "Bad request"
+        401:
+          description: "Unauthorized"
+        404:
+          description: "Class inspection not found"
+
+    put:
+      tags:
+      - "Class Inspections"
+      summary: ""
+      description: ""
+      operationId: "updateClassInspection"
+      parameters:
+      - in: "path"
+        name: "class-inspection"
+        description: "Class inspection identifier"
+        required: true
+        schema:
+          type: string
+          example: "ea6e110a-c866-49ff-9948-93b231ba9157"
+      security:
+        - BearerAuth: []
+      requestBody:
+        description: "Class inspection information"
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                 status:
+                    type: string
+                    enum:
+                      - REQUESTED
+                      - REJECTED
+              required:
+                - status
+      responses:
+        200:
+          description: "Class inspection status updated"
+        400:
+          description: "Bad request"
+        401:
+          description: "Unauthorized"
+        404:
+          description: "Class inspection not found"
+
+  /tutorships:
+    post:
+      tags:
+      - "Tutorships"
+      summary: ""
+      description: ""
+      operationId: "createTutorship"
+      security:
+        - BearerAuth: []
+      requestBody:
+        description: "Tutorship information"
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                advisor_id:
+                  type: string
+                  description: "The student identifier"
+                  example: "859f74b4-9a6c-4608-90c8-49ad259d7361"
+                subject_id:
+                  type: string
+                  example: "cbb22896-7cf9-4da7-9690-ede1a9847ea7"
+                schedule:
+                  type: array
+                  minLength: 1
+                  items:
+                    type: object
+                    properties:
+                      weekday:
+                        type: string
+                        enum:
+                          - MONDAY
+                          - TUESDAY
+                          - WEDNESDAY
+                          - THURSDAY
+                          - FRIDAY
+                          - SATURDAY
+                          - SUNDAY
+                      start_time:
+                        type: string
+                        example: "14:00"
+                      end_time:
+                        type: string
+                        example: "15:00"
+                    required:
+                      - weekday
+                      - start_time
+                      - end_time
+              required:
+                - advisor_id
+                - subject_id
+                - schedule
+      responses:
+        201:
+          description: "Created"
+        400:
+          description: "Bad request"
+        401:
+          description: "Unauthorized"
+
+    get:
+      tags:
+      - "Tutorships"
+      summary: ""
+      description: ""
+      operationId: "getTutorships"
+      parameters:
+      - in: "query"
+        name: "page"
+        description: "Pagination page to fetch"
+        required: true
+        schema:
+          type: number
+          example: 1
+      - in: "query"
+        name: "limit"
+        description: "Pagination limit"
+        required: true
+        schema:
+          type: number
+          example: 6
+      security:
+        - BearerAuth: []
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  _links:
+                    type: object
+                    properties:
+                      self:
+                        type: object
+                        properties:
+                          href:
+                            type: string
+                            example: "http://localhost:8080/v1/tutorships?page=2&limit=6"
+                  _embedded:
+                    type: object
+                    properties:
+                      tutorships:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/tutorship"
+                  pagination:
+                    type: object
+                    properties:
+                      total:
+                        type: integer
+                        example: 48
+                      count:
+                        type: integer
+                        example: 6
+                      per_page:
+                        type: integer
+                        example: 6
+                      current_page:
+                        type: integer
+                        example: 2
+                      total_pages:
+                        type: integer
+                        example: 8
+                      _links:
+                        type: object
+                        properties:
+                          previous:
+                            type: string
+                            example: "http://localhost:8080/v1/tutorships?page=1&limit=6"
+                          next:
+                            type: string
+                            example: "http://localhost:8080/v1/tutorships?page=3&limit=6"
+        401:
+          description: "Unauthorized"
+
+
+components:
+
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+
+  schemas:
+    account:
+      title: "The User Object"
+      type: "object"
+      properties:
+        id:
+          type: string
+          example: "5a3f166e-d90f-4116-8b59-bfcd074203b3"
+        fullname:
+          type: string
+          example: "Philip McLaren"
+        email:
+          type: string
+          example: "pmclaren2@est.ups.edu.ec"
+          readOnly: true
+        student:
+          $ref: '#/components/schemas/student'
+        registered_at:
+          type: string
+          example: "2022-11-06 21:59:20"
+          readOnly: true
+        _links:
+          type: object
+          readOnly: true
+          properties:
+            self:
+              type: object
+              properties:
+                href:
+                  type: string
+                  example: "http://localhost:8080/v1/account"
+                action:
+                  type: string
+                  example: "GET"
+            password_reset:
+              type: object
+              properties:
+                href:
+                  type: string
+                  example: "http://localhost:8080/v1/account/password-reset"
+                action:
+                  type: string
+                  example: "GET"
+
+    student:
+      title: "The Student Object"
+      type: "object"
+      properties:
+        id:
+          type: string
+          example: "859f74b4-9a6c-4608-90c8-49ad259d7361"
+          readOnly: true
+        fullname:
+          type: string
+          example: "Philip McLaren"
+        institutional_email:
+          type: string
+          example: "pmclaren2@est.ups.edu.ec"
+          readOnly: true
+        personal_email:
+          type: string
+          example: "philip.mclaren2@gmail.com"
+        identification_card:
+          type: string
+          example: "0937491273"
+        mobile_number:
+          type: string
+          example: "09876540865"
+        landline_number:
+          type: string
+          example: "2069472"
+        degrees:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                example: "6704f23a-2a3f-461b-8741-b3e2605dba93"
+              name:
+                type: string
+                example: "Computer Science Engineering"
+                readOnly: true
+        created_at:
+          type: string
+          example: "2022-11-06 21:59:20"
+          readOnly: true
+        _links:
+          type: object
+          readOnly: true
+          properties:
+            self:
+              type: object
+              properties:
+                href:
+                  type: string
+                  example: "http://localhost:8080/v1/students/859f74b4-9a6c-4608-90c8-49ad259d7361"
+                action:
+                  type: string
+                  example: "GET"
+            enrollments:
+              type: object
+              properties:
+                href:
+                  type: string
+                  example: "http://localhost:8080/v1/students/859f74b4-9a6c-4608-90c8-49ad259d7361/enrollments?include=classes"
+                action:
+                  type: string
+                  example: "GET"
+            grades:
+              type: object
+              properties:
+                href:
+                  type: string
+                  example: "http://localhost:8080/v1/grades"
+                action:
+                  type: string
+                  example: "POST"
+            class_inspections:
+              type: object
+              properties:
+                href:
+                  type: string
+                  example: "http://localhost:8080/v1/class-inspections"
+                action:
+                  type: string
+                  example: "POST"
+
+    enrollment:
+      title: "The Enrollment Object"
+      type: "object"
+      properties:
+        id:
+          type: string
+          example: "9e537e5d-a45f-4fd0-80cd-6e1e17e61b7a"
+        student:
+          type: object
+          properties:
+            id:
+              type: string
+              example: "859f74b4-9a6c-4608-90c8-49ad259d7361"
+              readOnly: true
+            fullname:
+              type: string
+              example: "Philip McLaren"
+            identification_card:
+              type: string
+              example: "0937491273"
+            institutional_email:
+              type: string
+              example: "pmclaren2@est.ups.edu.ec"
+        degree:
+          type: object
+          properties:
+            id:
+              type: string
+              example: "be353755-7a9c-4590-85d6-c43a597d6458"
+            name:
+              type: string
+              example: "Computer Science Engineering"
+        total_enrolled_classes:
+          type: number
+          example: 5
+        classes:
+          type: array
+          items:
+            $ref: "#/components/schemas/class"
+        enrolled_at:
+          type: string
+          example: "2022-11-06"
+        _links:
+          type: object
+          readOnly: true
+          properties:
+            self:
+              type: object
+              properties:
+                href:
+                  type: string
+                  example: "http://localhost:8080/v1/enrollments/9e537e5d-a45f-4fd0-80cd-6e1e17e61b7a"
+
+    degree:
+      type: object
+      title: "The Degree Object"
+      properties:
+        id:
+          type: string
+          example: "6704f23a-2a3f-461b-8741-b3e2605dba93"
+        name:
+          type: string
+          example: "Computer Science Engineering"
+        created_at:
+          type: string
+          example: "2022-11-06 21:59:20"
+
+    subject:
+      type: object
+      title: "The Subject Object"
+      properties:
+        id:
+          type: string
+          example: "cbb22896-7cf9-4da7-9690-ede1a9847ea7"
+        code:
+          type: string
+          example: "C-CT-ITE-004"
+        name:
+          type: string
+          example: "Artificial Intelligence"
+        degrees:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                example: "6704f23a-2a3f-461b-8741-b3e2605dba93"
+              name:
+                type: string
+                example: "Computer Science Engineering"
+                readOnly: true
+              semester:
+                type: number
+                example: "7"
+        registered_at:
+          type: string
+          example: "2022-11-06 21:59:20"
+
+    class:
+      title: "The Class Object"
+      type: object
+      properties:
+        id:
+          type: string
+          example: "894d0925-d026-42c1-b7ca-f954aef5201b"
+        group:
+          type: number
+          example: 1
+        schedule:
+          type: array
+          items:
+            type: object
+            properties:
+              weekday:
+                type: string
+                example: Monday
+              start_time:
+                type: string
+                example: "11:00"
+              end_time:
+                type: string
+                example: "13:00"
+        subject:
+          type: object
+          properties:
+            id:
+              type: string
+              example: "cbb22896-7cf9-4da7-9690-ede1a9847ea7"
+            code:
+              type: string
+              example: "C-CT-ITE-004"
+            name:
+              type: string
+              example: "Artificial Intelligence"
+            degrees:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    example: "6704f23a-2a3f-461b-8741-b3e2605dba93"
+                  name:
+                    type: string
+                    example: "Computer Science Engineering"
+                    readOnly: true
+                  semester:
+                    type: number
+                    example: "7"
+        professor:
+          type: object
+          properties:
+            id:
+              type: string
+              example: "49ac6288-55f4-4805-8ff0-37536a46d20f"
+            name:
+              type: string
+              example: "Trevor Smith"
+        total_enrolled_students:
+          type: number
+          example: 45
+        registered_at:
+          type: string
+          example: "2022-11-06 21:59:20"
+
+    grade:
+      type: object
+      title: "The Grade Object"
+      properties:
+        id:
+          type: string
+          example: "f401b1ff-0567-497b-9070-bb5b50351c53"
+        class:
+          $ref: "#/components/schemas/class"
+        rating:
+          type: number
+          example: 3
+        comment:
+          type: string
+          example: "Such a good class"
+        attended_to_class:
+          type: boolean
+          example: true
+        graded_at:
+          type: string
+          example: "2022-11-06 21:54:30"
+
+    class-inspection:
+      type: object
+      title: "The Class Inspection Object"
+      properties:
+        id:
+          type: string
+          example: "ea6e110a-c866-49ff-9948-93b231ba9157"
+        reason:
+          type: string
+          example: "Professor is arriving too late on Mondays"
+        description:
+          type: string
+          example: "Please, take action on the matter"
+        status:
+          type: string
+          enum:
+            - REQUESTED
+            - INSPECTED
+            - REJECTED
+        class:
+          $ref: "#/components/schemas/class"
+        requested_at:
+          type: string
+          example: "Mon 11st 2022, 11:30:00"
+        _links:
+          type: object
+          readOnly: true
+          properties:
+            self:
+              type: object
+              properties:
+                href:
+                  type: string
+                  example: "http://localhost:8080/v1/class-inspections/ea6e110a-c866-49ff-9948-93b231ba9157"
+                action:
+                  type: string
+                  example: GET
+            update:
+              type: object
+              properties:
+                href:
+                  type: string
+                  example: "http://localhost:8080/v1/class-inspections/ea6e110a-c866-49ff-9948-93b231ba9157"
+                action:
+                  type: string
+                  example: PUT
+
+    tutorship:
+      type: object
+      title: "The Tutorship Object"
+      properties:
+        id:
+          type: string
+          example: "7ad67b78-214f-42e5-a35a-cfdf01d74751"
+        advisor:
+          type: object
+          properties:
+            id:
+              type: string
+              example: "859f74b4-9a6c-4608-90c8-49ad259d7361"
+            fullname:
+              type: string
+              example: "Philip McLaren"
+            institutional_email:
+              type: string
+              example: "pmclaren2@est.ups.edu.ec"
+            mobile_number:
+              type: string
+              example: "09876540865"
+        subject:
+          $ref: "#/components/schemas/subject"
+        schedule:
+          type: array
+          minLength: 1
+          items:
+            type: object
+            properties:
+              weekday:
+                type: string
+                enum:
+                  - MONDAY
+                  - TUESDAY
+                  - WEDNESDAY
+                  - THURSDAY
+                  - FRIDAY
+                  - SATURDAY
+                  - SUNDAY
+              start_time:
+                type: string
+                example: "14:00"
+              end_time:
+                type: string
+                example: "15:00"
+        created_at:
+          type: string
+          example: "2022-11-06 21:59:20"

@@ -1,0 +1,47 @@
+version: "3.9"
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: professor-grading-app
+    working_dir: /app
+    restart: unless-stopped
+    tty: true
+    volumes:
+      - ./:/app
+    ports:
+      - "${APP_PORT:-8080}:8080"
+    networks:
+      - pga-network
+
+  mongo:
+    image: "mongo:6.0"
+    container_name: professor-grading-app-mongodb
+    command: mongod --auth
+    restart: unless-stopped
+    logging:
+      driver: none
+    ports:
+      - "${DB_PORT_INTERNAL_LOCALHOST_MONGODB:-27017}:${DB_PORT_MONGODB:-27017}"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${DB_USERNAME_MONGODB}
+      - MONGO_INITDB_ROOT_PASSWORD=${DB_PASSWORD_MONGODB}
+    volumes:
+      - 'pga-mongo-data:/data/db'
+      - 'pga-mongo-log:/var/log/mongodb/'
+    networks:
+      - pga-network
+
+volumes:
+  pga-mongo-data:
+    driver: local
+  pga-mongo-log:
+    driver: local
+
+networks:
+  pga-network:
+    external:
+      name: pga-shared-network
+
+#Create external network with <docker network create pga-shared-network> command
