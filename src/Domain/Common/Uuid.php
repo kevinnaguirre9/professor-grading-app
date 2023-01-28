@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ProfessorGradingApp\Domain\Common;
 
 use ProfessorGradingApp\Domain\Common\Exceptions\InvalidUuid;

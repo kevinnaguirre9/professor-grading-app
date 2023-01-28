@@ -5,7 +5,7 @@
     "license": "MIT",
     "type": "project",
     "require": {
-        "php": "^8.0",
+        "php": "^8.1",
         "doctrine/mongodb-odm": "2.5.x-dev",
         "laravel/lumen-framework": "^9.0",
         "league/tactician": "^1.1",
