@@ -6,13 +6,13 @@ namespace ProfessorGradingApp\Domain\Student;
 
 use ProfessorGradingApp\Domain\Common\BaseEntity;
 use ProfessorGradingApp\Domain\Common\ValueObjects\InstitutionalEmail;
-use ProfessorGradingApp\Domain\Student\ValueObjects\{
-    DegreeId,
+use ProfessorGradingApp\Domain\Student\ValueObjects\{DegreeId,
     StudentId,
     EnrollmentId,
     GradeId,
     NationalIdentificationNumber,
-    PersonalEmail};
+    PersonalEmail,
+    UserId};
 
 /**
  * Class Student
@@ -27,9 +27,10 @@ final class Student extends BaseEntity
      * @param PersonalEmail $personalEmail
      * @param InstitutionalEmail $institutionalEmail
      * @param NationalIdentificationNumber $nationalIdentificationNumber
-     * @param array $degreeIds
-     * @param array $enrollmentIds
-     * @param array $gradeIds
+     * @param UserId $userId
+     * @param DegreeId[] $degreeIds
+     * @param EnrollmentId[] $enrollmentIds
+     * @param GradeId[] $gradeIds
      * @param \DateTime $registeredAt
      * @param string|null $mobileNumber
      * @param string|null $landlineNumber
@@ -40,6 +41,7 @@ final class Student extends BaseEntity
         private PersonalEmail $personalEmail,
         private InstitutionalEmail $institutionalEmail,
         private NationalIdentificationNumber $nationalIdentificationNumber,
+        UserId $userId,
         private array $degreeIds,
         private array $enrollmentIds,
         private array $gradeIds,
@@ -55,6 +57,7 @@ final class Student extends BaseEntity
      * @param PersonalEmail $personalEmail
      * @param InstitutionalEmail $institutionalEmail
      * @param NationalIdentificationNumber $nationalIdentificationNumber
+     * @param UserId $userId
      * @param DegreeId[] $degreeIds
      * @param EnrollmentId[] $enrollmentIds
      * @param GradeId[] $gradeIds
@@ -69,6 +72,7 @@ final class Student extends BaseEntity
         PersonalEmail $personalEmail,
         InstitutionalEmail $institutionalEmail,
         NationalIdentificationNumber $nationalIdentificationNumber,
+        UserId $userId,
         array $degreeIds = [],
         array $enrollmentIds = [],
         array $gradeIds = [],
@@ -82,6 +86,7 @@ final class Student extends BaseEntity
             $personalEmail,
             $institutionalEmail,
             $nationalIdentificationNumber,
+            $userId,
             $degreeIds,
             $enrollmentIds,
             $gradeIds,

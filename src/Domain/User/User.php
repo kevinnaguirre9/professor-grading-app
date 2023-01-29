@@ -67,7 +67,6 @@ final class User extends BaseEntity
      * @param PasswordHashingManager $passwordManager
      * @param string $newPassword
      * @return void
-     * @throws Exceptions\InvalidPassword
      */
     public function updatePassword(
         PasswordHashingManager $passwordManager,

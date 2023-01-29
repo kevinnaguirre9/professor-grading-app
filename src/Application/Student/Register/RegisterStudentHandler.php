@@ -2,14 +2,13 @@
 
 namespace ProfessorGradingApp\Application\Student\Register;
 
-use ProfessorGradingApp\Domain\Common\Exceptions\InvalidEmail;
+use ProfessorGradingApp\Domain\Common\Exceptions\{InvalidEmailFormat, InvalidEmailDomain, InvalidUuid};
 use ProfessorGradingApp\Domain\Common\ValueObjects\InstitutionalEmail;
+use ProfessorGradingApp\Domain\Student\Exceptions\StudentInstitutionalEmailAlreadyRegistered;
+use ProfessorGradingApp\Domain\Student\Exceptions\StudentNationalIdentificationNumberAlreadyRegistered;
 use ProfessorGradingApp\Domain\Student\Repositories\StudentRepository;
 use ProfessorGradingApp\Domain\Student\Student;
-use ProfessorGradingApp\Domain\Student\ValueObjects\{
-    NationalIdentificationNumber,
-    PersonalEmail,
-    StudentId};
+use ProfessorGradingApp\Domain\Student\ValueObjects\{NationalIdentificationNumber, PersonalEmail, StudentId, UserId};
 
 /**
  * Class RegisterStudentHandler
@@ -21,18 +20,28 @@ final class RegisterStudentHandler
     /**
      * @param StudentRepository $repository
      */
-    public function __construct(private StudentRepository $repository)
+    public function __construct(private readonly StudentRepository $repository)
     {
     }
 
     /**
      * @param RegisterStudentCommand $command
      * @return void
-     * @throws InvalidEmail
+     * @throws InvalidEmailDomain
+     * @throws InvalidEmailFormat
+     * @throws InvalidUuid
+     * @throws StudentInstitutionalEmailAlreadyRegistered
+     * @throws StudentNationalIdentificationNumberAlreadyRegistered
      */
     public function __invoke(RegisterStudentCommand $command): void
     {
-        // TODO: check if student is already registered using institutional email
+        $this->ensureInstitutionalEmailIsNotInUse(
+            new InstitutionalEmail($command->institutionalEmail())
+        );
+
+        $this->ensureStudentNationalIdentificationNumberDoesNotExists(
+            new NationalIdentificationNumber($command->nationalIdentificationNumber())
+        );
 
         $Student = Student::create(
             id: new StudentId(),
@@ -40,10 +49,34 @@ final class RegisterStudentHandler
             personalEmail: new PersonalEmail($command->personalEmail()),
             institutionalEmail: new InstitutionalEmail($command->institutionalEmail()),
             nationalIdentificationNumber: new NationalIdentificationNumber($command->nationalIdentificationNumber()),
+            userId: new UserId($command->userId()),
             mobileNumber: $command->mobileNumber(),
             landlineNumber: $command->landlineNumber(),
         );
 
         $this->repository->save($Student);
+    }
+
+    /**
+     * @param InstitutionalEmail $institutionalEmail
+     * @return void
+     * @throws StudentInstitutionalEmailAlreadyRegistered
+     */
+    private function ensureInstitutionalEmailIsNotInUse(InstitutionalEmail $institutionalEmail): void
+    {
+        if($this->repository->findByInstitutionalEmail($institutionalEmail))
+            throw new StudentInstitutionalEmailAlreadyRegistered($institutionalEmail);
+    }
+
+    /**
+     * @param NationalIdentificationNumber $identificationNumber
+     * @return void
+     * @throws StudentNationalIdentificationNumberAlreadyRegistered
+     */
+    private function ensureStudentNationalIdentificationNumberDoesNotExists(
+        NationalIdentificationNumber $identificationNumber
+    ): void {
+        if($this->repository->findByNationalIdentificationNumber($identificationNumber))
+            throw new StudentNationalIdentificationNumberAlreadyRegistered($identificationNumber);
     }
 }

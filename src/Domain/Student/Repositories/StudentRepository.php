@@ -2,7 +2,9 @@
 
 namespace ProfessorGradingApp\Domain\Student\Repositories;
 
+use ProfessorGradingApp\Domain\Common\ValueObjects\InstitutionalEmail;
 use ProfessorGradingApp\Domain\Student\Student;
+use ProfessorGradingApp\Domain\Student\ValueObjects\NationalIdentificationNumber;
 use ProfessorGradingApp\Domain\Student\ValueObjects\StudentId;
 
 /**
@@ -23,4 +25,17 @@ interface StudentRepository
      * @return Student|null
      */
     public function find(StudentId $id): ?Student;
+
+    /**
+     * @param InstitutionalEmail $institutionalEmail
+     * @return Student|null
+     */
+    public function findByInstitutionalEmail(InstitutionalEmail $institutionalEmail): ?Student;
+
+    /**
+     * @param NationalIdentificationNumber $identificationNumber
+     * @return Student|null
+     */
+    public function findByNationalIdentificationNumber(NationalIdentificationNumber $identificationNumber): ?Student;
+
 }

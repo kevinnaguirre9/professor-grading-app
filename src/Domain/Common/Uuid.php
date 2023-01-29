@@ -42,7 +42,7 @@ abstract class Uuid
     private function ensureIsValidUuid(string $uuid): string
     {
         if (!RamseyUuid::isValid($uuid))
-            throw new InvalidUuid(sprintf('Invalid uuid <%s>.', $uuid));
+            throw new InvalidUuid($uuid);
 
         return $uuid;
     }

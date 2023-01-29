@@ -2,9 +2,9 @@
 
 namespace ProfessorGradingApp\Application\User\Register;
 
-use ProfessorGradingApp\Domain\Common\Exceptions\InvalidEmail;
+use ProfessorGradingApp\Domain\Common\Exceptions\{InvalidEmailFormat, InvalidEmailDomain};
 use ProfessorGradingApp\Domain\User\Contracts\PasswordHashingManager;
-use ProfessorGradingApp\Domain\User\Exceptions\{InvalidPassword, UserAlreadyExists};
+use ProfessorGradingApp\Domain\User\Exceptions\UserWithGivenEmailAlreadyRegistered;
 use ProfessorGradingApp\Domain\User\Repositories\UserRepository;
 use ProfessorGradingApp\Domain\User\User;
 use ProfessorGradingApp\Domain\User\ValueObjects\{Role, UserEmail, UserId, UserPassword};
@@ -28,15 +28,15 @@ final class CreateUserHandler
 
     /**
      * @param CreateUserCommand $command
-     * @return void
-     * @throws UserAlreadyExists
-     * @throws InvalidEmail
-     * @throws InvalidPassword
+     * @return User
+     * @throws InvalidEmailFormat
+     * @throws UserWithGivenEmailAlreadyRegistered
+     * @throws InvalidEmailDomain
      */
-    public function __invoke(CreateUserCommand $command): void
+    public function __invoke(CreateUserCommand $command): User
     {
         if($this->repository->findByEmail(new UserEmail($command->email())))
-            throw new UserAlreadyExists('User already exists');
+            throw new UserWithGivenEmailAlreadyRegistered($command->email());
 
         $role = Role::from($command->role());
 
@@ -50,5 +50,7 @@ final class CreateUserHandler
         );
 
         $this->repository->save($User);
+
+        return $User;
     }
 }

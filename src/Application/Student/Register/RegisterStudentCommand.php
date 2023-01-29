@@ -14,6 +14,7 @@ final class RegisterStudentCommand
      * @param string $personalEmail
      * @param string $institutionalEmail
      * @param string $nationalIdentificationNumber
+     * @param string $userId
      * @param array $degreeIds
      * @param array $enrollmentIds
      * @param array $gradeIds
@@ -25,6 +26,7 @@ final class RegisterStudentCommand
         private string $personalEmail,
         private string $institutionalEmail,
         private string $nationalIdentificationNumber,
+        private string $userId,
         private array $degreeIds = [],
         private array $enrollmentIds = [],
         private array $gradeIds = [],
@@ -63,6 +65,14 @@ final class RegisterStudentCommand
     public function nationalIdentificationNumber(): string
     {
         return $this->nationalIdentificationNumber;
+    }
+
+    /**
+     * @return string
+     */
+    public function userId(): string
+    {
+        return $this->userId;
     }
 
     /**
