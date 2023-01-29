@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace ProfessorGradingApp\Domain\Student\ValueObjects;
 
+use ProfessorGradingApp\Domain\Common\ValueObjects\StringValueObject;
+
 /**
  * Class NationalIdentificationNumber
  *
  * @package ProfessorGradingApp\Domain\Student\ValueObjects
  */
-final class NationalIdentificationNumber
+final class NationalIdentificationNumber extends StringValueObject
 {
     private const FIXED_LENGTH = 10;
-
-    private string $value;
 
     /**
      * @param string $value
@@ -22,7 +22,7 @@ final class NationalIdentificationNumber
     {
         $this->validate($value);
 
-        $this->value = $value;
+        parent::__construct($value);
     }
 
     /**
@@ -35,21 +35,5 @@ final class NationalIdentificationNumber
             throw new \InvalidArgumentException(
                 sprintf("National Identification Number must be %d characters long", self::FIXED_LENGTH)
             );
-    }
-
-    /**
-     * @return string
-     */
-    public function value(): string
-    {
-        return $this->value;
-    }
-
-    /**
-     * @return string
-     */
-    public function __toString(): string
-    {
-        return $this->value();
     }
 }

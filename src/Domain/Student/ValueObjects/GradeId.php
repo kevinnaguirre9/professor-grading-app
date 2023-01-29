@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace ProfessorGradingApp\Domain\Student\ValueObjects;
 
 use ProfessorGradingApp\Domain\Common\Exceptions\InvalidUuid;
-use ProfessorGradingApp\Domain\Common\Uuid;
+use ProfessorGradingApp\Domain\Common\ValueObjects\Uuid;
 
 /**
  * Class GradeId

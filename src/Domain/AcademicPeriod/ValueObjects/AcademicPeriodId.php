@@ -2,7 +2,7 @@
 
 namespace ProfessorGradingApp\Domain\AcademicPeriod\ValueObjects;
 
-use ProfessorGradingApp\Domain\Common\Uuid;
+use ProfessorGradingApp\Domain\Common\ValueObjects\Uuid;
 
 /**
  * Class AcademicPeriodId

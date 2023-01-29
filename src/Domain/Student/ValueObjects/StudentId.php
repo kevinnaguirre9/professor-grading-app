@@ -2,7 +2,7 @@
 
 namespace ProfessorGradingApp\Domain\Student\ValueObjects;
 
-use ProfessorGradingApp\Domain\Common\Uuid;
+use ProfessorGradingApp\Domain\Common\ValueObjects\Uuid;
 
 /**
  * Class StudentId

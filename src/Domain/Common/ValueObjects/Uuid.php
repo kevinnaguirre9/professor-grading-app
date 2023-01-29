@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace ProfessorGradingApp\Domain\Common;
+namespace ProfessorGradingApp\Domain\Common\ValueObjects;
 
 use ProfessorGradingApp\Domain\Common\Exceptions\InvalidUuid;
 use Ramsey\Uuid\Uuid as RamseyUuid;
@@ -10,7 +10,7 @@ use Ramsey\Uuid\Uuid as RamseyUuid;
 /**
  * Class Uuid
  *
- * @package ProfessorGradingApp\Domain\Common
+ * @package ProfessorGradingApp\Domain\Common\ValueObjects
  */
 abstract class Uuid
 {

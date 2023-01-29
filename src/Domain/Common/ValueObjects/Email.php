@@ -12,10 +12,8 @@ use ProfessorGradingApp\Domain\Common\Exceptions\InvalidEmailDomain;
  *
  * @package ProfessorGradingApp\Domain\Common\ValueObjects
  */
-abstract class Email
+abstract class Email extends StringValueObject
 {
-    private string $value;
-
     /**
      * The allowed email domains
      *
@@ -34,15 +32,7 @@ abstract class Email
 
         $this->ensureEmailHasAllowedDomain($value);
 
-        $this->value = $value;
-    }
-
-    /**
-     * @return string
-     */
-    public function value(): string
-    {
-        return $this->value;
+        parent::__construct($value);
     }
 
     /**
@@ -72,22 +62,5 @@ abstract class Email
 
         if(!in_array($domain, $this->allowedDomains))
             throw new InvalidEmailDomain($domain, $this->allowedDomains);
-    }
-
-    /**
-     * @param Email $email
-     * @return bool
-     */
-    public function equals(self $email): bool
-    {
-        return $this->value() === $email->value();
-    }
-
-    /**
-     * @return string
-     */
-    public function __toString(): string
-    {
-        return $this->value();
     }
 }
