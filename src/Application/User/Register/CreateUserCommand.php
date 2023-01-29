@@ -1,11 +1,11 @@
 <?php
 
-namespace ProfessorGradingApp\Application\User\Create;
+namespace ProfessorGradingApp\Application\User\Register;
 
 /**
  * Class CreateUserCommand
  *
- * @package ProfessorGradingApp\Application\User\Create
+ * @package ProfessorGradingApp\Application\User\Register
  */
 final class CreateUserCommand
 {

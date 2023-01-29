@@ -1,11 +1,11 @@
 <?php
 
-namespace ProfessorGradingApp\Application\AcademicPeriod\Create;
+namespace ProfessorGradingApp\Application\AcademicPeriod\Register;
 
 /**
  * Class CreateAcademicPeriodCommand
  *
- * @package ProfessorGradingApp\Application\AcademicPeriod\Create
+ * @package ProfessorGradingApp\Application\AcademicPeriod\Register
  */
 final class CreateAcademicPeriodCommand
 {

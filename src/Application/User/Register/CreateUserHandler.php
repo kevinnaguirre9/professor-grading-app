@@ -1,6 +1,6 @@
 <?php
 
-namespace ProfessorGradingApp\Application\User\Create;
+namespace ProfessorGradingApp\Application\User\Register;
 
 use ProfessorGradingApp\Domain\Common\Exceptions\InvalidEmail;
 use ProfessorGradingApp\Domain\User\Contracts\PasswordHashingManager;
@@ -12,7 +12,7 @@ use ProfessorGradingApp\Domain\User\ValueObjects\{Role, UserEmail, UserId, UserP
 /**
  * Class CreateUserHandler
  *
- * @package ProfessorGradingApp\Application\User\Create
+ * @package ProfessorGradingApp\Application\User\Register
  */
 final class CreateUserHandler
 {

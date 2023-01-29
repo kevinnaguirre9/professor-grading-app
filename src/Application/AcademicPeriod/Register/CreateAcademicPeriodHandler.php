@@ -1,6 +1,6 @@
 <?php
 
-namespace ProfessorGradingApp\Application\AcademicPeriod\Create;
+namespace ProfessorGradingApp\Application\AcademicPeriod\Register;
 
 use ProfessorGradingApp\Domain\AcademicPeriod\AcademicPeriod;
 use ProfessorGradingApp\Domain\AcademicPeriod\Repositories\AcademicPeriodRepository;
@@ -9,7 +9,7 @@ use ProfessorGradingApp\Domain\AcademicPeriod\ValueObjects\AcademicPeriodId;
 /**
  * Class CreateAcademicPeriodHandler
  *
- * @package ProfessorGradingApp\Application\AcademicPeriod\Create
+ * @package ProfessorGradingApp\Application\AcademicPeriod\Register
  */
 final class CreateAcademicPeriodHandler
 {
