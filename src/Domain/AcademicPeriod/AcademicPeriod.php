@@ -17,10 +17,12 @@ final class AcademicPeriod extends BaseEntity
     /**
      * @param AcademicPeriodId $id
      * @param string $name
+     * @param \DateTimeImmutable $createdAt
      */
     public function __construct(
-        private AcademicPeriodId $id,
-        private string $name,
+        private readonly AcademicPeriodId $id,
+        private readonly string $name,
+        private readonly \DateTimeImmutable $createdAt,
     )
     {
     }
@@ -32,7 +34,7 @@ final class AcademicPeriod extends BaseEntity
      */
     public static function create(AcademicPeriodId $id, string $name): self
     {
-        return new self($id, $name);
+        return new self($id, $name, new \DateTimeImmutable());
     }
 
     /**

@@ -31,7 +31,7 @@ final class Student extends BaseEntity
      * @param DegreeId[] $degreeIds
      * @param EnrollmentId[] $enrollmentIds
      * @param GradeId[] $gradeIds
-     * @param \DateTime $registeredAt
+     * @param \DateTimeImmutable $registeredAt
      * @param string|null $mobileNumber
      * @param string|null $landlineNumber
      */
@@ -45,7 +45,7 @@ final class Student extends BaseEntity
         private array $degreeIds,
         private array $enrollmentIds,
         private array $gradeIds,
-        private \DateTime $registeredAt,
+        private \DateTimeImmutable $registeredAt,
         private ?string $mobileNumber,
         private ?string $landlineNumber,
     ) {
@@ -61,7 +61,7 @@ final class Student extends BaseEntity
      * @param DegreeId[] $degreeIds
      * @param EnrollmentId[] $enrollmentIds
      * @param GradeId[] $gradeIds
-     * @param \DateTime $registeredAt
+     * @param \DateTimeImmutable $registeredAt
      * @param string|null $mobileNumber
      * @param string|null $landlineNumber
      * @return static
@@ -76,7 +76,7 @@ final class Student extends BaseEntity
         array $degreeIds = [],
         array $enrollmentIds = [],
         array $gradeIds = [],
-        \DateTime $registeredAt = new \DateTime(),
+        \DateTimeImmutable $registeredAt = new \DateTimeImmutable(),
         ?string $mobileNumber = null,
         ?string $landlineNumber = null,
     ): self {
@@ -204,9 +204,9 @@ final class Student extends BaseEntity
     }
 
     /**
-     * @return \DateTime
+     * @return \DateTimeImmutable
      */
-    public function registrationDate(): \DateTime
+    public function registrationDate(): \DateTimeImmutable
     {
         return $this->registeredAt;
     }

@@ -20,9 +20,9 @@ final class User extends BaseEntity
      * @param UserEmail $email
      * @param UserPassword $password
      * @param Role $role
-     * @param \DateTime $registeredAt
+     * @param \DateTimeImmutable $registeredAt
      * @param bool $isActive
-     * @param \DateTime|null $updatedAt
+     * @param \DateTimeImmutable|null $updatedAt
      */
     public function __construct(
         private UserId $id,
@@ -30,8 +30,8 @@ final class User extends BaseEntity
         private UserPassword $password,
         private Role $role,
         private bool $isActive,
-        private \DateTime $registeredAt,
-        private ?\DateTime $updatedAt = null,
+        private \DateTimeImmutable $registeredAt,
+        private ?\DateTimeImmutable $updatedAt = null,
     ) {
     }
 
@@ -41,7 +41,7 @@ final class User extends BaseEntity
      * @param UserPassword $password
      * @param Role $role
      * @param bool $isActive
-     * @param \DateTime $registeredAt
+     * @param \DateTimeImmutable $registeredAt
      * @return static
      */
     public static function create(
@@ -50,7 +50,7 @@ final class User extends BaseEntity
         UserPassword $password,
         Role $role,
         bool $isActive = true,
-        \DateTime $registeredAt = new \DateTime(),
+        \DateTimeImmutable $registeredAt = new \DateTimeImmutable(),
     ): self {
 
         return new self(
@@ -84,13 +84,13 @@ final class User extends BaseEntity
      */
     private function touch(): void
     {
-        $this->updatedAt = new \DateTime();
+        $this->updatedAt = new \DateTimeImmutable();
     }
 
     /**
-     * @return \DateTime|null
+     * @return \DateTimeImmutable|null
      */
-    public function lastUpdatedDate(): ?\DateTime
+    public function lastUpdatedDate(): ?\DateTimeImmutable
     {
         return $this->updatedAt;
     }
@@ -136,9 +136,9 @@ final class User extends BaseEntity
     }
 
     /**
-     * @return \DateTime
+     * @return \DateTimeImmutable
      */
-    public function registeredAt(): \DateTime
+    public function registeredAt(): \DateTimeImmutable
     {
         return $this->registeredAt;
     }
