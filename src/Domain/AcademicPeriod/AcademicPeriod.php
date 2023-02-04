@@ -18,13 +18,13 @@ final class AcademicPeriod extends BaseEntity
      * @param AcademicPeriodId $id
      * @param string $name
      * @param bool $isActive
-     * @param \DateTimeImmutable $createdAt
+     * @param \DateTimeImmutable $registeredAt
      */
     public function __construct(
         private readonly AcademicPeriodId $id,
         private string $name,
         public bool $isActive,
-        private readonly \DateTimeImmutable $createdAt,
+        private readonly \DateTimeImmutable $registeredAt,
     ) {
     }
 
@@ -69,5 +69,13 @@ final class AcademicPeriod extends BaseEntity
     public function name(): string
     {
         return $this->name;
+    }
+
+    /**
+     * @return \DateTimeImmutable
+     */
+    public function registeredAt(): \DateTimeImmutable
+    {
+        return $this->registeredAt;
     }
 }

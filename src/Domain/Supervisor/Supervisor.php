@@ -6,8 +6,7 @@ namespace ProfessorGradingApp\Domain\Supervisor;
 
 use ProfessorGradingApp\Domain\Common\BaseEntity;
 use ProfessorGradingApp\Domain\Common\ValueObjects\InstitutionalEmail;
-use ProfessorGradingApp\Domain\Supervisor\ValueObjects\SupervisorId;
-use ProfessorGradingApp\Domain\Supervisor\ValueObjects\UserId;
+use ProfessorGradingApp\Domain\Supervisor\ValueObjects\{SupervisorId, UserId};
 
 /**
  * Class Supervisor
@@ -24,10 +23,10 @@ final class Supervisor extends BaseEntity
      * @param \DateTimeImmutable $registeredAt
      */
     public function __construct(
-        private readonly SupervisorId       $id,
-        private string             $fullName,
+        private readonly SupervisorId $id,
+        private string $fullName,
         private readonly InstitutionalEmail $institutionalEmail,
-        private readonly UserId             $userId,
+        private readonly UserId $userId,
         private readonly \DateTimeImmutable $registeredAt,
     ) {
     }

@@ -15,9 +15,9 @@ final class CreateUserCommand
      * @param string $role
      */
     public function __construct(
-        private string $email,
-        private string $password,
-        private string $role,
+        private readonly string $email,
+        private readonly string $password,
+        private readonly string $role,
     ) {
     }
 

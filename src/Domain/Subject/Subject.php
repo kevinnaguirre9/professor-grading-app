@@ -5,9 +5,7 @@ declare(strict_types=1);
 namespace ProfessorGradingApp\Domain\Subject;
 
 use ProfessorGradingApp\Domain\Common\BaseEntity;
-use ProfessorGradingApp\Domain\Subject\ValueObjects\DegreeId;
-use ProfessorGradingApp\Domain\Subject\ValueObjects\DegreeLevel;
-use ProfessorGradingApp\Domain\Subject\ValueObjects\SubjectId;
+use ProfessorGradingApp\Domain\Subject\ValueObjects\{DegreeId, DegreeLevel, SubjectId};
 
 /**
  * Class Subject
@@ -20,7 +18,7 @@ final class Subject extends BaseEntity
      * @param SubjectId $id
      * @param string $code
      * @param string $name
-     * @param array $degreesLevel
+     * @param DegreeLevel[] $degreesLevel
      * @param \DateTimeImmutable $registeredAt
      */
     public function __construct(
@@ -36,16 +34,16 @@ final class Subject extends BaseEntity
      * @param SubjectId $id
      * @param string $code
      * @param string $name
-     * @param array $degreeIds
+     * @param DegreeLevel[] $degreesLevel
      * @return static
      */
     public static function create(
         SubjectId $id,
         string $code,
         string $name,
-        array $degreeIds = [],
+        array $degreesLevel = [],
     ): self {
-        return new self($id, $code, $name, $degreeIds, new \DateTimeImmutable());
+        return new self($id, $code, $name, $degreesLevel, new \DateTimeImmutable());
     }
 
     /**

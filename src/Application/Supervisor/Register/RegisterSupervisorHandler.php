@@ -2,14 +2,11 @@
 
 namespace ProfessorGradingApp\Application\Supervisor\Register;
 
-use ProfessorGradingApp\Domain\Common\Exceptions\InvalidEmailDomain;
-use ProfessorGradingApp\Domain\Common\Exceptions\InvalidEmailFormat;
-use ProfessorGradingApp\Domain\Common\Exceptions\InvalidUuid;
+use ProfessorGradingApp\Domain\Common\Exceptions\{InvalidEmailDomain, InvalidEmailFormat, InvalidUuid};
 use ProfessorGradingApp\Domain\Common\ValueObjects\InstitutionalEmail;
 use ProfessorGradingApp\Domain\Supervisor\Repositories\SupervisorRepository;
 use ProfessorGradingApp\Domain\Supervisor\Supervisor;
-use ProfessorGradingApp\Domain\Supervisor\ValueObjects\SupervisorId;
-use ProfessorGradingApp\Domain\Supervisor\ValueObjects\UserId;
+use ProfessorGradingApp\Domain\Supervisor\ValueObjects\{SupervisorId, UserId};
 
 /**
  * Class RegisterSupervisorHandler

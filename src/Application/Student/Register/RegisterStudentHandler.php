@@ -4,8 +4,9 @@ namespace ProfessorGradingApp\Application\Student\Register;
 
 use ProfessorGradingApp\Domain\Common\Exceptions\{InvalidEmailFormat, InvalidEmailDomain, InvalidUuid};
 use ProfessorGradingApp\Domain\Common\ValueObjects\InstitutionalEmail;
-use ProfessorGradingApp\Domain\Student\Exceptions\StudentInstitutionalEmailAlreadyRegistered;
-use ProfessorGradingApp\Domain\Student\Exceptions\StudentNationalIdentificationNumberAlreadyRegistered;
+use ProfessorGradingApp\Domain\Student\Exceptions\{
+    StudentInstitutionalEmailAlreadyRegistered,
+    StudentNationalIdentificationNumberAlreadyRegistered};
 use ProfessorGradingApp\Domain\Student\Repositories\StudentRepository;
 use ProfessorGradingApp\Domain\Student\Student;
 use ProfessorGradingApp\Domain\Student\ValueObjects\{NationalIdentificationNumber, PersonalEmail, StudentId, UserId};

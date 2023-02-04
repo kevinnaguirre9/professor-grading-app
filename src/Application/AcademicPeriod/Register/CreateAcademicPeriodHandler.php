@@ -17,7 +17,7 @@ final class CreateAcademicPeriodHandler
      * @param AcademicPeriodRepository $repository
      */
     public function __construct(
-        private AcademicPeriodRepository $repository
+        private readonly AcademicPeriodRepository $repository
     ) {
     }
 
