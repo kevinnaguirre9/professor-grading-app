@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ProfessorGradingApp\Domain\Enrollment;
 
 use ProfessorGradingApp\Domain\Enrollment\ValueObjects\{AcademicPeriodId, ClassId, DegreeId, EnrollmentId, StudentId};
@@ -36,7 +38,7 @@ final class Enrollment
      * @param DegreeId $degreeId
      * @param ClassId[] $classIds
      * @param \DateTimeImmutable $enrolledAt
-     * @return static
+     * @return self
      */
     public static function create(
         EnrollmentId $id,

@@ -64,7 +64,7 @@ final class Student extends BaseEntity
      * @param \DateTimeImmutable $registeredAt
      * @param string|null $mobileNumber
      * @param string|null $landlineNumber
-     * @return static
+     * @return self
      */
     public static function create(
         StudentId $id,

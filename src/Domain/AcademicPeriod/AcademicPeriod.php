@@ -32,7 +32,7 @@ final class AcademicPeriod extends BaseEntity
      * @param AcademicPeriodId $id
      * @param string $name
      * @param bool $isActive
-     * @return static
+     * @return self
      */
     public static function create(AcademicPeriodId $id, string $name, bool $isActive = true): self
     {

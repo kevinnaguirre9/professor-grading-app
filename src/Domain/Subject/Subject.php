@@ -35,7 +35,7 @@ final class Subject extends BaseEntity
      * @param string $code
      * @param string $name
      * @param DegreeLevel[] $degreesLevel
-     * @return static
+     * @return self
      */
     public static function create(
         SubjectId $id,

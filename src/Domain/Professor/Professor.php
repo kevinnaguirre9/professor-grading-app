@@ -36,7 +36,7 @@ final class Professor extends BaseEntity
      * @param ClassId[] $classIds
      * @param DegreeId[] $degreeIds
      * @param \DateTimeImmutable $registeredAt
-     * @return Professor
+     * @return self
      */
     public static function create(
         ProfessorId $id,
@@ -44,8 +44,8 @@ final class Professor extends BaseEntity
         array $classIds = [],
         array $degreeIds = [],
         \DateTimeImmutable $registeredAt = new \DateTimeImmutable(),
-    ): Professor {
-        return new Professor($id, $fullName, $classIds, $degreeIds, $registeredAt);
+    ): self {
+        return new self($id, $fullName, $classIds, $degreeIds, $registeredAt);
     }
 
     /**

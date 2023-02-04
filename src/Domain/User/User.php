@@ -42,7 +42,7 @@ final class User extends BaseEntity
      * @param Role $role
      * @param bool $isActive
      * @param \DateTimeImmutable $registeredAt
-     * @return static
+     * @return self
      */
     public static function create(
         UserId $id,
@@ -52,7 +52,6 @@ final class User extends BaseEntity
         bool $isActive = true,
         \DateTimeImmutable $registeredAt = new \DateTimeImmutable(),
     ): self {
-
         return new self(
             $id,
             $email,

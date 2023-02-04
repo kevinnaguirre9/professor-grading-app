@@ -32,7 +32,7 @@ final class Degree extends BaseEntity
      * @param DegreeId $id
      * @param string $name
      * @param SubjectId[] $subjectIds
-     * @return static
+     * @return self
      */
     public static function create(
         DegreeId $id,

@@ -37,7 +37,7 @@ final class Supervisor extends BaseEntity
      * @param InstitutionalEmail $institutionalEmail
      * @param UserId $userId
      * @param \DateTimeImmutable $registeredAt
-     * @return Supervisor
+     * @return self
      */
     public static function create(
         SupervisorId $id,
@@ -45,7 +45,7 @@ final class Supervisor extends BaseEntity
         InstitutionalEmail $institutionalEmail,
         UserId $userId,
         \DateTimeImmutable $registeredAt = new \DateTimeImmutable()
-    ) : Supervisor {
+    ) : self {
         return new self(
             $id,
             $fullName,
