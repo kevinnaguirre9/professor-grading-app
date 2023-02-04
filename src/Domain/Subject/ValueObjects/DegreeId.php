@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace ProfessorGradingApp\Domain\Student\ValueObjects;
+namespace ProfessorGradingApp\Domain\Subject\ValueObjects;
 
 use ProfessorGradingApp\Domain\Common\Exceptions\InvalidUuid;
 use ProfessorGradingApp\Domain\Common\ValueObjects\Uuid;
 
 /**
- * Class UserId
+ * Class DegreeId
  *
- * @package ProfessorGradingApp\Domain\Student\ValueObjects
+ * @package ProfessorGradingApp\Domain\Subject\ValueObjects
  */
-final class UserId extends Uuid
+final class DegreeId extends Uuid
 {
     /**
      * @param string $value

@@ -17,7 +17,7 @@ abstract class Uuid
     /**
      * @var string
      */
-    private string $value;
+    private readonly string $value;
 
     /**
      * @param string|null $value

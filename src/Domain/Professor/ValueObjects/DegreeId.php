@@ -23,6 +23,3 @@ final class DegreeId extends Uuid
         parent::__construct($value);
     }
 }
-{
-
-}

@@ -36,16 +36,16 @@ final class Student extends BaseEntity
      * @param string|null $landlineNumber
      */
     public function __construct(
-        private StudentId $id,
+        private readonly StudentId $id,
         private string $fullName,
         private PersonalEmail $personalEmail,
-        private InstitutionalEmail $institutionalEmail,
+        private readonly InstitutionalEmail $institutionalEmail,
         private NationalIdentificationNumber $nationalIdentificationNumber,
-        UserId $userId,
+        private readonly UserId $userId,
         private array $degreeIds,
         private array $enrollmentIds,
         private array $gradeIds,
-        private \DateTimeImmutable $registeredAt,
+        private readonly \DateTimeImmutable $registeredAt,
         private ?string $mobileNumber,
         private ?string $landlineNumber,
     ) {
@@ -161,6 +161,14 @@ final class Student extends BaseEntity
     public function nationalIdentificationNumber(): NationalIdentificationNumber
     {
         return $this->nationalIdentificationNumber;
+    }
+
+    /**
+     * @return UserId
+     */
+    public function userId(): UserId
+    {
+        return $this->userId;
     }
 
     /**

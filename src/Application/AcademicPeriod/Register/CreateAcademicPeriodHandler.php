@@ -27,6 +27,8 @@ final class CreateAcademicPeriodHandler
      */
     public function __invoke(CreateAcademicPeriodCommand $command) : void
     {
+        //TODO: deactivate previous academic period
+
         $AcademicPeriod = AcademicPeriod::create(
             new AcademicPeriodId(),
             $command->name(),

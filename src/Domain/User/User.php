@@ -25,12 +25,12 @@ final class User extends BaseEntity
      * @param \DateTimeImmutable|null $updatedAt
      */
     public function __construct(
-        private UserId $id,
+        private readonly UserId $id,
         private UserEmail $email,
         private UserPassword $password,
         private Role $role,
         private bool $isActive,
-        private \DateTimeImmutable $registeredAt,
+        private readonly \DateTimeImmutable $registeredAt,
         private ?\DateTimeImmutable $updatedAt = null,
     ) {
     }

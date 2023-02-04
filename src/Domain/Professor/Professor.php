@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ProfessorGradingApp\Domain\Professor;
 
 use ProfessorGradingApp\Domain\Common\BaseEntity;

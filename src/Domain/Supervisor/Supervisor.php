@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ProfessorGradingApp\Domain\Supervisor;
 
 use ProfessorGradingApp\Domain\Common\BaseEntity;
@@ -23,7 +25,7 @@ final class Supervisor extends BaseEntity
      */
     public function __construct(
         private readonly SupervisorId       $id,
-        private readonly string             $fullName,
+        private string             $fullName,
         private readonly InstitutionalEmail $institutionalEmail,
         private readonly UserId             $userId,
         private readonly \DateTimeImmutable $registeredAt,

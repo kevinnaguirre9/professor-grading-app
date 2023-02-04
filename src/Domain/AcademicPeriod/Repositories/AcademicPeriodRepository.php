@@ -23,4 +23,9 @@ interface AcademicPeriodRepository
      * @return AcademicPeriod|null
      */
     public function find(academicPeriodId $id): ?AcademicPeriod;
+
+    /**
+     * @return AcademicPeriod
+     */
+    public function findCurrentAcademicPeriod(): AcademicPeriod;
 }

@@ -17,24 +17,42 @@ final class AcademicPeriod extends BaseEntity
     /**
      * @param AcademicPeriodId $id
      * @param string $name
+     * @param bool $isActive
      * @param \DateTimeImmutable $createdAt
      */
     public function __construct(
         private readonly AcademicPeriodId $id,
-        private readonly string $name,
+        private string $name,
+        public bool $isActive,
         private readonly \DateTimeImmutable $createdAt,
-    )
-    {
+    ) {
     }
 
     /**
      * @param AcademicPeriodId $id
      * @param string $name
+     * @param bool $isActive
      * @return static
      */
-    public static function create(AcademicPeriodId $id, string $name): self
+    public static function create(AcademicPeriodId $id, string $name, bool $isActive = true): self
     {
-        return new self($id, $name, new \DateTimeImmutable());
+        return new self($id, $name, $isActive, new \DateTimeImmutable());
+    }
+
+    /**
+     * @return void
+     */
+    public function deactivate(): void
+    {
+        $this->isActive = false;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isActive(): bool
+    {
+        return $this->isActive;
     }
 
     /**
