@@ -1,6 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ProfessorGradingApp\Domain\Common\ValueObjects;
+
+use ProfessorGradingApp\Domain\Common\Exceptions\InvalidWeekdayValue;
 
 /**
  * Enum Weekday
@@ -22,4 +26,32 @@ enum Weekday : int
     case SATURDAY = 6;
 
     case SUNDAY = 7;
+
+    /**
+     * @param int $value
+     * @return static
+     * @throws InvalidWeekdayValue
+     */
+    public static function fromValue(int $value): self
+    {
+        return match ($value) {
+            1 => self::MONDAY,
+            2 => self::TUESDAY,
+            3 => self::WEDNESDAY,
+            4 => self::THURSDAY,
+            5 => self::FRIDAY,
+            6 => self::SATURDAY,
+            7 => self::SUNDAY,
+            default => throw new InvalidWeekdayValue($value)
+        };
+    }
+
+    /**
+     * @param Weekday $weekday
+     * @return bool
+     */
+    public function equals(self $weekday): bool
+    {
+        return $this->value === $weekday->value;
+    }
 }

@@ -13,7 +13,7 @@ final class Schedule
 {
     /**
      * @param ScheduleId $id
-     * @param array $dailySchedules
+     * @param DailySchedule[] $dailySchedules
      */
     public function __construct(
         private readonly ScheduleId $id,
@@ -78,7 +78,7 @@ final class Schedule
      */
     public static function dailyScheduleBuilder(): \Closure
     {
-        return static fn(array $dailySchedule): DailySchedule => DailySchedule::fromPrimitives(
+        return fn(array $dailySchedule): DailySchedule => DailySchedule::fromPrimitives(
             $dailySchedule['start_time'],
             $dailySchedule['end_time'],
             $dailySchedule['weekday']
