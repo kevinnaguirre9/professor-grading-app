@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace ProfessorGradingApp\Domain\Enrollment;
 
 use ProfessorGradingApp\Domain\Enrollment\ValueObjects\{AcademicPeriodId, ClassId, DegreeId, EnrollmentId, StudentId};
+use ProfessorGradingApp\Domain\Enrollment\Exceptions\ClassAlreadyRegisteredInEnrollment;
 
 /**
  * Class Enrollment
@@ -54,10 +55,29 @@ final class Enrollment
     /**
      * @param ClassId $classId
      * @return void
+     * @throws ClassAlreadyRegisteredInEnrollment
      */
     public function registerClass(ClassId $classId): void
     {
+        foreach ($this->classIds as $enrolledClassId) {
+            if ($enrolledClassId->equals($classId)) {
+                throw new ClassAlreadyRegisteredInEnrollment($classId);
+            }
+        }
+
         $this->classIds[] = $classId;
+    }
+
+    /**
+     * @param ClassId $classId
+     * @return void
+     */
+    public function quitFromClass(ClassId $classId): void
+    {
+        $this->classIds = array_filter(
+            $this->classIds,
+            fn(ClassId $enrolledClassId) => !$enrolledClassId->equals($classId)
+        );
     }
 
     /**
