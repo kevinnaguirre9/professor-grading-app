@@ -23,4 +23,9 @@ interface TutorshipRepository
      * @return Tutorship|null
      */
     public function find(TutorshipId $id): ?Tutorship;
+
+    /**
+     * @return Tutorship[]
+     */
+    public function search(): array;
 }

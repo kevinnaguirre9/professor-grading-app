@@ -16,40 +16,40 @@ final class Tutorship
 {
     /**
      * @param TutorshipId $id
-     * @param Schedule $schedule
      * @param AdvisorId $advisorId
      * @param SubjectId $subjectId
      * @param AcademicPeriodId $academicPeriodId
      * @param \DateTimeImmutable $registeredAt
+     * @param Schedule|null $schedule
      */
     public function __construct(
         private readonly TutorshipId $id,
-        private Schedule $schedule,
         private readonly AdvisorId $advisorId,
         private readonly SubjectId $subjectId,
         private readonly AcademicPeriodId $academicPeriodId,
+        private ?Schedule $schedule,
         private readonly \DateTimeImmutable $registeredAt,
     ) {
     }
 
     /**
      * @param TutorshipId $id
-     * @param Schedule $schedule
      * @param AdvisorId $advisorId
      * @param SubjectId $subjectId
      * @param AcademicPeriodId $academicPeriodId
      * @param \DateTimeImmutable $registeredAt
+     * @param Schedule|null $schedule
      * @return self
      */
     public static function create(
         TutorshipId $id,
-        Schedule $schedule,
         AdvisorId $advisorId,
         SubjectId $subjectId,
         AcademicPeriodId $academicPeriodId,
-        \DateTimeImmutable $registeredAt,
+        Schedule $schedule = null,
+        \DateTimeImmutable $registeredAt = new \DateTimeImmutable(),
     ): self {
-        return new self($id, $schedule, $advisorId, $subjectId, $academicPeriodId, $registeredAt);
+        return new self($id, $advisorId, $subjectId, $academicPeriodId, $schedule, $registeredAt);
     }
 
     /**
@@ -61,9 +61,9 @@ final class Tutorship
     }
 
     /**
-     * @return Schedule
+     * @return Schedule|null
      */
-    public function schedule(): Schedule
+    public function schedule(): ?Schedule
     {
         return $this->schedule;
     }
