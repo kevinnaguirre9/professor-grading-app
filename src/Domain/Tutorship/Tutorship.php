@@ -53,6 +53,14 @@ final class Tutorship
     }
 
     /**
+     * @return bool|null
+     */
+    public function isInProgress(): bool|null
+    {
+        return $this->schedule()?->isInProgress();
+    }
+
+    /**
      * @return TutorshipId
      */
     public function id(): TutorshipId
