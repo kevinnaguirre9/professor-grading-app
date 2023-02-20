@@ -3,7 +3,9 @@
 namespace ProfessorGradingApp\Domain\AcademicPeriod\Repositories;
 
 use ProfessorGradingApp\Domain\AcademicPeriod\AcademicPeriod;
+use ProfessorGradingApp\Domain\AcademicPeriod\Criteria\AcademicPeriodsCollection;
 use ProfessorGradingApp\Domain\AcademicPeriod\ValueObjects\AcademicPeriodId;
+use ProfessorGradingApp\Domain\Common\Criteria\Criteria;
 
 /**
  * Interface AcademicPeriodRepository
@@ -19,13 +21,19 @@ interface AcademicPeriodRepository
     public function save(AcademicPeriod $academicPeriod): void;
 
     /**
+     * @return AcademicPeriod[]
+     */
+    public function all(): array;
+
+    /**
      * @param AcademicPeriodId $id
      * @return AcademicPeriod|null
      */
     public function find(academicPeriodId $id): ?AcademicPeriod;
 
     /**
-     * @return AcademicPeriod
+     * @param Criteria $criteria
+     * @return AcademicPeriodsCollection
      */
-    public function findCurrentAcademicPeriod(): AcademicPeriod;
+    public function search(Criteria $criteria): AcademicPeriodsCollection;
 }

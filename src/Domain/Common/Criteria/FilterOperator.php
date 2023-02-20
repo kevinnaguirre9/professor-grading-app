@@ -32,4 +32,12 @@ enum FilterOperator: string
     case IS_NULL = 'IS NULL';
 
     case IS_NOT_NULL = 'IS NOT NULL';
+
+    /**
+     * @return string
+     */
+    public function value(): string
+    {
+        return $this->value;
+    }
 }
