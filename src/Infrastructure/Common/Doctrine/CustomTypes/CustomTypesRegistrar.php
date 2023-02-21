@@ -3,7 +3,7 @@
 namespace ProfessorGradingApp\Infrastructure\Common\Doctrine\CustomTypes;
 
 use Doctrine\ODM\MongoDB\Types\Type;
-use Illuminate\Support\Facades\Storage;
+use ProfessorGradingApp\Infrastructure\Common\Doctrine\Concerns\InteractsWithMapper;
 
 /**
  * Class CustomTypesRegistrar
@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Storage;
  */
 final class CustomTypesRegistrar
 {
+    use InteractsWithMapper;
+
     /**
      * @var bool
      */
@@ -22,7 +24,7 @@ final class CustomTypesRegistrar
      */
     public static function register(): void
     {
-        $customTypes = self::getCustomTypeClassNames();
+        $customTypes = self::fetch(self::mapperPath());
 
         if (! self::$initialized) {
 
@@ -43,26 +45,9 @@ final class CustomTypesRegistrar
     }
 
     /**
-     * @return array
-     */
-    private static function getCustomTypeClassNames(): array
-    {
-        $filePath = self::customTypesMapperFilePath();
-
-        if (! Storage::exists($filePath))
-            throw new \RuntimeException('Custom types map file not found');
-
-        $fileContents = Storage::get($filePath);
-
-        $customTypes = json_decode($fileContents, true);
-
-        return array_values($customTypes);
-    }
-
-    /**
      * @return string
      */
-    private static function customTypesMapperFilePath(): string
+    private static function mapperPath(): string
     {
         return 'mappings' . DIRECTORY_SEPARATOR . 'doctrine_custom_types.json';
     }

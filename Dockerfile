@@ -26,7 +26,8 @@ COPY . .
 
 # run composer install to install the dependencies
 RUN composer install --prefer-dist --optimize-autoloader --no-dev \
-    && php artisan doctrine:custom-types:find
+    && php artisan doctrine:custom-types:map \
+    && php artisan doctrine:xml-documents:map
 
 RUN chmod -R 775 storage \
     && chown -R www-data:www-data storage

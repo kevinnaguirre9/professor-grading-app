@@ -106,4 +106,16 @@ final class DailySchedule
             && $this->startTime()->equals($other->startTime())
             && $this->endTime()->equals($other->endTime());
     }
+
+    /**
+     * @return array
+     */
+    public function toPrimitives(): array
+    {
+        return [
+            'weekday' => $this->weekday()->value(),
+            'start_time' => $this->startTime()->value(),
+            'end_time' => $this->endTime()->value(),
+        ];
+    }
 }

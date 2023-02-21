@@ -2,17 +2,17 @@
 
 namespace ProfessorGradingApp\Infrastructure\Common\Doctrine\Factories;
 
-use Doctrine\ODM\MongoDB\{Configuration, DocumentManager};
-use Doctrine\ODM\MongoDB\Mapping\Driver\SimplifiedXmlDriver;
+use Doctrine\ODM\MongoDB\{Configuration, DocumentManager, Mapping\Driver\XmlDriver};
 use MongoDB\Client;
 use ProfessorGradingApp\Infrastructure\Common\Doctrine\CustomTypes\CustomTypesRegistrar;
+use ProfessorGradingApp\Infrastructure\Common\Doctrine\Mappings\XmlMappingDocumentsSearcher;
 
 /**
- * Class DocumentMangerFactory
+ * Class DocumentManagerFactory
  *
  * @package ProfessorGradingApp\Infrastructure\Common\Doctrine\Factories
  */
-final class DocumentMangerFactory
+final class DocumentManagerFactory
 {
     private const HYDRATORS_DIR = __DIR__ . '/../Hydrators';
 
@@ -42,7 +42,7 @@ final class DocumentMangerFactory
     private static function createClient() : Client
     {
         return new Client(
-            uri: self::connectionUri(),
+            uri: config('database.connections.mongodb.uri'),
             driverOptions: self::driverOptions(),
         );
     }
@@ -58,32 +58,13 @@ final class DocumentMangerFactory
 
         $config->setHydratorNamespace(self::HYDRATORS_NAMESPACE);
 
-        //TODO: Create a console command that finds all the mapping files paths/namespaces
         $config->setMetadataDriverImpl(
-            new SimplifiedXmlDriver([
-                '/app/src/Infrastructure/AcademicPeriod/Repositories/Doctrine' => 'ProfessorGradingApp\Domain\AcademicPeriod'
-            ])
+            new XmlDriver(self::mappingDocumentsPaths())
         );
 
-        $config->setDefaultDB(self::databaseName());
+        $config->setDefaultDB(config('database.connections.mongodb.database'));
 
         return $config;
-    }
-
-    /**
-     * @return string
-     */
-    private static function databaseName() : string
-    {
-        return config('database.connections.mongodb.database');
-    }
-
-    /**
-     * @return string
-     */
-    private static function connectionUri() : string
-    {
-        return config('database.connections.mongodb.uri');
     }
 
     /**
@@ -94,5 +75,13 @@ final class DocumentMangerFactory
         return [
             'typeMap' => DocumentManager::CLIENT_TYPEMAP,
         ];
+    }
+
+    /**
+     * @return array
+     */
+    private static function mappingDocumentsPaths() : array
+    {
+        return XmlMappingDocumentsSearcher::search();
     }
 }

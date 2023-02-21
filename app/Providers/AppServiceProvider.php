@@ -6,7 +6,7 @@ use Doctrine\ODM\MongoDB\DocumentManager;
 use Illuminate\Support\ServiceProvider;
 use ProfessorGradingApp\Domain\AcademicPeriod\Repositories\AcademicPeriodRepository;
 use ProfessorGradingApp\Infrastructure\AcademicPeriod\Repositories\MongoDbAcademicPeriodRepository;
-use ProfessorGradingApp\Infrastructure\Common\Doctrine\Factories\DocumentMangerFactory;
+use ProfessorGradingApp\Infrastructure\Common\Doctrine\Factories\DocumentManagerFactory;
 
 /**
  * Class AppServiceProvider
@@ -22,7 +22,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton(DocumentManager::class, fn() => DocumentMangerFactory::create());
+        $this->app->singleton(DocumentManager::class, fn() => DocumentManagerFactory::create());
 
         $this->app->bind(AcademicPeriodRepository::class, MongoDbAcademicPeriodRepository::class);
     }

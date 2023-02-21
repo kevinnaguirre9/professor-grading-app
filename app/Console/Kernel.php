@@ -2,7 +2,8 @@
 
 namespace App\Console;
 
-use App\Console\Commands\FindDoctrineCustomTypes;
+use App\Console\Commands\MapDoctrineCustomTypes;
+use App\Console\Commands\MapDoctrineXmlMappingDocuments;
 use Illuminate\Console\Scheduling\Schedule;
 use Laravel\Lumen\Console\Kernel as ConsoleKernel;
 
@@ -19,7 +20,8 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        FindDoctrineCustomTypes::class,
+        MapDoctrineCustomTypes::class,
+        MapDoctrineXmlMappingDocuments::class,
     ];
 
     /**

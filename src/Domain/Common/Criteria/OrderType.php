@@ -29,7 +29,7 @@ enum OrderType: string
      */
     public function equals(self $OrderType): bool
     {
-        return $this->value === $OrderType->value;
+        return $this->value() === $OrderType->value();
     }
 
     /**
