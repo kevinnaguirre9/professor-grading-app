@@ -21,7 +21,7 @@ final class InvalidWeekdayValue extends AbstractCoreException
     public function __construct(int $value)
     {
         $this->errorDetail = sprintf(
-            "Invalid weekday value: %s. Possible values are from 1 to 7 for Monday to Sunday respectively.",
+            "Invalid weekday value <%s>. Possible values are from 1 to 7 for Monday to Sunday respectively.",
             $value
         );
 
@@ -33,7 +33,7 @@ final class InvalidWeekdayValue extends AbstractCoreException
      */
     public function title(): string
     {
-        return 'Cannot create Weekday';
+        return 'Cannot create Weekday.';
     }
 
     /**

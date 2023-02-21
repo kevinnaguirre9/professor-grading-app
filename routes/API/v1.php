@@ -9,4 +9,12 @@ $router->get('/', function () use ($router) {
 });
 
 
-$router->post('/academic-periods', AcademicPeriodPostController::class);
+$router->post('/academic-periods', [
+    'uses' => 'AcademicPeriod\AcademicPeriodPostController',
+    'as' => 'academic-periods.post'
+]);
+
+$router->post('/students', [
+    'uses' => 'Student\StudentPostController',
+    'as' => 'students.post'
+]);

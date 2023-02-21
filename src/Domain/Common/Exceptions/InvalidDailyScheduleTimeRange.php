@@ -22,7 +22,7 @@ final class InvalidDailyScheduleTimeRange extends AbstractCoreException
     public function __construct(Time $startTime, Time $endTime)
     {
         $this->errorDetail = sprintf(
-            'Start time %s must be before end time %s',
+            'Start time <%s> must be before end time %s.',
             $startTime->value(),
             $endTime->value(),
         );
@@ -35,7 +35,7 @@ final class InvalidDailyScheduleTimeRange extends AbstractCoreException
      */
     public function title(): string
     {
-        return 'Cannot create daily schedule';
+        return 'Cannot create daily schedule.';
     }
 
     /**

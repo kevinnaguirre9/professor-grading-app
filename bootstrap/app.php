@@ -110,6 +110,7 @@ $app->register(App\Providers\CommandBusServiceProvider::class);
 */
 
 $app->router->group([
+    'namespace' => 'App\Http\Controllers',
     'prefix' => 'api/v1',
 ], function ($router) {
     require __DIR__.'/../routes/API/v1.php';

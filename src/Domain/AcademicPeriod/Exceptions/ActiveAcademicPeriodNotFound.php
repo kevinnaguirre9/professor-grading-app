@@ -18,7 +18,7 @@ final class ActiveAcademicPeriodNotFound extends AbstractCoreException
      */
     public function title(): string
     {
-        return 'No active academic period found';
+        return 'No active academic period found.';
     }
 
     /**
@@ -26,6 +26,6 @@ final class ActiveAcademicPeriodNotFound extends AbstractCoreException
      */
     public function detail(): string
     {
-        return 'No active academic period found';
+        return 'No active academic period found.';
     }
 }

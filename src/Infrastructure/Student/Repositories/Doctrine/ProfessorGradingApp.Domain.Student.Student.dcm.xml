@@ -9,7 +9,7 @@
         <id strategy="NONE" type="student_id" />
         <field field-name="fullName" name="full_name" type="string" />
         <field field-name="personalEmail" name="personal_email" type="student_personal_email" />
-        <field field-name="institutionalEmail" name="institutional_email" type="student_institutional_email" />
+        <field field-name="institutionalEmail" name="institutional_email" type="institutional_email" />
         <field field-name="nationalIdentificationNumber" name="national_identification_number" type="student_national_identification_number" />
         <field field-name="userId" name="user_id" type="student_user_id" />
         <field field-name="degreeIds" name="degree_ids" type="student_degree_ids" />

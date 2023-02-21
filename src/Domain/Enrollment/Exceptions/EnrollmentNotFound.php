@@ -21,7 +21,7 @@ final class EnrollmentNotFound extends AbstractCoreException
      */
     public function __construct(EnrollmentId $enrollmentId)
     {
-        $this->errorDetail = "Enrollment with id $enrollmentId doesn't match our records.";
+        $this->errorDetail = "Enrollment with id <$enrollmentId> doesn't match our records.";
 
         parent::__construct();
     }
@@ -31,7 +31,7 @@ final class EnrollmentNotFound extends AbstractCoreException
      */
     public function title(): string
     {
-        return 'Enrollment not found';
+        return 'Enrollment not found.';
     }
 
     /**

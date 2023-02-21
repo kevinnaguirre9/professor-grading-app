@@ -37,12 +37,11 @@ final class StudentPostController extends Controller
         $User = $this->handleCommand($createUserCommand);
 
         $registerStudentCommand = new RegisterStudentCommand(
-            fullname: $request->input('fullname'),
+            fullName: $request->input('full_name'),
             institutionalEmail: $request->input('institutional_email'),
             personalEmail: $request->input('personal_email'),
             nationalIdentificationNumber: $request->input('identification_card'),
-            userId: $User->id()->value(),
-            degreeIds: $request->input('degrees'),
+            userId: (string) $User->id(),
             mobileNumber: $request->input('mobile_number'),
             landlineNumber: $request->input('landline_number'),
         );
@@ -61,13 +60,12 @@ final class StudentPostController extends Controller
     private function rules(): array
     {
         return [
-            'fullname' => 'required|string|max:255',
+            'full_name' => 'required|string|max:255',
             'institutional_email' => 'required|string',
             'personal_email' => 'required|string',
             'identification_card' => 'required|string',
             'mobile_number' => 'required|string',
             'landline_number' => 'required|string',
-            'degrees.*' => 'required|array|distinct|min:1',
         ];
     }
 }

@@ -21,7 +21,7 @@ final class ClassAlreadyRegisteredInEnrollment extends AbstractCoreException
      */
     public function __construct(ClassId $classId)
     {
-        $this->errorDetail = "Enrollment already have class {$classId->value()}";
+        $this->errorDetail = "Enrollment already have class <$classId> registered.";
 
         parent::__construct();
     }
@@ -31,7 +31,7 @@ final class ClassAlreadyRegisteredInEnrollment extends AbstractCoreException
      */
     public function title(): string
     {
-        return "Class already registered in the enrollment";
+        return "Class already registered in the enrollment.";
     }
 
     /**

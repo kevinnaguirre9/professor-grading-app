@@ -31,7 +31,7 @@ final class StudentNationalIdentificationNumberAlreadyRegistered extends Abstrac
      */
     public function title(): string
     {
-        return 'Student national identification number already registered';
+        return 'Student national identification number already registered.';
     }
 
     /**

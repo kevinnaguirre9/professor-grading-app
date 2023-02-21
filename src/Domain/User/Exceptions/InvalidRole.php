@@ -1,28 +1,31 @@
 <?php
 
-declare(strict_types=1);
-
 namespace ProfessorGradingApp\Domain\User\Exceptions;
 
 use ProfessorGradingApp\Domain\Common\Exceptions\AbstractCoreException;
+use ProfessorGradingApp\Domain\User\ValueObjects\Role;
 
 /**
- * Class UserWithGivenEmailAlreadyRegistered
+ * Class InvalidRole
  *
  * @package ProfessorGradingApp\Domain\User\Exceptions
  */
-final class UserWithGivenEmailAlreadyRegistered extends AbstractCoreException
+final class InvalidRole extends AbstractCoreException
 {
-    protected const ERROR_TYPE = 'user_with_given_email_already_registered';
+    protected const ERROR_TYPE = 'invalid_role';
 
     private string $errorDetail;
 
     /**
-     * @param string $email
+     * @param string $value
      */
-    public function __construct(string $email)
+    public function __construct(string $value)
     {
-        $this->errorDetail = "The user email <$email> is already in use.";
+        $this->errorDetail = sprintf(
+            "Invalid role value: %s. Possible values are <%s>.",
+            $value,
+            implode(', ', Role::allValues())
+        );
 
         parent::__construct();
     }
@@ -32,7 +35,7 @@ final class UserWithGivenEmailAlreadyRegistered extends AbstractCoreException
      */
     public function title(): string
     {
-        return 'User cannot be registered.';
+        return 'Invalid Role.';
     }
 
     /**

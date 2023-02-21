@@ -28,7 +28,7 @@ final class InvalidTime extends AbstractCoreException
      */
     public function title(): string
     {
-        return 'Cannot create time';
+        return 'Cannot create time.';
     }
 
     /**

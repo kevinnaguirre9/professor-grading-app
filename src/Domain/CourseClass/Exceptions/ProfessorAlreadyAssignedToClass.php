@@ -24,7 +24,7 @@ final class ProfessorAlreadyAssignedToClass extends AbstractCoreException
     public function __construct(ClassId $classId, ProfessorId $professorId)
     {
         $this->errorDetail = sprintf(
-            'Professor %s is already assigned to class %s',
+            'Professor <%s> is already assigned to class <%s>',
             $professorId->value(),
             $classId->value()
         );

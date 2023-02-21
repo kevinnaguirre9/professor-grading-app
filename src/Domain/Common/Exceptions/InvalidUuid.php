@@ -28,7 +28,7 @@ final class InvalidUuid extends AbstractCoreException
      */
     public function title(): string
     {
-        return 'Invalid UUID';
+        return 'Invalid UUID.';
     }
 
     /**
