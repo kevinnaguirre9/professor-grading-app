@@ -15,8 +15,8 @@ tags:
   description: "Authenticate to the application"
 - name: "Account"
   description: "User account information"
-- name: "Students"
-  description: "UPS Students"
+- name: "Student"
+  description: "UPS Student"
 - name: "Enrollments"
   description: "Classes enrollments"
 - name: "Degrees"
@@ -219,7 +219,7 @@ paths:
   /students:
     post:
       tags:
-      - "Students"
+      - "Student"
       summary: ""
       description: ""
       operationId: "createStudent"
@@ -272,7 +272,7 @@ paths:
 
     get:
       tags:
-      - "Students"
+      - "Student"
       summary: ""
       description: ""
       operationId: "getStudents"
@@ -287,7 +287,7 @@ paths:
           example: "09876540865"
       - in: "query"
         name: "filters[degrees]"
-        description: "Students degree"
+        description: "Student degree"
         required: true
         schema:
           type: array
@@ -366,7 +366,7 @@ paths:
   /students/{student}:
     get:
       tags:
-      - "Students"
+      - "Student"
       summary: ""
       description: ""
       operationId: "getStudent"
@@ -397,7 +397,7 @@ paths:
   /students/{student}/enrollments:
     get:
       tags:
-      - "Students"
+      - "Student"
       summary: ""
       description: ""
       operationId: "getStudentEnrollments"
@@ -502,7 +502,7 @@ paths:
       parameters:
       - in: "query"
         name: "filters[students]"
-        description: "Students identifiers"
+        description: "Student identifiers"
         schema:
           type: array
           uniqueItems: true
@@ -511,7 +511,7 @@ paths:
             example: "bce19a85-f630-4cbd-a2fe-772b6415b0c5"
       - in: "query"
         name: "filters[degrees]"
-        description: "Students degree"
+        description: "Student degree"
         required: true
         schema:
           type: array

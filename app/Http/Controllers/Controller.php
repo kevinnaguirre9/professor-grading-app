@@ -3,9 +3,14 @@
 namespace App\Http\Controllers;
 
 use Laravel\Lumen\Routing\Controller as BaseController;
-use ProfessorGradingApp\Domain\Common\Contracts\Bus\Command\CommandBus;
+use League\Tactician\CommandBus;
 use ProfessorGradingApp\Domain\Common\Contracts\Bus\Command\Command;
 
+/**
+ * Class Controller
+ *
+ * @package App\Http\Controllers
+ */
 class Controller extends BaseController
 {
     /**
@@ -20,10 +25,10 @@ class Controller extends BaseController
      * Dispatches a command to the command bus
      *
      * @param Command $command
-     * @return void
+     * @return mixed
      */
-    public function handleCommand(Command $command): void
+    public function handleCommand(Command $command)
     {
-        $this->commandBus->dispatch($command);
+        return $this->commandBus->handle($command);
     }
 }

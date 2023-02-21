@@ -12,4 +12,12 @@ enum Role: string
     case SUPERVISOR = 'supervisor';
 
     case STUDENT = 'student';
+
+    /**
+     * @return string
+     */
+    public function value(): string
+    {
+        return $this->value;
+    }
 }

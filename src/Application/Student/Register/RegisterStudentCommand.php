@@ -2,17 +2,19 @@
 
 namespace ProfessorGradingApp\Application\Student\Register;
 
+use ProfessorGradingApp\Domain\Common\Contracts\Bus\Command\Command;
+
 /**
  * Class RegisterStudentCommand
  *
  * @package ProfessorGradingApp\Application\Student\Register
  */
-final class RegisterStudentCommand
+final class RegisterStudentCommand implements Command
 {
     /**
      * @param string $fullName
-     * @param string $personalEmail
      * @param string $institutionalEmail
+     * @param string $personalEmail
      * @param string $nationalIdentificationNumber
      * @param string $userId
      * @param array $degreeIds
@@ -23,8 +25,8 @@ final class RegisterStudentCommand
      */
     public function __construct(
         private string $fullName,
-        private string $personalEmail,
         private string $institutionalEmail,
+        private string $personalEmail,
         private string $nationalIdentificationNumber,
         private string $userId,
         private array $degreeIds = [],

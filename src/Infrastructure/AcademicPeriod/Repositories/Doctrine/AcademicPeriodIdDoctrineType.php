@@ -13,7 +13,7 @@ use ProfessorGradingApp\Infrastructure\Common\Doctrine\CustomTypes\UuidType;
 final class AcademicPeriodIdDoctrineType extends UuidType
 {
     /**
-     * @return string
+     * @inheritDoc
      */
     public static function customTypeName(): string
     {
@@ -21,7 +21,7 @@ final class AcademicPeriodIdDoctrineType extends UuidType
     }
 
     /**
-     * @return string
+     * @inheritDoc
      */
     public function customTypeClassName(): string
     {

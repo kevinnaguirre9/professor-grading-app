@@ -28,7 +28,7 @@ final class User extends BaseEntity
         private readonly UserId $id,
         private UserEmail $email,
         private UserPassword $password,
-        private Role $role,
+        private readonly Role $role,
         private bool $isActive,
         private readonly \DateTimeImmutable $registeredAt,
         private ?\DateTimeImmutable $updatedAt = null,
@@ -84,6 +84,16 @@ final class User extends BaseEntity
     private function touch(): void
     {
         $this->updatedAt = new \DateTimeImmutable();
+    }
+
+    /**
+     * @return void
+     */
+    public function deactivate(): void
+    {
+        $this->isActive = false;
+
+        $this->touch();
     }
 
     /**

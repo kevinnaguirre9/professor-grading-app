@@ -27,14 +27,14 @@ final class RegisterStudentHandler
 
     /**
      * @param RegisterStudentCommand $command
-     * @return void
+     * @return Student
      * @throws InvalidEmailDomain
      * @throws InvalidEmailFormat
      * @throws InvalidUuid
      * @throws StudentInstitutionalEmailAlreadyRegistered
      * @throws StudentNationalIdentificationNumberAlreadyRegistered
      */
-    public function __invoke(RegisterStudentCommand $command): void
+    public function __invoke(RegisterStudentCommand $command): Student
     {
         $this->ensureInstitutionalEmailIsNotInUse(
             new InstitutionalEmail($command->institutionalEmail())
@@ -56,6 +56,8 @@ final class RegisterStudentHandler
         );
 
         $this->repository->save($Student);
+
+        return $Student;
     }
 
     /**
