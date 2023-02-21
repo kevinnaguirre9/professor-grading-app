@@ -18,8 +18,8 @@ final class Criteria
     public function __construct(
         private readonly Filters $filters,
         private readonly Order $order,
-        private readonly ?int $offset,
-        private readonly ?int $limit
+        private readonly ?int $offset = null,
+        private readonly ?int $limit = null
     ) {
     }
 
@@ -63,6 +63,21 @@ final class Criteria
         return $this->limit;
     }
 
+    /**
+     * @return bool
+     */
+    public function hasFilters(): bool
+    {
+        return $this->filters->count() > 0;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasOrder(): bool
+    {
+        return !$this->order->isNone();
+    }
 
     /**
      * @return string

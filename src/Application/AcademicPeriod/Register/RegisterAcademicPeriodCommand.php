@@ -2,20 +2,21 @@
 
 namespace ProfessorGradingApp\Application\AcademicPeriod\Register;
 
+use ProfessorGradingApp\Domain\Common\Contracts\Bus\Command\Command;
+
 /**
- * Class CreateAcademicPeriodCommand
+ * Class RegisterAcademicPeriodCommand
  *
  * @package ProfessorGradingApp\Application\AcademicPeriod\Register
  */
-final class CreateAcademicPeriodCommand
+final class RegisterAcademicPeriodCommand implements Command
 {
     /**
      * @param string $name
      */
     public function __construct(
-        private string $name,
-    )
-    {
+        private readonly string $name,
+    ) {
     }
 
     /**

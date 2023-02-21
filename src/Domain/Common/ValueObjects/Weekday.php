@@ -52,6 +52,14 @@ enum Weekday : int
      */
     public function equals(self $weekday): bool
     {
-        return $this->value === $weekday->value;
+        return $this->value() === $weekday->value();
+    }
+
+    /**
+     * @return int
+     */
+    public function value(): int
+    {
+        return $this->value;
     }
 }

@@ -4,9 +4,7 @@ namespace ProfessorGradingApp\Infrastructure\Common\Bus\Command\Locator;
 
 use League\Tactician\Exception\MissingHandlerException;
 use League\Tactician\Handler\Locator\HandlerLocator;
-use Psr\Container\ContainerExceptionInterface;
-use Psr\Container\ContainerInterface;
-use Psr\Container\NotFoundExceptionInterface;
+use Psr\Container\{ContainerExceptionInterface, ContainerInterface, NotFoundExceptionInterface};
 
 /**
  * Class NamespacedHandlerLocator

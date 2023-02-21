@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Laravel\Lumen\Routing\Controller as BaseController;
 use ProfessorGradingApp\Domain\Common\Contracts\Bus\Command\CommandBus;
+use ProfessorGradingApp\Domain\Common\Contracts\Bus\Command\Command;
 
 class Controller extends BaseController
 {
@@ -18,10 +19,10 @@ class Controller extends BaseController
     /**
      * Dispatches a command to the command bus
      *
-     * @param $command
+     * @param Command $command
      * @return void
      */
-    public function handleCommand($command): void
+    public function handleCommand(Command $command): void
     {
         $this->commandBus->dispatch($command);
     }

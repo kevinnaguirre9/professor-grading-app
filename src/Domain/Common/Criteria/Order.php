@@ -61,6 +61,14 @@ final class Order
     }
 
     /**
+     * @return bool
+     */
+    public function isNone(): bool
+    {
+        return $this->orderType()->isNone();
+    }
+
+    /**
      * @return string
      */
     public function serialize(): string

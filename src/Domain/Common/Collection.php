@@ -23,7 +23,7 @@ abstract class Collection
     public function assertItemsHaveTheRightType(): void
     {
         foreach ($this->items as $item)
-            $this->instanceOf($this->type(), $item);
+            $this->assertInstanceOf($this->type(), $item);
     }
 
     /**
@@ -31,7 +31,7 @@ abstract class Collection
      * @param $item
      * @return void
      */
-    private function instanceOf(string $class, $item): void
+    private function assertInstanceOf(string $class, $item): void
     {
         if (!$item instanceof $class) {
             throw new \InvalidArgumentException(
@@ -67,5 +67,24 @@ abstract class Collection
     public function items(): array
     {
         return $this->items;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function first(): mixed
+    {
+        foreach ($this->items as $item)
+            return $item;
+
+        return null;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isEmpty(): bool
+    {
+        return empty($this->items);
     }
 }

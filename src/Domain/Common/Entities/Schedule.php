@@ -3,13 +3,14 @@
 namespace ProfessorGradingApp\Domain\Common\Entities;
 
 use ProfessorGradingApp\Domain\Common\ValueObjects\{DailySchedule, ScheduleId};
+use ProfessorGradingApp\Domain\Common\BaseEntity;
 
 /**
  * Class Schedule
  *
  * @package ProfessorGradingApp\Domain\Common\Entities
  */
-final class Schedule
+final class Schedule extends BaseEntity
 {
     /**
      * @param ScheduleId $id

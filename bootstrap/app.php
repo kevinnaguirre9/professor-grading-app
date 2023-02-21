@@ -23,7 +23,7 @@ $app = new Laravel\Lumen\Application(
     dirname(__DIR__)
 );
 
-// $app->withFacades();
+$app->withFacades();
 
 // $app->withEloquent();
 
@@ -93,7 +93,7 @@ $app->configure('database');
 |
 */
 
-// $app->register(App\Providers\AppServiceProvider::class);
+$app->register(App\Providers\AppServiceProvider::class);
 // $app->register(App\Providers\AuthServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);
 $app->register(App\Providers\CommandBusServiceProvider::class);
@@ -110,7 +110,6 @@ $app->register(App\Providers\CommandBusServiceProvider::class);
 */
 
 $app->router->group([
-    'namespace' => 'App\Http\Controllers',
     'prefix' => 'api/v1',
 ], function ($router) {
     require __DIR__.'/../routes/API/v1.php';
