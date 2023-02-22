@@ -9,6 +9,7 @@ use ProfessorGradingApp\Domain\CourseClass\Repositories\CourseClassRepository;
 use ProfessorGradingApp\Domain\Degree\Repositories\DegreeRepository;
 use ProfessorGradingApp\Domain\Enrollment\Repositories\EnrollmentRepository;
 use ProfessorGradingApp\Domain\Grade\Repositories\GradeRepository;
+use ProfessorGradingApp\Domain\Professor\Repositories\ProfessorRepository;
 use ProfessorGradingApp\Domain\Student\Repositories\StudentRepository;
 use ProfessorGradingApp\Domain\Subject\Repositories\SubjectRepository;
 use ProfessorGradingApp\Domain\Tutorship\Repositories\TutorshipRepository;
@@ -20,6 +21,7 @@ use ProfessorGradingApp\Infrastructure\CourseClass\Repositories\MongoDbCourseCla
 use ProfessorGradingApp\Infrastructure\Degree\Repositories\MongoDbDegreeRepository;
 use ProfessorGradingApp\Infrastructure\Enrollment\Repositories\MongoDbEnrollmentRepository;
 use ProfessorGradingApp\Infrastructure\Grade\Repositories\MongoDbGradeRepository;
+use ProfessorGradingApp\Infrastructure\Professor\Repositories\MongoDbProfessorRepository;
 use ProfessorGradingApp\Infrastructure\Student\Repositories\MongoDbStudentRepository;
 use ProfessorGradingApp\Infrastructure\Subject\Repositories\MongoDbSubjectRepository;
 use ProfessorGradingApp\Infrastructure\Tutorship\Repositories\MongoDbTutorshipRepository;
@@ -64,5 +66,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(GradeRepository::class, MongoDbGradeRepository::class);
 
         $this->app->bind(TutorshipRepository::class, MongoDbTutorshipRepository::class);
+
+        $this->app->bind(ProfessorRepository::class, MongoDbProfessorRepository::class);
     }
 }
