@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace ProfessorGradingApp\Domain\Enrollment;
 
 use ProfessorGradingApp\Domain\Enrollment\ValueObjects\{AcademicPeriodId, ClassId, DegreeId, EnrollmentId, StudentId};
+use ProfessorGradingApp\Domain\Common\BaseEntity;
 use ProfessorGradingApp\Domain\Enrollment\Exceptions\ClassAlreadyRegisteredInEnrollment;
 
 /**
@@ -12,7 +13,7 @@ use ProfessorGradingApp\Domain\Enrollment\Exceptions\ClassAlreadyRegisteredInEnr
  *
  * @package ProfessorGradingApp\Domain\Enrollment
  */
-final class Enrollment
+final class Enrollment extends BaseEntity
 {
     /**
      * @param EnrollmentId $id
