@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<doctrine-mongo-mapping xmlns="http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping"
+                        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                        xsi:schemaLocation="http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping
+                    http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping.xsd">
+
+    <document name="ProfessorGradingApp\Domain\CourseClass\CourseClass" collection="classes">
+        <id strategy="NONE" type="class_id" />
+        <field field-name="groupSection" name="group_section" type="string" />
+        <embed-one
+            field-name="Schedule"
+            field="schedule"
+            target-document="ProfessorGradingApp\Domain\Common\Entities\Schedule"
+        />
+        <field field-name="academicPeriodId" name="academic_period_id" type="class_academic_period_id" />
+        <field field-name="subjectId" name="subject_id" type="class_subject_id" />
+        <field field-name="professorId" name="professor_id" type="class_professor_id" />
+        <field field-name="degreeIds" name="degree_ids" type="class_degree_ids" />
+        <field field-name="studentIds" name="student_ids" type="class_student_ids" />
+        <field field-name="gradeIds" name="grade_ids" type="class_grade_ids" />
+        <field field-name="registeredAt" name="registered_at" type="date_immutable" />
+    </document>
+
+</doctrine-mongo-mapping>

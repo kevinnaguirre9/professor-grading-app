@@ -9,7 +9,11 @@
         <id strategy="NONE" type="subject_id" />
         <field field-name="code" name="code" type="string" />
         <field field-name="name" name="name" type="string" />
-        <embed-many field-name="degreesLevel" field="degrees_level" target-document="ProfessorGradingApp\Domain\Subject\ValueObjects\DegreeLevel" />
+        <embed-many
+            field-name="degreesLevel"
+            field="degrees_level"
+            target-document="ProfessorGradingApp\Domain\Subject\ValueObjects\DegreeLevel"
+        />
         <field field-name="registeredAt" name="registered_at" type="date_immutable" />
     </document>
 

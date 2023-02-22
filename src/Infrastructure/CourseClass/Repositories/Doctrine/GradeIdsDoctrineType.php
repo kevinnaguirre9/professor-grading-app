@@ -1,14 +1,14 @@
 <?php
 
-namespace ProfessorGradingApp\Infrastructure\Student\Repositories\Doctrine;
+namespace ProfessorGradingApp\Infrastructure\CourseClass\Repositories\Doctrine;
 
-use ProfessorGradingApp\Domain\Student\ValueObjects\GradeId;
+use ProfessorGradingApp\Domain\CourseClass\ValueObjects\GradeId;
 use ProfessorGradingApp\Infrastructure\Common\Doctrine\CustomTypes\UuidCollectionType;
 
 /**
  * Class GradeIdsDoctrineType
  *
- * @package ProfessorGradingApp\Infrastructure\Student\Repositories\Doctrine
+ * @package ProfessorGradingApp\Infrastructure\CourseClass\Repositories\Doctrine
  */
 final class GradeIdsDoctrineType extends UuidCollectionType
 {
@@ -17,7 +17,7 @@ final class GradeIdsDoctrineType extends UuidCollectionType
      */
     public static function customTypeName(): string
     {
-        return 'student_grade_ids';
+        return 'class_grade_ids';
     }
 
     /**

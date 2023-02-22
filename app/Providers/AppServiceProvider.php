@@ -14,6 +14,7 @@ use ProfessorGradingApp\Domain\User\Contracts\PasswordHashingManager;
 use ProfessorGradingApp\Domain\User\Repositories\UserRepository;
 use ProfessorGradingApp\Infrastructure\AcademicPeriod\Repositories\MongoDbAcademicPeriodRepository;
 use ProfessorGradingApp\Infrastructure\Common\Doctrine\Factories\DocumentManagerFactory;
+use ProfessorGradingApp\Infrastructure\CourseClass\Repositories\MongoDbCourseClassRepository;
 use ProfessorGradingApp\Infrastructure\Degree\Repositories\MongoDbDegreeRepository;
 use ProfessorGradingApp\Infrastructure\Enrollment\Repositories\MongoDbEnrollmentRepository;
 use ProfessorGradingApp\Infrastructure\Student\Repositories\MongoDbStudentRepository;
@@ -53,5 +54,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(DegreeRepository::class, MongoDbDegreeRepository::class);
 
         $this->app->bind(SubjectRepository::class, MongoDbSubjectRepository::class);
+
+        $this->app->bind(CourseClassRepository::class, MongoDbCourseClassRepository::class);
     }
 }

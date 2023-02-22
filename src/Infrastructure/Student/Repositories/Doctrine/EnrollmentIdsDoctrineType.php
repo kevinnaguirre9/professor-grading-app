@@ -2,20 +2,16 @@
 
 namespace ProfessorGradingApp\Infrastructure\Student\Repositories\Doctrine;
 
-use Doctrine\ODM\MongoDB\MongoDBException;
-use Doctrine\ODM\MongoDB\Types\{ClosureToPHP, CollectionType};
 use ProfessorGradingApp\Domain\Student\ValueObjects\EnrollmentId;
-use ProfessorGradingApp\Infrastructure\Common\Doctrine\Contracts\DoctrineCustomType;
+use ProfessorGradingApp\Infrastructure\Common\Doctrine\CustomTypes\UuidCollectionType;
 
 /**
  * Class EnrollmentIdsDoctrineType
  *
  * @package ProfessorGradingApp\Infrastructure\Student\Repositories\Doctrine
  */
-final class EnrollmentIdsDoctrineType extends CollectionType implements DoctrineCustomType
+final class EnrollmentIdsDoctrineType extends UuidCollectionType
 {
-    use ClosureToPHP;
-
     /**
      * @inheritDoc
      */
@@ -30,28 +26,5 @@ final class EnrollmentIdsDoctrineType extends CollectionType implements Doctrine
     public function customTypeClassName(): string
     {
         return EnrollmentId::class;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function convertToPHPValue($value)
-    {
-        $scalars = parent::convertToPHPValue($value);
-
-        $classname = $this->customTypeClassName();
-
-        return array_map(fn(string $enrollmentId) => new $classname($enrollmentId), $scalars);
-    }
-
-    /**
-     * @inheritDoc
-     * @throws MongoDBException
-     */
-    public function convertToDatabaseValue($value)
-    {
-        return parent::convertToDatabaseValue(
-            array_map(fn(EnrollmentId $enrollmentId) => $enrollmentId->value(), $value)
-        );
     }
 }
