@@ -13,10 +13,10 @@ use ProfessorGradingApp\Domain\Grade\ValueObjects\GradeId;
 interface GradeRepository
 {
     /**
-     * @param Grade $grade
+     * @param Grade $Grade
      * @return void
      */
-    public function save(Grade $grade): void;
+    public function save(Grade $Grade): void;
 
     /**
      * @param GradeId $id

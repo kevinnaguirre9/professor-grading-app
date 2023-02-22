@@ -3,6 +3,7 @@
 namespace ProfessorGradingApp\Application\Grade\Register;
 
 use ProfessorGradingApp\Domain\Common\Exceptions\InvalidUuid;
+use ProfessorGradingApp\Domain\Grade\Exceptions\InvalidRating;
 use ProfessorGradingApp\Domain\Grade\Grade;
 use ProfessorGradingApp\Domain\Grade\Repositories\GradeRepository;
 use ProfessorGradingApp\Domain\Grade\ValueObjects\{AcademicPeriodId, ClassId, GradeId, Rating, StudentId};
@@ -25,6 +26,7 @@ final class RegisterGradeHandler
      * @param RegisterGradeCommand $command
      * @return void
      * @throws InvalidUuid
+     * @throws InvalidRating
      */
     public function __invoke(RegisterGradeCommand $command) : void
     {
@@ -35,7 +37,7 @@ final class RegisterGradeHandler
             new AcademicPeriodId($command->academicPeriodId()),
             new ClassId($command->classId()),
             new StudentId($command->studentId()),
-            Rating::from($command->rating()),
+            Rating::fromValue($command->rating()),
             $command->comment()
         );
 

@@ -32,11 +32,12 @@ enum Role: string
      */
     public static function fromValue(string $value): self
     {
-        return match ($value) {
-            'supervisor' => self::SUPERVISOR,
-            'student' => self::STUDENT,
-            default => throw new InvalidRole($value),
-        };
+        $cases = self::allValues();
+
+        if (!in_array($value, $cases, true))
+            throw new InvalidRole($value);
+
+        return self::from($value);
     }
 
     /**
