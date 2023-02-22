@@ -21,14 +21,14 @@ final class Tutorship extends BaseEntity
      * @param SubjectId $subjectId
      * @param AcademicPeriodId $academicPeriodId
      * @param \DateTimeImmutable $registeredAt
-     * @param Schedule|null $schedule
+     * @param Schedule|null $Schedule
      */
     public function __construct(
         private readonly TutorshipId $id,
         private readonly AdvisorId $advisorId,
         private readonly SubjectId $subjectId,
         private readonly AcademicPeriodId $academicPeriodId,
-        private ?Schedule $schedule,
+        private ?Schedule $Schedule,
         private readonly \DateTimeImmutable $registeredAt,
     ) {
     }
@@ -39,7 +39,7 @@ final class Tutorship extends BaseEntity
      * @param SubjectId $subjectId
      * @param AcademicPeriodId $academicPeriodId
      * @param \DateTimeImmutable $registeredAt
-     * @param Schedule|null $schedule
+     * @param Schedule|null $Schedule
      * @return self
      */
     public static function create(
@@ -47,10 +47,10 @@ final class Tutorship extends BaseEntity
         AdvisorId $advisorId,
         SubjectId $subjectId,
         AcademicPeriodId $academicPeriodId,
-        Schedule $schedule = null,
+        Schedule $Schedule = null,
         \DateTimeImmutable $registeredAt = new \DateTimeImmutable(),
     ): self {
-        return new self($id, $advisorId, $subjectId, $academicPeriodId, $schedule, $registeredAt);
+        return new self($id, $advisorId, $subjectId, $academicPeriodId, $Schedule, $registeredAt);
     }
 
     /**
@@ -74,7 +74,7 @@ final class Tutorship extends BaseEntity
      */
     public function schedule(): ?Schedule
     {
-        return $this->schedule;
+        return $this->Schedule;
     }
 
     /**

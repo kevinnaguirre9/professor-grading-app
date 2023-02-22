@@ -23,7 +23,7 @@ use ProfessorGradingApp\Domain\CourseClass\ValueObjects\{
 final class CourseClass extends BaseEntity
 {
     /**
-     * @param ClassId $classId
+     * @param ClassId $id
      * @param string $groupSection
      * @param Schedule $Schedule
      * @param AcademicPeriodId $academicPeriodId
@@ -35,7 +35,7 @@ final class CourseClass extends BaseEntity
      * @param \DateTimeImmutable $registeredAt
      */
     public function __construct(
-        private readonly ClassId $classId,
+        private readonly ClassId $id,
         private readonly string $groupSection,
         private Schedule $Schedule,
         private readonly AcademicPeriodId $academicPeriodId,
@@ -49,7 +49,7 @@ final class CourseClass extends BaseEntity
     }
 
     /**
-     * @param ClassId $classId
+     * @param ClassId $id
      * @param string $groupSection
      * @param Schedule $Schedule
      * @param AcademicPeriodId $academicPeriodId
@@ -62,7 +62,7 @@ final class CourseClass extends BaseEntity
      * @return CourseClass
      */
     public static function create(
-        ClassId $classId,
+        ClassId $id,
         string $groupSection,
         Schedule $Schedule,
         AcademicPeriodId $academicPeriodId,
@@ -74,7 +74,7 @@ final class CourseClass extends BaseEntity
         \DateTimeImmutable $registeredAt = new \DateTimeImmutable(),
     ): self {
         return new self(
-            $classId,
+            $id,
             $groupSection,
             $Schedule,
             $academicPeriodId,
@@ -141,7 +141,7 @@ final class CourseClass extends BaseEntity
      */
     public function id(): ClassId
     {
-        return $this->classId;
+        return $this->id;
     }
 
     /**

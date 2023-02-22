@@ -6,7 +6,7 @@
                     http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping.xsd">
 
     <embedded-document name="ProfessorGradingApp\Domain\Common\Entities\Schedule">
-        <field field-name="scheduleId" name="schedule_id" type="schedule_id" />
+        <id strategy="NONE" type="schedule_id" />
         <embed-many
             field-name="dailySchedules"
             field="daily_schedules"
