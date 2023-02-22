@@ -47,8 +47,12 @@ final class MapDoctrineXmlMappingDocuments extends Command
 
         $this->getOutput()->writeln(sprintf("Found %d file(s) in %s", $finder->count(), $path));
 
-        foreach ($finder as $file)
+        foreach ($finder as $file) {
+            if (in_array($file->getPath(), $mapper))
+                continue;
+
             $mapper[] = $file->getPath();
+        }
 
         $this->getOutput()->writeln(sprintf("Found %d resource(s)", count($mapper)));
 
