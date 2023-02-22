@@ -12,6 +12,7 @@ use ProfessorGradingApp\Domain\Grade\Repositories\GradeRepository;
 use ProfessorGradingApp\Domain\Professor\Repositories\ProfessorRepository;
 use ProfessorGradingApp\Domain\Student\Repositories\StudentRepository;
 use ProfessorGradingApp\Domain\Subject\Repositories\SubjectRepository;
+use ProfessorGradingApp\Domain\Supervisor\Repositories\SupervisorRepository;
 use ProfessorGradingApp\Domain\Tutorship\Repositories\TutorshipRepository;
 use ProfessorGradingApp\Domain\User\Contracts\PasswordHashingManager;
 use ProfessorGradingApp\Domain\User\Repositories\UserRepository;
@@ -24,6 +25,7 @@ use ProfessorGradingApp\Infrastructure\Grade\Repositories\MongoDbGradeRepository
 use ProfessorGradingApp\Infrastructure\Professor\Repositories\MongoDbProfessorRepository;
 use ProfessorGradingApp\Infrastructure\Student\Repositories\MongoDbStudentRepository;
 use ProfessorGradingApp\Infrastructure\Subject\Repositories\MongoDbSubjectRepository;
+use ProfessorGradingApp\Infrastructure\Supervisor\Repositories\MongoDbSupervisorRepository;
 use ProfessorGradingApp\Infrastructure\Tutorship\Repositories\MongoDbTutorshipRepository;
 use ProfessorGradingApp\Infrastructure\User\Repositories\MongoDbUserRepository;
 use ProfessorGradingApp\Infrastructure\User\Services\BcryptPasswordHashingManager;
@@ -68,5 +70,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(TutorshipRepository::class, MongoDbTutorshipRepository::class);
 
         $this->app->bind(ProfessorRepository::class, MongoDbProfessorRepository::class);
+
+        $this->app->bind(SupervisorRepository::class, MongoDbSupervisorRepository::class);
     }
 }
