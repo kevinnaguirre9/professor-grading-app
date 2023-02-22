@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<doctrine-mongo-mapping xmlns="http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping"
+                        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                        xsi:schemaLocation="http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping
+                    http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping.xsd">
+
+    <document name="ProfessorGradingApp\Domain\Tutorship\Tutorship" collection="tutorships">
+        <id strategy="NONE" type="tutorship_id" />
+        <field field-name="advisorId" name="advisor_id" type="tutorship_advisor_id" />
+        <field field-name="subjectId" name="subject_id" type="tutorship_subject_id" />
+        <field field-name="academicPeriodId" name="academic_period_id" type="tutorship_academic_period_id" />
+        <embed-one
+            field-name="Schedule"
+            field="schedule"
+            target-document="ProfessorGradingApp\Domain\Common\Entities\Schedule"
+        />
+        <field field-name="registeredAt" name="registered_at" type="date_immutable" />
+    </document>
+
+</doctrine-mongo-mapping>

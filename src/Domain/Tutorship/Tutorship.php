@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace ProfessorGradingApp\Domain\Tutorship;
 
 use ProfessorGradingApp\Domain\Tutorship\ValueObjects\{AcademicPeriodId, AdvisorId, SubjectId, TutorshipId};
+use ProfessorGradingApp\Domain\Common\BaseEntity;
 use ProfessorGradingApp\Domain\Common\Entities\Schedule;
 
 /**
@@ -12,7 +13,7 @@ use ProfessorGradingApp\Domain\Common\Entities\Schedule;
  *
  * @package ProfessorGradingApp\Domain\Tutorship
  */
-final class Tutorship
+final class Tutorship extends BaseEntity
 {
     /**
      * @param TutorshipId $id
