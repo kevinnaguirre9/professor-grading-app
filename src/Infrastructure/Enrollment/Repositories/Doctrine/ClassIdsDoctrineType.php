@@ -3,8 +3,7 @@
 namespace ProfessorGradingApp\Infrastructure\Enrollment\Repositories\Doctrine;
 
 use Doctrine\ODM\MongoDB\MongoDBException;
-use Doctrine\ODM\MongoDB\Types\ClosureToPHP;
-use Doctrine\ODM\MongoDB\Types\CollectionType;
+use Doctrine\ODM\MongoDB\Types\{ClosureToPHP, CollectionType};
 use ProfessorGradingApp\Domain\Enrollment\ValueObjects\ClassId;
 use ProfessorGradingApp\Infrastructure\Common\Doctrine\Contracts\DoctrineCustomType;
 

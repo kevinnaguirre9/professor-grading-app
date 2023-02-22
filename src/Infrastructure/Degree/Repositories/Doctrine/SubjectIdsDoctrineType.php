@@ -1,18 +1,18 @@
 <?php
 
-namespace ProfessorGradingApp\Infrastructure\Student\Repositories\Doctrine;
+namespace ProfessorGradingApp\Infrastructure\Degree\Repositories\Doctrine;
 
 use Doctrine\ODM\MongoDB\MongoDBException;
 use Doctrine\ODM\MongoDB\Types\{ClosureToPHP, CollectionType};
-use ProfessorGradingApp\Domain\Student\ValueObjects\EnrollmentId;
+use ProfessorGradingApp\Domain\Degree\ValueObjects\SubjectId;
 use ProfessorGradingApp\Infrastructure\Common\Doctrine\Contracts\DoctrineCustomType;
 
 /**
- * Class EnrollmentIdsDoctrineType
+ * Class SubjectIdsDoctrineType
  *
- * @package ProfessorGradingApp\Infrastructure\Student\Repositories\Doctrine
+ * @package ProfessorGradingApp\Infrastructure\Degree\Repositories\Doctrine
  */
-final class EnrollmentIdsDoctrineType extends CollectionType implements DoctrineCustomType
+final class SubjectIdsDoctrineType extends CollectionType implements DoctrineCustomType
 {
     use ClosureToPHP;
 
@@ -21,7 +21,7 @@ final class EnrollmentIdsDoctrineType extends CollectionType implements Doctrine
      */
     public static function customTypeName(): string
     {
-        return 'student_enrollment_ids';
+        return 'degree_subject_ids';
     }
 
     /**
@@ -29,7 +29,7 @@ final class EnrollmentIdsDoctrineType extends CollectionType implements Doctrine
      */
     public function customTypeClassName(): string
     {
-        return EnrollmentId::class;
+        return SubjectId::class;
     }
 
     /**
@@ -41,7 +41,7 @@ final class EnrollmentIdsDoctrineType extends CollectionType implements Doctrine
 
         $classname = $this->customTypeClassName();
 
-        return array_map(fn(string $enrollmentId) => new $classname($enrollmentId), $scalars);
+        return array_map(fn(string $subjectId) => new $classname($subjectId), $scalars);
     }
 
     /**
@@ -51,7 +51,7 @@ final class EnrollmentIdsDoctrineType extends CollectionType implements Doctrine
     public function convertToDatabaseValue($value)
     {
         return parent::convertToDatabaseValue(
-            array_map(fn(EnrollmentId $enrollmentId) => $enrollmentId->value(), $value)
+            array_map(fn(SubjectId $subjectId) => $subjectId->value(), $value)
         );
     }
 }

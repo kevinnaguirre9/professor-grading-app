@@ -3,7 +3,7 @@
 namespace ProfessorGradingApp\Infrastructure\Student\Repositories\Doctrine;
 
 use Doctrine\ODM\MongoDB\MongoDBException;
-use Doctrine\ODM\MongoDB\Types\CollectionType;
+use Doctrine\ODM\MongoDB\Types\{ClosureToPHP, CollectionType};
 use ProfessorGradingApp\Domain\Student\ValueObjects\GradeId;
 use ProfessorGradingApp\Infrastructure\Common\Doctrine\Contracts\DoctrineCustomType;
 
@@ -14,6 +14,7 @@ use ProfessorGradingApp\Infrastructure\Common\Doctrine\Contracts\DoctrineCustomT
  */
 final class GradeIdsDoctrineType extends CollectionType implements DoctrineCustomType
 {
+    use ClosureToPHP;
 
     /**
      * @inheritDoc
