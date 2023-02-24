@@ -63,6 +63,8 @@ $app->configure('app');
 
 $app->configure('database');
 
+$app->configure('schemas');
+
 /*
 |--------------------------------------------------------------------------
 | Register Middleware

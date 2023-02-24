@@ -50,15 +50,15 @@ final class RegisterStudentHandler
             $command->nationalIdentificationNumber()
         );
 
+        $this->ensureInstitutionalEmailIsNotInUse($institutionalEmail);
+
+        $this->ensureStudentNationalIdentificationNumberDoesNotExists($nationalIdentificationNumber);
+
         $createUserCommand = new CreateUserCommand(
             $command->institutionalEmail(),
             $command->nationalIdentificationNumber(),
             Role::STUDENT->value()
         );
-
-        $this->ensureInstitutionalEmailIsNotInUse($institutionalEmail);
-
-        $this->ensureStudentNationalIdentificationNumberDoesNotExists($nationalIdentificationNumber);
 
         $User = $this->userCreator->__invoke($createUserCommand);
 
