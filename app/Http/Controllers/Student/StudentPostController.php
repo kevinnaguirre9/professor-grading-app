@@ -6,10 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\{JsonResponse, Request};
 use Illuminate\Validation\ValidationException;
 use ProfessorGradingApp\Application\Student\Register\RegisterStudentCommand;
-use ProfessorGradingApp\Application\User\Register\CreateUserCommand;
 use ProfessorGradingApp\Domain\Student\Student;
-use ProfessorGradingApp\Domain\User\User;
-use ProfessorGradingApp\Domain\User\ValueObjects\Role;
 
 /**
  * Class StudentPostController
@@ -27,21 +24,11 @@ final class StudentPostController extends Controller
     {
         $this->validate($request, $this->rules());
 
-        $createUserCommand = new CreateUserCommand(
-            $request->input('institutional_email'),
-            $request->input( 'identification_card'),
-            Role::STUDENT->value()
-        );
-
-        /** @var User $User */
-        $User = $this->handleCommand($createUserCommand);
-
         $registerStudentCommand = new RegisterStudentCommand(
             fullName: $request->input('full_name'),
             institutionalEmail: $request->input('institutional_email'),
             personalEmail: $request->input('personal_email'),
             nationalIdentificationNumber: $request->input('identification_card'),
-            userId: (string) $User->id(),
             mobileNumber: $request->input('mobile_number'),
             landlineNumber: $request->input('landline_number'),
         );

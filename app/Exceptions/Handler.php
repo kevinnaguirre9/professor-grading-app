@@ -4,10 +4,12 @@ namespace App\Exceptions;
 
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Laravel\Lumen\Exceptions\Handler as ExceptionHandler;
 use ProfessorGradingApp\Domain\Common\Exceptions\CoreException;
+use ProfessorGradingApp\Domain\User\Exceptions\UserWithGivenEmailAlreadyRegistered;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
@@ -35,7 +37,9 @@ class Handler extends ExceptionHandler
     /**
      * @var array
      */
-    private array $badRequestExceptions = [];
+    private array $badRequestExceptions = [
+        UserWithGivenEmailAlreadyRegistered::class,
+    ];
 
     /**
      * @var array
@@ -67,7 +71,7 @@ class Handler extends ExceptionHandler
      *
      * @param  Request  $request
      * @param  \Throwable  $exception
-     * @return \Illuminate\Http\Response|\Illuminate\Http\JsonResponse
+     * @return Response|JsonResponse
      *
      * @throws \Throwable
      */
@@ -76,18 +80,22 @@ class Handler extends ExceptionHandler
         if (env('APP_DEBUG'))
             return parent::render($request, $exception);
 
+        $status = $this->getStatusCodeFor($exception);
+
+        $data = [];
+
         if($exception instanceof CoreException) {
 
-            $status = $this->getStatusCodeFor($exception);
-
-            return response()->json([
+            $data = [
                 'type' => $exception->type(),
                 'title' => $exception->title(),
                 'status' => $status,
                 'detail' => $exception->detail(),
-                'instance' => $request->route(),
-            ], $status);
+                'instance' => $request->getRequestUri(),
+            ];
         }
+
+        //TODO: handle other exception types (KISS)
 
 //        $status = Response::HTTP_INTERNAL_SERVER_ERROR;
 //
@@ -125,12 +133,11 @@ class Handler extends ExceptionHandler
 //            ],
 //        ], $status);
 
-        return response()->json([
-            'error' => [
-                'message' => 'Internal Server Error',
-                'status' => Response::HTTP_INTERNAL_SERVER_ERROR,
-            ],
-        ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        return response()->json(
+            data: $data,
+            status: $status,
+            options: JSON_UNESCAPED_SLASHES
+        );
     }
 
     /**
@@ -146,6 +153,9 @@ class Handler extends ExceptionHandler
             return Response::HTTP_NOT_FOUND;
 
         if ($this->isBadRequestException($exception))
+            return Response::HTTP_BAD_REQUEST;
+
+        if($exception instanceof CoreException)
             return Response::HTTP_BAD_REQUEST;
 
         if ($exception instanceof ValidationException)

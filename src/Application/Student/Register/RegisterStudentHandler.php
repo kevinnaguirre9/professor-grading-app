@@ -3,7 +3,11 @@
 namespace ProfessorGradingApp\Application\Student\Register;
 
 use ProfessorGradingApp\Domain\Common\Exceptions\{InvalidEmailFormat, InvalidEmailDomain, InvalidUuid};
+use ProfessorGradingApp\Application\User\Register\CreateUserCommand;
+use ProfessorGradingApp\Application\User\Register\CreateUserHandler;
 use ProfessorGradingApp\Domain\Common\ValueObjects\InstitutionalEmail;
+use ProfessorGradingApp\Domain\User\Exceptions\UserWithGivenEmailAlreadyRegistered;
+use ProfessorGradingApp\Domain\User\ValueObjects\Role;
 use ProfessorGradingApp\Domain\Student\Exceptions\{
     StudentInstitutionalEmailAlreadyRegistered,
     StudentNationalIdentificationNumberAlreadyRegistered};
@@ -20,9 +24,12 @@ final class RegisterStudentHandler
 {
     /**
      * @param StudentRepository $repository
+     * @param CreateUserHandler $userCreator
      */
-    public function __construct(private readonly StudentRepository $repository)
-    {
+    public function __construct(
+        private readonly StudentRepository $repository,
+        private readonly CreateUserHandler $userCreator,
+    ) {
     }
 
     /**
@@ -33,24 +40,35 @@ final class RegisterStudentHandler
      * @throws InvalidUuid
      * @throws StudentInstitutionalEmailAlreadyRegistered
      * @throws StudentNationalIdentificationNumberAlreadyRegistered
+     * @throws UserWithGivenEmailAlreadyRegistered
      */
     public function __invoke(RegisterStudentCommand $command): Student
     {
-        $this->ensureInstitutionalEmailIsNotInUse(
-            new InstitutionalEmail($command->institutionalEmail())
+        $institutionalEmail = new InstitutionalEmail($command->institutionalEmail());
+
+        $nationalIdentificationNumber = new NationalIdentificationNumber(
+            $command->nationalIdentificationNumber()
         );
 
-        $this->ensureStudentNationalIdentificationNumberDoesNotExists(
-            new NationalIdentificationNumber($command->nationalIdentificationNumber())
+        $createUserCommand = new CreateUserCommand(
+            $command->institutionalEmail(),
+            $command->nationalIdentificationNumber(),
+            Role::STUDENT->value()
         );
+
+        $this->ensureInstitutionalEmailIsNotInUse($institutionalEmail);
+
+        $this->ensureStudentNationalIdentificationNumberDoesNotExists($nationalIdentificationNumber);
+
+        $User = $this->userCreator->__invoke($createUserCommand);
 
         $Student = Student::create(
             id: new StudentId(),
             fullName: $command->fullName(),
             personalEmail: new PersonalEmail($command->personalEmail()),
-            institutionalEmail: new InstitutionalEmail($command->institutionalEmail()),
-            nationalIdentificationNumber: new NationalIdentificationNumber($command->nationalIdentificationNumber()),
-            userId: new UserId($command->userId()),
+            institutionalEmail: $institutionalEmail,
+            nationalIdentificationNumber: $nationalIdentificationNumber,
+            userId: new UserId($User->id()),
             mobileNumber: $command->mobileNumber(),
             landlineNumber: $command->landlineNumber(),
         );
