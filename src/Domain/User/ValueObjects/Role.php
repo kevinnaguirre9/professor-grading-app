@@ -18,14 +18,6 @@ enum Role: string
     case STUDENT = 'student';
 
     /**
-     * @return string
-     */
-    public function value(): string
-    {
-        return $this->value;
-    }
-
-    /**
      * @param string $value
      * @return static
      * @throws InvalidRole
@@ -38,6 +30,39 @@ enum Role: string
             throw new InvalidRole($value);
 
         return self::from($value);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isSupervisor(): bool
+    {
+        return $this->equals(self::SUPERVISOR);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isStudent(): bool
+    {
+        return $this->equals(self::STUDENT);
+    }
+
+    /**
+     * @return string
+     */
+    public function value(): string
+    {
+        return $this->value;
+    }
+
+    /**
+     * @param Role $other
+     * @return bool
+     */
+    public function equals(self $other): bool
+    {
+        return $this->value() === $other->value();
     }
 
     /**

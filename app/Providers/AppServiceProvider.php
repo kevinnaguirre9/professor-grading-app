@@ -5,6 +5,7 @@ namespace App\Providers;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Illuminate\Support\ServiceProvider;
 use ProfessorGradingApp\Domain\AcademicPeriod\Repositories\AcademicPeriodRepository;
+use ProfessorGradingApp\Domain\ClassInspectionRequest\Repositories\ClassInspectionRequestRepository;
 use ProfessorGradingApp\Domain\CourseClass\Repositories\CourseClassRepository;
 use ProfessorGradingApp\Domain\Degree\Repositories\DegreeRepository;
 use ProfessorGradingApp\Domain\Enrollment\Repositories\EnrollmentRepository;
@@ -17,6 +18,7 @@ use ProfessorGradingApp\Domain\Tutorship\Repositories\TutorshipRepository;
 use ProfessorGradingApp\Domain\User\Contracts\PasswordHashingManager;
 use ProfessorGradingApp\Domain\User\Repositories\UserRepository;
 use ProfessorGradingApp\Infrastructure\AcademicPeriod\Repositories\MongoDbAcademicPeriodRepository;
+use ProfessorGradingApp\Infrastructure\ClassInspectionRequest\Repositories\MongoDbClassInspectionRequestRepository;
 use ProfessorGradingApp\Infrastructure\Common\Doctrine\Factories\DocumentManagerFactory;
 use ProfessorGradingApp\Infrastructure\CourseClass\Repositories\MongoDbCourseClassRepository;
 use ProfessorGradingApp\Infrastructure\Degree\Repositories\MongoDbDegreeRepository;
@@ -67,6 +69,11 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(ProfessorRepository::class, MongoDbProfessorRepository::class);
 
         $this->app->bind(SupervisorRepository::class, MongoDbSupervisorRepository::class);
+
+        $this->app->bind(
+            ClassInspectionRequestRepository::class,
+            MongoDbClassInspectionRequestRepository::class
+        );
 
         $this->app->bind(
             PasswordHashingManager::class,

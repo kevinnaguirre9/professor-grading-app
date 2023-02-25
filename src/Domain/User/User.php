@@ -21,8 +21,8 @@ final class User extends BaseEntity
      * @param UserEmail $email
      * @param UserPassword $password
      * @param Role $role
-     * @param \DateTimeImmutable $registeredAt
      * @param bool $isActive
+     * @param \DateTimeImmutable $registeredAt
      * @param \DateTimeImmutable|null $updatedAt
      */
     public function __construct(
@@ -95,6 +95,32 @@ final class User extends BaseEntity
         $this->isActive = false;
 
         $this->touch();
+    }
+
+    /**
+     * @return void
+     */
+    public function activate(): void
+    {
+        $this->isActive = true;
+
+        $this->touch();
+    }
+
+    /**
+     * @return bool
+     */
+    public function isSupervisor(): bool
+    {
+        return $this->role->isSupervisor();
+    }
+
+    /**
+     * @return bool
+     */
+    public function isStudent(): bool
+    {
+        return $this->role->isStudent();
     }
 
     /**
