@@ -4,8 +4,12 @@ declare(strict_types=1);
 
 namespace ProfessorGradingApp\Domain\Enrollment;
 
-use ProfessorGradingApp\Domain\Enrollment\ValueObjects\{AcademicPeriodId, ClassId, DegreeId, EnrollmentId, StudentId};
+use ProfessorGradingApp\Domain\Common\ValueObjects\Enrollment\EnrollmentId;
 use ProfessorGradingApp\Domain\Common\BaseEntity;
+use ProfessorGradingApp\Domain\Common\ValueObjects\AcademicPeriod\AcademicPeriodId;
+use ProfessorGradingApp\Domain\Common\ValueObjects\CourseClass\ClassId;
+use ProfessorGradingApp\Domain\Common\ValueObjects\Degree\DegreeId;
+use ProfessorGradingApp\Domain\Common\ValueObjects\Student\StudentId;
 use ProfessorGradingApp\Domain\Enrollment\Exceptions\ClassAlreadyRegisteredInEnrollment;
 
 /**

@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace ProfessorGradingApp\Domain\Tutorship;
 
-use ProfessorGradingApp\Domain\Tutorship\ValueObjects\{AcademicPeriodId, AdvisorId, SubjectId, TutorshipId};
+use ProfessorGradingApp\Domain\Tutorship\ValueObjects\{AdvisorId, TutorshipId};
 use ProfessorGradingApp\Domain\Common\BaseEntity;
 use ProfessorGradingApp\Domain\Common\Entities\Schedule;
+use ProfessorGradingApp\Domain\Common\ValueObjects\AcademicPeriod\AcademicPeriodId;
+use ProfessorGradingApp\Domain\Common\ValueObjects\Subject\SubjectId;
 
 /**
  * Class Tutorship

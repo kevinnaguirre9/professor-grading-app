@@ -52,11 +52,6 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->bind(UserRepository::class, MongoDbUserRepository::class);
 
-        $this->app->bind(
-            PasswordHashingManager::class,
-            fn($app) => new BcryptPasswordHashingManager($app['config']['hashing.bcrypt'] ?? [])
-        );
-
         $this->app->bind(EnrollmentRepository::class, MongoDbEnrollmentRepository::class);
 
         $this->app->bind(DegreeRepository::class, MongoDbDegreeRepository::class);
@@ -72,5 +67,10 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(ProfessorRepository::class, MongoDbProfessorRepository::class);
 
         $this->app->bind(SupervisorRepository::class, MongoDbSupervisorRepository::class);
+
+        $this->app->bind(
+            PasswordHashingManager::class,
+            fn($app) => new BcryptPasswordHashingManager($app['config']['hashing.bcrypt'] ?? [])
+        );
     }
 }

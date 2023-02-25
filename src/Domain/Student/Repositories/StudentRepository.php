@@ -3,9 +3,9 @@
 namespace ProfessorGradingApp\Domain\Student\Repositories;
 
 use ProfessorGradingApp\Domain\Common\ValueObjects\InstitutionalEmail;
+use ProfessorGradingApp\Domain\Common\ValueObjects\Student\StudentId;
 use ProfessorGradingApp\Domain\Student\Student;
 use ProfessorGradingApp\Domain\Student\ValueObjects\NationalIdentificationNumber;
-use ProfessorGradingApp\Domain\Student\ValueObjects\StudentId;
 
 /**
  * Interface StudentRepository

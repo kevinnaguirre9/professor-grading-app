@@ -4,9 +4,10 @@ namespace ProfessorGradingApp\Application\Supervisor\Register;
 
 use ProfessorGradingApp\Domain\Common\Exceptions\{InvalidEmailDomain, InvalidEmailFormat, InvalidUuid};
 use ProfessorGradingApp\Domain\Common\ValueObjects\InstitutionalEmail;
+use ProfessorGradingApp\Domain\Common\ValueObjects\User\UserId;
 use ProfessorGradingApp\Domain\Supervisor\Repositories\SupervisorRepository;
 use ProfessorGradingApp\Domain\Supervisor\Supervisor;
-use ProfessorGradingApp\Domain\Supervisor\ValueObjects\{SupervisorId, UserId};
+use ProfessorGradingApp\Domain\Supervisor\ValueObjects\SupervisorId;
 
 /**
  * Class RegisterSupervisorHandler

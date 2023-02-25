@@ -5,9 +5,10 @@ namespace ProfessorGradingApp\Infrastructure\Student\Repositories;
 use Doctrine\ODM\MongoDB\{LockException, MongoDBException};
 use Doctrine\ODM\MongoDB\Mapping\MappingException;
 use ProfessorGradingApp\Domain\Common\ValueObjects\InstitutionalEmail;
+use ProfessorGradingApp\Domain\Common\ValueObjects\Student\StudentId;
 use ProfessorGradingApp\Domain\Student\Repositories\StudentRepository;
 use ProfessorGradingApp\Domain\Student\Student;
-use ProfessorGradingApp\Domain\Student\ValueObjects\{NationalIdentificationNumber, StudentId};
+use ProfessorGradingApp\Domain\Student\ValueObjects\{NationalIdentificationNumber};
 use ProfessorGradingApp\Infrastructure\Common\Doctrine\Repositories\DoctrineRepository;
 
 /**

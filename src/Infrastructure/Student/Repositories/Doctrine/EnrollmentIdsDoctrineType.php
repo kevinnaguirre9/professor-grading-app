@@ -2,7 +2,7 @@
 
 namespace ProfessorGradingApp\Infrastructure\Student\Repositories\Doctrine;
 
-use ProfessorGradingApp\Domain\Student\ValueObjects\EnrollmentId;
+use ProfessorGradingApp\Domain\Common\ValueObjects\Enrollment\EnrollmentId;
 use ProfessorGradingApp\Infrastructure\Common\Doctrine\CustomTypes\UuidCollectionType;
 
 /**
@@ -17,7 +17,7 @@ final class EnrollmentIdsDoctrineType extends UuidCollectionType
      */
     public static function customTypeName(): string
     {
-        return 'student_enrollment_ids';
+        return 'enrollment_ids';
     }
 
     /**

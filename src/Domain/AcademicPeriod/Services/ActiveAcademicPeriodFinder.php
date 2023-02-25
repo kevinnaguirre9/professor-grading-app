@@ -6,6 +6,7 @@ use ProfessorGradingApp\Domain\AcademicPeriod\AcademicPeriod;
 use ProfessorGradingApp\Domain\AcademicPeriod\Criteria\AcademicPeriodCriteria;
 use ProfessorGradingApp\Domain\AcademicPeriod\Exceptions\ActiveAcademicPeriodNotFound;
 use ProfessorGradingApp\Domain\AcademicPeriod\Repositories\AcademicPeriodRepository;
+use ProfessorGradingApp\Domain\Common\Exceptions\EmptyReportFilters;
 
 /**
  * Class ActiveAcademicPeriodFinder
@@ -25,10 +26,13 @@ final class ActiveAcademicPeriodFinder
     /**
      * @return AcademicPeriod
      * @throws ActiveAcademicPeriodNotFound
+     * @throws EmptyReportFilters
      */
     public function __invoke() : AcademicPeriod
     {
-        $criteria = (new AcademicPeriodCriteria)->withIsActiveFilter(true);
+        $criteria = (new AcademicPeriodCriteria)
+            ->withIsActiveFilter(true)
+            ->build();
 
         $academicPeriods = $this->repository->search($criteria);
 

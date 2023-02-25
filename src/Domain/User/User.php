@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace ProfessorGradingApp\Domain\User;
 
 use ProfessorGradingApp\Domain\Common\BaseEntity;
+use ProfessorGradingApp\Domain\Common\ValueObjects\User\UserId;
 use ProfessorGradingApp\Domain\User\Contracts\PasswordHashingManager;
-use ProfessorGradingApp\Domain\User\ValueObjects\{Role, UserEmail, UserId, UserPassword};
+use ProfessorGradingApp\Domain\User\ValueObjects\{Role, UserEmail, UserPassword};
 
 /**
  * Class User

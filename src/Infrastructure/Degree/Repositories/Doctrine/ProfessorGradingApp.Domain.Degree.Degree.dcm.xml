@@ -8,7 +8,7 @@
     <document name="ProfessorGradingApp\Domain\Degree\Degree" collection="degrees">
         <id strategy="NONE" type="degree_id" />
         <field field-name="name" name="name" type="string" />
-        <field field-name="subjectIds" name="subject_ids" type="degree_subject_ids" />
+        <field field-name="subjectIds" name="subject_ids" type="subject_ids" />
         <field field-name="registeredAt" name="registered_at" type="date_immutable" />
     </document>
 

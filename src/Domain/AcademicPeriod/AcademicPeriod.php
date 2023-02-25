@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace ProfessorGradingApp\Domain\AcademicPeriod;
 
-use ProfessorGradingApp\Domain\AcademicPeriod\ValueObjects\AcademicPeriodId;
+use ProfessorGradingApp\Domain\Common\ValueObjects\AcademicPeriod\AcademicPeriodId;
 use ProfessorGradingApp\Domain\Common\BaseEntity;
 
 /**

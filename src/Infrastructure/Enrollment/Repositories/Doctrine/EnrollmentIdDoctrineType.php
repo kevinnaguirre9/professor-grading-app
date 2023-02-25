@@ -2,7 +2,7 @@
 
 namespace ProfessorGradingApp\Infrastructure\Enrollment\Repositories\Doctrine;
 
-use ProfessorGradingApp\Domain\Enrollment\ValueObjects\EnrollmentId;
+use ProfessorGradingApp\Domain\Common\ValueObjects\Enrollment\EnrollmentId;
 use ProfessorGradingApp\Infrastructure\Common\Doctrine\CustomTypes\UuidType;
 
 /**

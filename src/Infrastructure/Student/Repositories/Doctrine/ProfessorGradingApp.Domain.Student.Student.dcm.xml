@@ -11,10 +11,10 @@
         <field field-name="personalEmail" name="personal_email" type="student_personal_email" />
         <field field-name="institutionalEmail" name="institutional_email" type="institutional_email" />
         <field field-name="nationalIdentificationNumber" name="national_identification_number" type="student_national_identification_number" />
-        <field field-name="userId" name="user_id" type="student_user_id" />
-        <field field-name="degreeIds" name="degree_ids" type="student_degree_ids" />
-        <field field-name="enrollmentIds" name="enrollment_ids" type="student_enrollment_ids" />
-        <field field-name="gradeIds" name="grade_ids" type="student_grade_ids" />
+        <field field-name="userId" name="user_id" type="user_id" />
+        <field field-name="degreeIds" name="degree_ids" type="degree_ids" />
+        <field field-name="enrollmentIds" name="enrollment_ids" type="enrollment_ids" />
+        <field field-name="gradeIds" name="grade_ids" type="grade_ids" />
         <field field-name="mobileNumber" name="mobile_number" type="string" />
         <field field-name="landlineNumber" name="landline_number" type="string" />
         <field field-name="registeredAt" name="registered_at" type="date_immutable" />

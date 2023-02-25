@@ -4,9 +4,11 @@ namespace ProfessorGradingApp\Application\Tutorship\Register;
 
 use ProfessorGradingApp\Domain\Common\Entities\Schedule;
 use ProfessorGradingApp\Domain\Common\Exceptions\InvalidUuid;
+use ProfessorGradingApp\Domain\Common\ValueObjects\AcademicPeriod\AcademicPeriodId;
+use ProfessorGradingApp\Domain\Common\ValueObjects\Subject\SubjectId;
 use ProfessorGradingApp\Domain\Tutorship\Repositories\TutorshipRepository;
 use ProfessorGradingApp\Domain\Tutorship\Tutorship;
-use ProfessorGradingApp\Domain\Tutorship\ValueObjects\{AcademicPeriodId, AdvisorId, SubjectId, TutorshipId};
+use ProfessorGradingApp\Domain\Tutorship\ValueObjects\{AdvisorId, TutorshipId};
 
 /**
  * Class RegisterTutorshipHandler

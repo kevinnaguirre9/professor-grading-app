@@ -6,7 +6,8 @@ namespace ProfessorGradingApp\Domain\Supervisor;
 
 use ProfessorGradingApp\Domain\Common\BaseEntity;
 use ProfessorGradingApp\Domain\Common\ValueObjects\InstitutionalEmail;
-use ProfessorGradingApp\Domain\Supervisor\ValueObjects\{SupervisorId, UserId};
+use ProfessorGradingApp\Domain\Common\ValueObjects\User\UserId;
+use ProfessorGradingApp\Domain\Supervisor\ValueObjects\{SupervisorId};
 
 /**
  * Class Supervisor

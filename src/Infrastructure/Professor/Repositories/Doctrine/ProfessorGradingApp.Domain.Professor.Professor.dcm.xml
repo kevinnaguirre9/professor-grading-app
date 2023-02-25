@@ -8,8 +8,8 @@
     <document name="ProfessorGradingApp\Domain\Professor\Professor" collection="professors">
         <id strategy="NONE" type="professor_id" />
         <field field-name="fullName" name="full_name" type="string" />
-        <field field-name="classIds" name="class_ids" type="professor_class_ids" />
-        <field field-name="degreeIds" name="degree_ids" type="professor_degree_ids" />
+        <field field-name="classIds" name="class_ids" type="class_ids" />
+        <field field-name="degreeIds" name="degree_ids" type="degree_ids" />
         <field field-name="registeredAt" name="registered_at" type="date_immutable" />
     </document>
 

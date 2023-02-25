@@ -4,16 +4,14 @@ namespace ProfessorGradingApp\Domain\CourseClass;
 
 use ProfessorGradingApp\Domain\Common\BaseEntity;
 use ProfessorGradingApp\Domain\Common\Entities\Schedule;
+use ProfessorGradingApp\Domain\Common\ValueObjects\AcademicPeriod\AcademicPeriodId;
+use ProfessorGradingApp\Domain\Common\ValueObjects\CourseClass\ClassId;
+use ProfessorGradingApp\Domain\Common\ValueObjects\Degree\DegreeId;
+use ProfessorGradingApp\Domain\Common\ValueObjects\Grade\GradeId;
+use ProfessorGradingApp\Domain\Common\ValueObjects\Professor\ProfessorId;
+use ProfessorGradingApp\Domain\Common\ValueObjects\Student\StudentId;
+use ProfessorGradingApp\Domain\Common\ValueObjects\Subject\SubjectId;
 use ProfessorGradingApp\Domain\CourseClass\Exceptions\ProfessorAlreadyAssignedToClass;
-use ProfessorGradingApp\Domain\CourseClass\ValueObjects\{
-    AcademicPeriodId,
-    ClassId,
-    DegreeId,
-    GradeId,
-    ProfessorId,
-    StudentId,
-    SubjectId,
-};
 
 /**
  * Class CourseClass

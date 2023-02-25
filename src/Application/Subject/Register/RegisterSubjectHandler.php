@@ -2,10 +2,12 @@
 
 namespace ProfessorGradingApp\Application\Subject\Register;
 
+use ProfessorGradingApp\Domain\Common\ValueObjects\Degree\DegreeId;
+use ProfessorGradingApp\Domain\Common\ValueObjects\Subject\SubjectId;
 use ProfessorGradingApp\Domain\Subject\Exceptions\SubjectAlreadyRegistered;
 use ProfessorGradingApp\Domain\Subject\Repositories\SubjectRepository;
 use ProfessorGradingApp\Domain\Subject\Subject;
-use ProfessorGradingApp\Domain\Subject\ValueObjects\{DegreeId, DegreeLevel, SubjectId};
+use ProfessorGradingApp\Domain\Subject\ValueObjects\DegreeLevel;
 
 /**
  * Class RegisterSubjectHandler

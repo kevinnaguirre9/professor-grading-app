@@ -7,10 +7,10 @@
 
     <document name="ProfessorGradingApp\Domain\Enrollment\Enrollment" collection="enrollments">
         <id strategy="NONE" type="enrollment_id" />
-        <field field-name="studentId" name="student_id" type="enrollment_student_id" />
-        <field field-name="academicPeriodId" name="academic_period_id" type="enrollment_academic_period_id" />
-        <field field-name="classIds" name="class_ids" type="enrollment_class_ids" />
-        <field field-name="degreeId" name="degree_id" type="enrollment_degree_id" />
+        <field field-name="studentId" name="student_id" type="student_id" />
+        <field field-name="academicPeriodId" name="academic_period_id" type="academic_period_id" />
+        <field field-name="classIds" name="class_ids" type="class_ids" />
+        <field field-name="degreeId" name="degree_id" type="degree_id" />
         <field field-name="enrolledAt" name="enrolled_at" type="date_immutable" />
     </document>
 

@@ -14,12 +14,5 @@ use ProfessorGradingApp\Domain\Common\ValueObjects\Uuid;
  */
 final class AdvisorId extends Uuid
 {
-    /**
-     * @param string $value
-     * @throws InvalidUuid
-     */
-    public function __construct(string $value)
-    {
-        parent::__construct($value);
-    }
+
 }

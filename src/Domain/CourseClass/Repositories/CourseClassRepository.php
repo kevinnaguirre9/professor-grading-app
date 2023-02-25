@@ -2,8 +2,8 @@
 
 namespace ProfessorGradingApp\Domain\CourseClass\Repositories;
 
+use ProfessorGradingApp\Domain\Common\ValueObjects\CourseClass\ClassId;
 use ProfessorGradingApp\Domain\CourseClass\CourseClass;
-use ProfessorGradingApp\Domain\CourseClass\ValueObjects\ClassId;
 
 /**
  * Interface CourseClassRepository

@@ -5,7 +5,11 @@ declare(strict_types=1);
 namespace ProfessorGradingApp\Domain\Grade;
 
 use ProfessorGradingApp\Domain\Common\BaseEntity;
-use ProfessorGradingApp\Domain\Grade\ValueObjects\{AcademicPeriodId, ClassId, GradeId, Rating, StudentId};
+use ProfessorGradingApp\Domain\Common\ValueObjects\Grade\GradeId;
+use ProfessorGradingApp\Domain\Common\ValueObjects\Student\StudentId;
+use ProfessorGradingApp\Domain\Grade\ValueObjects\{Rating};
+use ProfessorGradingApp\Domain\Common\ValueObjects\AcademicPeriod\AcademicPeriodId;
+use ProfessorGradingApp\Domain\Common\ValueObjects\CourseClass\ClassId;
 
 /**
  * Class Grade

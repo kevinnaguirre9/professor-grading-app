@@ -7,8 +7,8 @@ use Doctrine\ODM\MongoDB\Mapping\MappingException;
 use ProfessorGradingApp\Domain\AcademicPeriod\AcademicPeriod;
 use ProfessorGradingApp\Domain\AcademicPeriod\Criteria\AcademicPeriodsCollection;
 use ProfessorGradingApp\Domain\AcademicPeriod\Repositories\AcademicPeriodRepository;
-use ProfessorGradingApp\Domain\AcademicPeriod\ValueObjects\AcademicPeriodId;
 use ProfessorGradingApp\Domain\Common\Criteria\Criteria;
+use ProfessorGradingApp\Domain\Common\ValueObjects\AcademicPeriod\AcademicPeriodId;
 use ProfessorGradingApp\Infrastructure\Common\Doctrine\Criteria\DoctrineCriteriaConverter;
 use ProfessorGradingApp\Infrastructure\Common\Doctrine\Repositories\DoctrineRepository;
 

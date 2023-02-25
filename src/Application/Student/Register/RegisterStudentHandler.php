@@ -6,6 +6,8 @@ use ProfessorGradingApp\Domain\Common\Exceptions\{InvalidEmailFormat, InvalidEma
 use ProfessorGradingApp\Application\User\Register\CreateUserCommand;
 use ProfessorGradingApp\Application\User\Register\CreateUserHandler;
 use ProfessorGradingApp\Domain\Common\ValueObjects\InstitutionalEmail;
+use ProfessorGradingApp\Domain\Common\ValueObjects\Student\StudentId;
+use ProfessorGradingApp\Domain\Common\ValueObjects\User\UserId;
 use ProfessorGradingApp\Domain\User\Exceptions\UserWithGivenEmailAlreadyRegistered;
 use ProfessorGradingApp\Domain\User\ValueObjects\Role;
 use ProfessorGradingApp\Domain\Student\Exceptions\{
@@ -13,7 +15,7 @@ use ProfessorGradingApp\Domain\Student\Exceptions\{
     StudentNationalIdentificationNumberAlreadyRegistered};
 use ProfessorGradingApp\Domain\Student\Repositories\StudentRepository;
 use ProfessorGradingApp\Domain\Student\Student;
-use ProfessorGradingApp\Domain\Student\ValueObjects\{NationalIdentificationNumber, PersonalEmail, StudentId, UserId};
+use ProfessorGradingApp\Domain\Student\ValueObjects\{NationalIdentificationNumber, PersonalEmail};
 
 /**
  * Class RegisterStudentHandler

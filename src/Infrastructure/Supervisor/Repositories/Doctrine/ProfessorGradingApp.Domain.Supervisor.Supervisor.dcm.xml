@@ -9,7 +9,7 @@
         <id strategy="NONE" type="supervisor_id" />
         <field field-name="fullName" name="full_name" type="string" />
         <field field-name="institutionalEmail" name="institutional_email" type="institutional_email" />
-        <field field-name="userId" name="user_id" type="supervisor_user_id" />
+        <field field-name="userId" name="user_id" type="user_id" />
         <field field-name="registeredAt" name="registered_at" type="date_immutable" />
     </document>
 

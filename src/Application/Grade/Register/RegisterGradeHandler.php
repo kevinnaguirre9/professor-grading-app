@@ -3,10 +3,14 @@
 namespace ProfessorGradingApp\Application\Grade\Register;
 
 use ProfessorGradingApp\Domain\Common\Exceptions\InvalidUuid;
+use ProfessorGradingApp\Domain\Common\ValueObjects\AcademicPeriod\AcademicPeriodId;
+use ProfessorGradingApp\Domain\Common\ValueObjects\CourseClass\ClassId;
+use ProfessorGradingApp\Domain\Common\ValueObjects\Grade\GradeId;
+use ProfessorGradingApp\Domain\Common\ValueObjects\Student\StudentId;
 use ProfessorGradingApp\Domain\Grade\Exceptions\InvalidRating;
 use ProfessorGradingApp\Domain\Grade\Grade;
 use ProfessorGradingApp\Domain\Grade\Repositories\GradeRepository;
-use ProfessorGradingApp\Domain\Grade\ValueObjects\{AcademicPeriodId, ClassId, GradeId, Rating, StudentId};
+use ProfessorGradingApp\Domain\Grade\ValueObjects\Rating;
 
 /**
  * Class RegisterGradeHandler

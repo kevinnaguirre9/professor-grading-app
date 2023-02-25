@@ -6,7 +6,7 @@
                     http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping.xsd">
 
     <embedded-document name="ProfessorGradingApp\Domain\Subject\ValueObjects\DegreeLevel">
-        <field field-name="degreeId" name="degree_id" type="subject_degree_id" />
+        <field field-name="degreeId" name="degree_id" type="degree_id" />
         <field field-name="level" name="level" type="int" />
     </embedded-document>
 

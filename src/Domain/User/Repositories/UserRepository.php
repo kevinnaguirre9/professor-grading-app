@@ -2,9 +2,9 @@
 
 namespace ProfessorGradingApp\Domain\User\Repositories;
 
+use ProfessorGradingApp\Domain\Common\ValueObjects\User\UserId;
 use ProfessorGradingApp\Domain\User\User;
 use ProfessorGradingApp\Domain\User\ValueObjects\UserEmail;
-use ProfessorGradingApp\Domain\User\ValueObjects\UserId;
 
 /**
  * Interface UserRepository

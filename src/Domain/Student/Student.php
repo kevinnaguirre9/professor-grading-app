@@ -5,14 +5,16 @@ declare(strict_types=1);
 namespace ProfessorGradingApp\Domain\Student;
 
 use ProfessorGradingApp\Domain\Common\BaseEntity;
+use ProfessorGradingApp\Domain\Common\ValueObjects\Degree\DegreeId;
+use ProfessorGradingApp\Domain\Common\ValueObjects\Enrollment\EnrollmentId;
+use ProfessorGradingApp\Domain\Common\ValueObjects\Grade\GradeId;
 use ProfessorGradingApp\Domain\Common\ValueObjects\InstitutionalEmail;
-use ProfessorGradingApp\Domain\Student\ValueObjects\{DegreeId,
-    StudentId,
-    EnrollmentId,
-    GradeId,
+use ProfessorGradingApp\Domain\Student\ValueObjects\{
     NationalIdentificationNumber,
     PersonalEmail,
-    UserId};
+};
+use ProfessorGradingApp\Domain\Common\ValueObjects\Student\StudentId;
+use ProfessorGradingApp\Domain\Common\ValueObjects\User\UserId;
 
 /**
  * Class Student

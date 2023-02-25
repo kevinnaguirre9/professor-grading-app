@@ -4,9 +4,9 @@ namespace ProfessorGradingApp\Infrastructure\Grade\Repositories;
 
 use Doctrine\ODM\MongoDB\{LockException, MongoDBException};
 use Doctrine\ODM\MongoDB\Mapping\MappingException;
+use ProfessorGradingApp\Domain\Common\ValueObjects\Grade\GradeId;
 use ProfessorGradingApp\Domain\Grade\Grade;
 use ProfessorGradingApp\Domain\Grade\Repositories\GradeRepository;
-use ProfessorGradingApp\Domain\Grade\ValueObjects\GradeId;
 use ProfessorGradingApp\Infrastructure\Common\Doctrine\Repositories\DoctrineRepository;
 
 /**

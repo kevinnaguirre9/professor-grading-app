@@ -2,7 +2,7 @@
 
 namespace ProfessorGradingApp\Infrastructure\Degree\Repositories\Doctrine;
 
-use ProfessorGradingApp\Domain\Degree\ValueObjects\SubjectId;
+use ProfessorGradingApp\Domain\Common\ValueObjects\Subject\SubjectId;
 use ProfessorGradingApp\Infrastructure\Common\Doctrine\CustomTypes\UuidCollectionType;
 
 /**
@@ -17,7 +17,7 @@ final class SubjectIdsDoctrineType extends UuidCollectionType
      */
     public static function customTypeName(): string
     {
-        return 'degree_subject_ids';
+        return 'subject_ids';
     }
 
     /**

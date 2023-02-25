@@ -30,7 +30,7 @@ trait InteractsWithMapper
     protected static function fetch(string $location): array
     {
         if (! Storage::exists($location))
-            throw new \RuntimeException('Custom types map file not found');
+            throw new \RuntimeException("Mapper file $location not found");
 
         $fileContents = Storage::get($location);
 

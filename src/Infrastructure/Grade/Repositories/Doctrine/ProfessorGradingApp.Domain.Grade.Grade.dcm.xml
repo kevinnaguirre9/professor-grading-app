@@ -7,9 +7,9 @@
 
     <document name="ProfessorGradingApp\Domain\Grade\Grade" collection="grades">
         <id strategy="NONE" type="grade_id" />
-        <field field-name="academicPeriodId" name="academic_period_id" type="grade_academic_period_id" />
-        <field field-name="classId" name="class_id" type="grade_class_id" />
-        <field field-name="studentId" name="student_id" type="grade_student_id" />
+        <field field-name="academicPeriodId" name="academic_period_id" type="academic_period_id" />
+        <field field-name="classId" name="class_id" type="class_id" />
+        <field field-name="studentId" name="student_id" type="student_id" />
         <field field-name="rating" name="rating" type="grade_rating" />
         <field field-name="comment" name="comment" type="string" />
         <field field-name="gradedAt" name="graded_at" type="date_immutable" />
