@@ -3,8 +3,10 @@
 namespace App\Processors;
 
 use App\Processors\Concerns\ProcessesMessage;
+use ProfessorGradingApp\Application\Student\Update\UpdateStudentCommand;
 use ProfessorGradingApp\Application\User\Register\CreateUserCommand;
 use ProfessorGradingApp\Domain\Student\Events\StudentRegistered;
+use ProfessorGradingApp\Domain\User\User;
 use ProfessorGradingApp\Domain\User\ValueObjects\Role;
 
 /**
@@ -30,12 +32,21 @@ final class StudentRegisteredProcessor
             $this->logger->debug($payload);
 
             $createUserCommand =  new CreateUserCommand(
-                data_get($payload, 'institutional_email'),
-                data_get($payload, 'national_identification_number'),
+                data_get($payload, 'student.institutional_email'),
+                data_get($payload, 'student.national_identification_number'),
+                data_get($payload, 'student.full_name'),
                 Role::STUDENT->value()
             );
 
-            $this->commandBus->handle($createUserCommand);
+            /** @var User $User */
+            $User = $this->commandBus->handle($createUserCommand);
+
+            $updateStudentCommand = new UpdateStudentCommand(
+                data_get($payload, 'student.id'),
+                $User->id()
+            );
+
+            $this->commandBus->handle($updateStudentCommand);
 
         } catch (\Exception $e) {
 

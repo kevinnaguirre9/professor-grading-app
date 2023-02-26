@@ -8,6 +8,15 @@ $router->get('/', function () use ($router) {
     return response()->json($router->app->version());
 });
 
+$router->post('/auth/sign-in', [
+    'uses' => 'Auth\AuthSignInPostController',
+    'as' => 'auth.sign-in.post'
+]);
+
+$router->get('/account', [
+    'uses' => 'Auth\AccountGetController',
+    'as' => 'account.get'
+]);
 
 $router->post('/academic-periods', [
     'uses' => 'AcademicPeriod\AcademicPeriodPostController',

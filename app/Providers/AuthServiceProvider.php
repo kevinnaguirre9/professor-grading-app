@@ -2,9 +2,16 @@
 
 namespace App\Providers;
 
-use App\Models\User;
+use Illuminate\Auth\GenericUser;
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
+use ProfessorGradingApp\Domain\Common\Exceptions\InvalidUuid;
+use ProfessorGradingApp\Domain\Common\ValueObjects\User\UserId;
+use ProfessorGradingApp\Domain\User\Contracts\JwtTokenManager;
+use ProfessorGradingApp\Domain\User\Exceptions\UserNotRegistered;
+use ProfessorGradingApp\Domain\User\Services\UserFinder;
+use Symfony\Component\VarDumper\VarDumper;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -22,6 +29,8 @@ class AuthServiceProvider extends ServiceProvider
      * Boot the authentication services for the application.
      *
      * @return void
+     * @throws InvalidUuid
+     * @throws BindingResolutionException
      */
     public function boot()
     {
@@ -31,9 +40,32 @@ class AuthServiceProvider extends ServiceProvider
         // the User instance via an API token or any other method necessary.
 
         $this->app['auth']->viaRequest('api', function ($request) {
-            if ($request->input('api_token')) {
-                return User::where('api_token', $request->input('api_token'))->first();
-            }
+
+            //TODO: If we want to be SOLID to the moon and back, this should go in something like an Action
+            $bearerToken = $request->bearerToken();
+//
+            /** @var UserFinder $userFinder */
+            $userFinder = $this->app->make(UserFinder::class);
+
+            /** @var JwtTokenManager $tokenManager */
+            $tokenManager = $this->app->make(JwtTokenManager::class);
+
+            $token = $tokenManager->decode($bearerToken);
+
+            $tokenUserId = data_get($token, 'user.id') ?? data_get($token, 'sub');
+
+            $User = $userFinder->__invoke(new UserId($tokenUserId));
+
+            if(! $User)
+                return null;
+
+            return new GenericUser(
+                [
+                    'id' => (string) $User->id(),
+                    'name' => $User->fullName(),
+                    'email' => (string) $User->email(),
+                ]
+            );
         });
     }
 }

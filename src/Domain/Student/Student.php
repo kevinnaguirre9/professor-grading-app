@@ -48,7 +48,7 @@ final class Student extends BaseEntity
         private array $degreeIds,
         private array $enrollmentIds,
         private array $gradeIds,
-        private readonly ?UserId $userId,
+        private ?UserId $userId,
         private readonly \DateTimeImmutable $registeredAt,
         private ?string $mobileNumber,
         private ?string $landlineNumber,
@@ -130,6 +130,15 @@ final class Student extends BaseEntity
     public function gradeProfessorClass(GradeId $gradeId): void
     {
         $this->gradeIds[] = $gradeId;
+    }
+
+    /**
+     * @param UserId $userId
+     * @return void
+     */
+    public function updateUserId(UserId $userId): void
+    {
+        $this->userId = $userId;
     }
 
     /**

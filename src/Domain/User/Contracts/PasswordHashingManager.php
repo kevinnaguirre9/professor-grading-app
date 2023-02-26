@@ -23,9 +23,9 @@ interface PasswordHashingManager
     /**
      * Checks if the given password matches the given hash.
      *
-     * @param string $password
+     * @param string $plainPassword
      * @param string $hash
      * @return bool
      */
-    public function verify(string $password, string $hash): bool;
+    public function verify(string $plainPassword, string $hash): bool;
 }

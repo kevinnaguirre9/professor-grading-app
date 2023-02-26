@@ -47,6 +47,7 @@ final class CreateUserHandler
             new UserId(),
             new UserEmail($command->email()),
             new UserPassword($hashedPassword),
+            $command->fullName(),
             $role
         );
 

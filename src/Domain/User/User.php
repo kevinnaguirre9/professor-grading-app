@@ -20,6 +20,7 @@ final class User extends BaseEntity
      * @param UserId $id
      * @param UserEmail $email
      * @param UserPassword $password
+     * @param string $fullName
      * @param Role $role
      * @param bool $isActive
      * @param \DateTimeImmutable $registeredAt
@@ -29,6 +30,7 @@ final class User extends BaseEntity
         private readonly UserId $id,
         private UserEmail $email,
         private UserPassword $password,
+        private string $fullName,
         private readonly Role $role,
         private bool $isActive,
         private readonly \DateTimeImmutable $registeredAt,
@@ -40,15 +42,17 @@ final class User extends BaseEntity
      * @param UserId $id
      * @param UserEmail $email
      * @param UserPassword $password
+     * @param string $fullName
      * @param Role $role
      * @param bool $isActive
      * @param \DateTimeImmutable $registeredAt
-     * @return self
+     * @return static
      */
     public static function create(
         UserId $id,
         UserEmail $email,
         UserPassword $password,
+        string $fullName,
         Role $role,
         bool $isActive = true,
         \DateTimeImmutable $registeredAt = new \DateTimeImmutable(),
@@ -57,6 +61,7 @@ final class User extends BaseEntity
             $id,
             $email,
             $password,
+            $fullName,
             $role,
             $isActive,
             $registeredAt,
@@ -153,6 +158,14 @@ final class User extends BaseEntity
     public function password(): UserPassword
     {
         return $this->password;
+    }
+
+    /**
+     * @return string
+     */
+    public function fullName(): string
+    {
+        return $this->fullName;
     }
 
     /**
