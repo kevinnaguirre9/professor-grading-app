@@ -37,8 +37,8 @@ final class BcryptPasswordHashingManager implements PasswordHashingManager
     /**
      * @inheritDoc
      */
-    public function verify(string $password, string $hash): bool
+    public function verify(string $plainPassword, string $hash): bool
     {
-        return $this->hasher->check($password, $hash);
+        return $this->hasher->check($plainPassword, $hash);
     }
 }

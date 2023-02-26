@@ -67,6 +67,8 @@ $app->configure('schemas');
 
 $app->configure('queue');
 
+$app->configure('jwt');
+
 /*
 |--------------------------------------------------------------------------
 | Register Middleware
@@ -82,9 +84,9 @@ $app->configure('queue');
 //     App\Http\Middleware\ExampleMiddleware::class
 // ]);
 
-// $app->routeMiddleware([
-//     'auth' => App\Http\Middleware\Authenticate::class,
-// ]);
+$app->routeMiddleware([
+    'auth' => App\Http\Middleware\Authenticate::class,
+]);
 
 /*
 |--------------------------------------------------------------------------
@@ -99,7 +101,7 @@ $app->configure('queue');
 
 $app->register(App\Providers\AppServiceProvider::class);
 
-// $app->register(App\Providers\AuthServiceProvider::class);
+$app->register(App\Providers\AuthServiceProvider::class);
 
 $app->register(App\Providers\EventServiceProvider::class);
 

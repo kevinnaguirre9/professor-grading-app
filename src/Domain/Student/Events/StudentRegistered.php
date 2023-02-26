@@ -69,14 +69,16 @@ final class StudentRegistered extends DomainEvent
     public function toArray(): array
     {
         return [
-            'id' => $this->id,
-            'full_name' => $this->fullName,
-            'personal_email' => $this->personalEmail,
-            'institutional_email' => $this->institutionalEmail,
-            'national_identification_number' => $this->nationalIdentificationNumber,
-            'mobile_number' => $this->mobileNumber,
-            'landline_number' => $this->landlineNumber,
-            'registered_at' => $this->registeredAt,
+            'student' => [
+                'id' => $this->id,
+                'full_name' => $this->fullName,
+                'personal_email' => $this->personalEmail,
+                'institutional_email' => $this->institutionalEmail,
+                'national_identification_number' => $this->nationalIdentificationNumber,
+                'mobile_number' => $this->mobileNumber,
+                'landline_number' => $this->landlineNumber,
+                'registered_at' => $this->registeredAt,
+            ]
         ];
     }
 }
