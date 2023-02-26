@@ -12,7 +12,7 @@ RUN pecl install mongodb \
 
 # Nginx and PHP default configuration files.
 COPY ./etc/nginx/nginx.conf /etc/nginx/nginx.conf
-COPY ./etc/php/fpm-pool.conf /etc/php81/php-fpm.d/www.conf
+COPY ./etc/php/fpm-pool.conf /usr/local/etc/php-fpm.d/www.conf
 COPY ./etc/supervisord/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 RUN mkdir -p /run/nginx \
