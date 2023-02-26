@@ -42,7 +42,7 @@ final class MapDoctrineCustomTypes extends Command
     /**
      * @return void
      */
-    public function handle() : void
+    public function handle(): void
     {
         $path = 'src';
 

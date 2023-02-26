@@ -2,8 +2,8 @@
 
 namespace ProfessorGradingApp\Domain\Grade\Repositories;
 
+use ProfessorGradingApp\Domain\Common\ValueObjects\Grade\GradeId;
 use ProfessorGradingApp\Domain\Grade\Grade;
-use ProfessorGradingApp\Domain\Grade\ValueObjects\GradeId;
 
 /**
  * Interface GradeRepository
@@ -13,10 +13,10 @@ use ProfessorGradingApp\Domain\Grade\ValueObjects\GradeId;
 interface GradeRepository
 {
     /**
-     * @param Grade $grade
+     * @param Grade $Grade
      * @return void
      */
-    public function save(Grade $grade): void;
+    public function save(Grade $Grade): void;
 
     /**
      * @param GradeId $id

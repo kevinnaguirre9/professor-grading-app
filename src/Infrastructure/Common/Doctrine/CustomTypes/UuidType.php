@@ -16,13 +16,6 @@ abstract class UuidType extends Type implements DoctrineCustomType
     use ClosureToPHP;
 
     /**
-     * The custom type name to be used in the mapping.
-     *
-     * @return string
-     */
-    abstract public function customTypeClassName() : string;
-
-    /**
      * @param $value
      * @return mixed
      */
@@ -42,7 +35,8 @@ abstract class UuidType extends Type implements DoctrineCustomType
      */
     public function convertToDatabaseValue($value): mixed
     {
-        if(null === $value) return $value;
+        if(null === $value)
+            return $value;
 
         return $value instanceof Uuid ? $value->value() : $value;
     }

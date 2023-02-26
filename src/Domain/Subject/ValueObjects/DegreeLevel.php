@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace ProfessorGradingApp\Domain\Subject\ValueObjects;
 
+use ProfessorGradingApp\Domain\Common\ValueObjects\Degree\DegreeId;
+
 /**
  * Class DegreeLevel
  *

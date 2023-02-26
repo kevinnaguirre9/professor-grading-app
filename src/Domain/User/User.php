@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace ProfessorGradingApp\Domain\User;
 
 use ProfessorGradingApp\Domain\Common\BaseEntity;
+use ProfessorGradingApp\Domain\Common\ValueObjects\User\UserId;
 use ProfessorGradingApp\Domain\User\Contracts\PasswordHashingManager;
-use ProfessorGradingApp\Domain\User\ValueObjects\{Role, UserEmail, UserId, UserPassword};
+use ProfessorGradingApp\Domain\User\ValueObjects\{Role, UserEmail, UserPassword};
 
 /**
  * Class User
@@ -20,15 +21,15 @@ final class User extends BaseEntity
      * @param UserEmail $email
      * @param UserPassword $password
      * @param Role $role
-     * @param \DateTimeImmutable $registeredAt
      * @param bool $isActive
+     * @param \DateTimeImmutable $registeredAt
      * @param \DateTimeImmutable|null $updatedAt
      */
     public function __construct(
         private readonly UserId $id,
         private UserEmail $email,
         private UserPassword $password,
-        private Role $role,
+        private readonly Role $role,
         private bool $isActive,
         private readonly \DateTimeImmutable $registeredAt,
         private ?\DateTimeImmutable $updatedAt = null,
@@ -84,6 +85,42 @@ final class User extends BaseEntity
     private function touch(): void
     {
         $this->updatedAt = new \DateTimeImmutable();
+    }
+
+    /**
+     * @return void
+     */
+    public function deactivate(): void
+    {
+        $this->isActive = false;
+
+        $this->touch();
+    }
+
+    /**
+     * @return void
+     */
+    public function activate(): void
+    {
+        $this->isActive = true;
+
+        $this->touch();
+    }
+
+    /**
+     * @return bool
+     */
+    public function isSupervisor(): bool
+    {
+        return $this->role->isSupervisor();
+    }
+
+    /**
+     * @return bool
+     */
+    public function isStudent(): bool
+    {
+        return $this->role->isStudent();
     }
 
     /**

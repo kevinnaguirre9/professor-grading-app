@@ -2,8 +2,8 @@
 
 namespace ProfessorGradingApp\Domain\Enrollment\Repositories;
 
+use ProfessorGradingApp\Domain\Common\ValueObjects\Enrollment\EnrollmentId;
 use ProfessorGradingApp\Domain\Enrollment\Enrollment;
-use ProfessorGradingApp\Domain\Enrollment\ValueObjects\EnrollmentId;
 
 /**
  * Interface EnrollmentRepository

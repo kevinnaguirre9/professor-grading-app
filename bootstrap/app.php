@@ -63,6 +63,10 @@ $app->configure('app');
 
 $app->configure('database');
 
+$app->configure('schemas');
+
+$app->configure('queue');
+
 /*
 |--------------------------------------------------------------------------
 | Register Middleware
@@ -94,9 +98,18 @@ $app->configure('database');
 */
 
 $app->register(App\Providers\AppServiceProvider::class);
+
 // $app->register(App\Providers\AuthServiceProvider::class);
-// $app->register(App\Providers\EventServiceProvider::class);
+
+$app->register(App\Providers\EventServiceProvider::class);
+
 $app->register(App\Providers\CommandBusServiceProvider::class);
+
+$app->register(Jenssegers\Mongodb\MongodbServiceProvider::class);
+
+$app->make('queue');
+
+$app->register(Jenssegers\Mongodb\MongodbQueueServiceProvider::class);
 
 /*
 |--------------------------------------------------------------------------
@@ -110,6 +123,7 @@ $app->register(App\Providers\CommandBusServiceProvider::class);
 */
 
 $app->router->group([
+    'namespace' => 'App\Http\Controllers',
     'prefix' => 'api/v1',
 ], function ($router) {
     require __DIR__.'/../routes/API/v1.php';

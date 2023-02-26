@@ -4,8 +4,8 @@ namespace ProfessorGradingApp\Domain\AcademicPeriod\Repositories;
 
 use ProfessorGradingApp\Domain\AcademicPeriod\AcademicPeriod;
 use ProfessorGradingApp\Domain\AcademicPeriod\Criteria\AcademicPeriodsCollection;
-use ProfessorGradingApp\Domain\AcademicPeriod\ValueObjects\AcademicPeriodId;
 use ProfessorGradingApp\Domain\Common\Criteria\Criteria;
+use ProfessorGradingApp\Domain\Common\ValueObjects\AcademicPeriod\AcademicPeriodId;
 
 /**
  * Interface AcademicPeriodRepository

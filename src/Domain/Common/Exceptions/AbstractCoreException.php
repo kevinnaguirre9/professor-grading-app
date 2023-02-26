@@ -29,6 +29,6 @@ abstract class AbstractCoreException extends \Exception implements CoreException
      */
     public function type(): string
     {
-        return self::ERROR_TYPE;
+        return static::ERROR_TYPE;
     }
 }

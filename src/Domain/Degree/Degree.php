@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace ProfessorGradingApp\Domain\Degree;
 
 use ProfessorGradingApp\Domain\Common\BaseEntity;
-use ProfessorGradingApp\Domain\Degree\ValueObjects\{DegreeId, SubjectId};
+use ProfessorGradingApp\Domain\Common\ValueObjects\Degree\DegreeId;
+use ProfessorGradingApp\Domain\Common\ValueObjects\Subject\SubjectId;
 
 /**
  * Class Degree

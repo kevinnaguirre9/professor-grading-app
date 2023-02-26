@@ -2,35 +2,27 @@
 
 namespace ProfessorGradingApp\Application\Grade\Register;
 
+use ProfessorGradingApp\Domain\Common\Contracts\Bus\Command\Command;
+
 /**
  * Class RegisterGradeCommand
  *
  * @package ProfessorGradingApp\Application\Grade\Register
  */
-final class RegisterGradeCommand
+final class RegisterGradeCommand implements Command
 {
     /**
-     * @param string $academicPeriodId
      * @param string $classId
      * @param string $studentId
      * @param string $rating
      * @param string|null $comment
      */
     public function __construct(
-        private readonly string $academicPeriodId,
         private readonly string $classId,
         private readonly string $studentId,
         private readonly string $rating,
         private readonly ?string $comment = null
     ) {
-    }
-
-    /**
-     * @return string
-     */
-    public function academicPeriodId(): string
-    {
-        return $this->academicPeriodId;
     }
 
     /**

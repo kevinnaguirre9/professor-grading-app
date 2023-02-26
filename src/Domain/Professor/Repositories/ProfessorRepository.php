@@ -2,8 +2,8 @@
 
 namespace ProfessorGradingApp\Domain\Professor\Repositories;
 
+use ProfessorGradingApp\Domain\Common\ValueObjects\Professor\ProfessorId;
 use ProfessorGradingApp\Domain\Professor\Professor;
-use ProfessorGradingApp\Domain\Professor\ValueObjects\ProfessorId;
 
 /**
  * Interface ProfessorRepository

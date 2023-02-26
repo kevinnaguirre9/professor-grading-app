@@ -2,6 +2,7 @@
 
 namespace ProfessorGradingApp\Domain\Tutorship\Repositories;
 
+use ProfessorGradingApp\Domain\Common\Criteria\Criteria;
 use ProfessorGradingApp\Domain\Tutorship\Tutorship;
 use ProfessorGradingApp\Domain\Tutorship\ValueObjects\TutorshipId;
 
@@ -25,7 +26,8 @@ interface TutorshipRepository
     public function find(TutorshipId $id): ?Tutorship;
 
     /**
+     * @param Criteria $criteria
      * @return Tutorship[]
      */
-    public function search(): array;
+    public function search(Criteria $criteria): array;
 }

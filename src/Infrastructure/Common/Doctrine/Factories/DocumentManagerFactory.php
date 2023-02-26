@@ -64,6 +64,9 @@ final class DocumentManagerFactory
 
         $config->setDefaultDB(config('database.connections.mongodb.database'));
 
+        if (config('app.env') === 'local')
+            $config->setAutoGenerateHydratorClasses(Configuration::AUTOGENERATE_ALWAYS);
+
         return $config;
     }
 

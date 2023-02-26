@@ -2,10 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\ResourceManager;
 use Laravel\Lumen\Routing\Controller as BaseController;
-use ProfessorGradingApp\Domain\Common\Contracts\Bus\Command\CommandBus;
+use League\Tactician\CommandBus;
 use ProfessorGradingApp\Domain\Common\Contracts\Bus\Command\Command;
+use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * Class Controller
+ *
+ * @package App\Http\Controllers
+ */
 class Controller extends BaseController
 {
     /**
@@ -20,10 +27,25 @@ class Controller extends BaseController
      * Dispatches a command to the command bus
      *
      * @param Command $command
-     * @return void
+     * @return mixed
      */
-    public function handleCommand(Command $command): void
+    protected function handleCommand(Command $command): mixed
     {
-        $this->commandBus->dispatch($command);
+        return $this->commandBus->handle($command);
+    }
+
+    /**
+     * Create a Response using the Resources Factory
+     *
+     * @param $resource
+     * @param integer $code
+     * @return Response
+     */
+    protected function createResponse($resource, int $code = Response::HTTP_OK): Response
+    {
+        return ResourceManager::createResponse(
+            $resource,
+            $code
+        );
     }
 }

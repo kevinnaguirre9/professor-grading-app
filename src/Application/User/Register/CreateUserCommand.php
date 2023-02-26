@@ -2,12 +2,14 @@
 
 namespace ProfessorGradingApp\Application\User\Register;
 
+use ProfessorGradingApp\Domain\Common\Contracts\Bus\Command\Command;
+
 /**
  * Class CreateUserCommand
  *
  * @package ProfessorGradingApp\Application\User\Register
  */
-final class CreateUserCommand
+final class CreateUserCommand implements Command
 {
     /**
      * @param string $email

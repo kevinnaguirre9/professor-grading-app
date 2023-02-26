@@ -23,7 +23,7 @@ final class SubjectAlreadyRegistered extends AbstractCoreException
      */
     public function __construct(string $subjectCode)
     {
-        $this->errorDetail = "Subject with code $subjectCode already registered";
+        $this->errorDetail = "Subject with code <$subjectCode> already registered.";
 
         parent::__construct();
     }
@@ -33,7 +33,7 @@ final class SubjectAlreadyRegistered extends AbstractCoreException
      */
     public function title(): string
     {
-        return 'Cannot register subject';
+        return 'Cannot register subject.';
     }
 
     /**

@@ -3,9 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use ProfessorGradingApp\Domain\Common\Contracts\Bus\Command\CommandBus;
 use ProfessorGradingApp\Infrastructure\Common\Bus\Command\CommandBusFactory;
-use ProfessorGradingApp\Infrastructure\Common\Bus\Command\SyncCommandBus;
 
 /**
  * Class CommandBusServiceProvider
@@ -26,7 +24,5 @@ class CommandBusServiceProvider  extends ServiceProvider
                 return (new CommandBusFactory)($app);
             }
         );
-
-        $this->app->bind(CommandBus::class, SyncCommandBus::class);
     }
 }

@@ -4,16 +4,14 @@ namespace ProfessorGradingApp\Domain\CourseClass;
 
 use ProfessorGradingApp\Domain\Common\BaseEntity;
 use ProfessorGradingApp\Domain\Common\Entities\Schedule;
+use ProfessorGradingApp\Domain\Common\ValueObjects\AcademicPeriod\AcademicPeriodId;
+use ProfessorGradingApp\Domain\Common\ValueObjects\CourseClass\ClassId;
+use ProfessorGradingApp\Domain\Common\ValueObjects\Degree\DegreeId;
+use ProfessorGradingApp\Domain\Common\ValueObjects\Grade\GradeId;
+use ProfessorGradingApp\Domain\Common\ValueObjects\Professor\ProfessorId;
+use ProfessorGradingApp\Domain\Common\ValueObjects\Student\StudentId;
+use ProfessorGradingApp\Domain\Common\ValueObjects\Subject\SubjectId;
 use ProfessorGradingApp\Domain\CourseClass\Exceptions\ProfessorAlreadyAssignedToClass;
-use ProfessorGradingApp\Domain\CourseClass\ValueObjects\{
-    AcademicPeriodId,
-    ClassId,
-    DegreeId,
-    GradeId,
-    ProfessorId,
-    StudentId,
-    SubjectId,
-};
 
 /**
  * Class CourseClass
@@ -23,7 +21,7 @@ use ProfessorGradingApp\Domain\CourseClass\ValueObjects\{
 final class CourseClass extends BaseEntity
 {
     /**
-     * @param ClassId $classId
+     * @param ClassId $id
      * @param string $groupSection
      * @param Schedule $Schedule
      * @param AcademicPeriodId $academicPeriodId
@@ -35,7 +33,7 @@ final class CourseClass extends BaseEntity
      * @param \DateTimeImmutable $registeredAt
      */
     public function __construct(
-        private readonly ClassId $classId,
+        private readonly ClassId $id,
         private readonly string $groupSection,
         private Schedule $Schedule,
         private readonly AcademicPeriodId $academicPeriodId,
@@ -49,7 +47,7 @@ final class CourseClass extends BaseEntity
     }
 
     /**
-     * @param ClassId $classId
+     * @param ClassId $id
      * @param string $groupSection
      * @param Schedule $Schedule
      * @param AcademicPeriodId $academicPeriodId
@@ -62,7 +60,7 @@ final class CourseClass extends BaseEntity
      * @return CourseClass
      */
     public static function create(
-        ClassId $classId,
+        ClassId $id,
         string $groupSection,
         Schedule $Schedule,
         AcademicPeriodId $academicPeriodId,
@@ -74,7 +72,7 @@ final class CourseClass extends BaseEntity
         \DateTimeImmutable $registeredAt = new \DateTimeImmutable(),
     ): self {
         return new self(
-            $classId,
+            $id,
             $groupSection,
             $Schedule,
             $academicPeriodId,
@@ -141,7 +139,7 @@ final class CourseClass extends BaseEntity
      */
     public function id(): ClassId
     {
-        return $this->classId;
+        return $this->id;
     }
 
     /**

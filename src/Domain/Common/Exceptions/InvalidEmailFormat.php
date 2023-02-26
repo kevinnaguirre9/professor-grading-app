@@ -18,7 +18,7 @@ final class InvalidEmailFormat extends AbstractCoreException
      */
     public function __construct(string $email)
     {
-        $this->errorDetail = "<$email> must follow the format example@email.com";
+        $this->errorDetail = "<$email> must follow the format example@email.com.";
 
         parent::__construct();
     }
@@ -26,7 +26,7 @@ final class InvalidEmailFormat extends AbstractCoreException
 
     public function title(): string
     {
-        return 'Invalid email format';
+        return 'Invalid email format.';
     }
 
     public function detail(): string

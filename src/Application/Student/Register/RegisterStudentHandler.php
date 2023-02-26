@@ -3,13 +3,20 @@
 namespace ProfessorGradingApp\Application\Student\Register;
 
 use ProfessorGradingApp\Domain\Common\Exceptions\{InvalidEmailFormat, InvalidEmailDomain, InvalidUuid};
+use ProfessorGradingApp\Application\User\Register\CreateUserCommand;
+use ProfessorGradingApp\Application\User\Register\CreateUserHandler;
+use ProfessorGradingApp\Domain\Common\Events\EventBus;
 use ProfessorGradingApp\Domain\Common\ValueObjects\InstitutionalEmail;
+use ProfessorGradingApp\Domain\Common\ValueObjects\Student\StudentId;
+use ProfessorGradingApp\Domain\Common\ValueObjects\User\UserId;
+use ProfessorGradingApp\Domain\User\Exceptions\UserWithGivenEmailAlreadyRegistered;
+use ProfessorGradingApp\Domain\User\ValueObjects\Role;
 use ProfessorGradingApp\Domain\Student\Exceptions\{
     StudentInstitutionalEmailAlreadyRegistered,
     StudentNationalIdentificationNumberAlreadyRegistered};
 use ProfessorGradingApp\Domain\Student\Repositories\StudentRepository;
 use ProfessorGradingApp\Domain\Student\Student;
-use ProfessorGradingApp\Domain\Student\ValueObjects\{NationalIdentificationNumber, PersonalEmail, StudentId, UserId};
+use ProfessorGradingApp\Domain\Student\ValueObjects\{NationalIdentificationNumber, PersonalEmail};
 
 /**
  * Class RegisterStudentHandler
@@ -20,42 +27,50 @@ final class RegisterStudentHandler
 {
     /**
      * @param StudentRepository $repository
+     * @param EventBus $eventBus
      */
-    public function __construct(private readonly StudentRepository $repository)
-    {
+    public function __construct(
+        private readonly StudentRepository $repository,
+        private readonly EventBus $eventBus,
+    ) {
     }
 
     /**
      * @param RegisterStudentCommand $command
-     * @return void
+     * @return Student
      * @throws InvalidEmailDomain
      * @throws InvalidEmailFormat
      * @throws InvalidUuid
      * @throws StudentInstitutionalEmailAlreadyRegistered
      * @throws StudentNationalIdentificationNumberAlreadyRegistered
      */
-    public function __invoke(RegisterStudentCommand $command): void
+    public function __invoke(RegisterStudentCommand $command): Student
     {
-        $this->ensureInstitutionalEmailIsNotInUse(
-            new InstitutionalEmail($command->institutionalEmail())
+        $institutionalEmail = new InstitutionalEmail($command->institutionalEmail());
+
+        $nationalIdentificationNumber = new NationalIdentificationNumber(
+            $command->nationalIdentificationNumber()
         );
 
-        $this->ensureStudentNationalIdentificationNumberDoesNotExists(
-            new NationalIdentificationNumber($command->nationalIdentificationNumber())
-        );
+        $this->ensureInstitutionalEmailIsNotInUse($institutionalEmail);
+
+        $this->ensureStudentNationalIdentificationNumberDoesNotExists($nationalIdentificationNumber);
 
         $Student = Student::create(
             id: new StudentId(),
             fullName: $command->fullName(),
             personalEmail: new PersonalEmail($command->personalEmail()),
-            institutionalEmail: new InstitutionalEmail($command->institutionalEmail()),
-            nationalIdentificationNumber: new NationalIdentificationNumber($command->nationalIdentificationNumber()),
-            userId: new UserId($command->userId()),
+            institutionalEmail: $institutionalEmail,
+            nationalIdentificationNumber: $nationalIdentificationNumber,
             mobileNumber: $command->mobileNumber(),
             landlineNumber: $command->landlineNumber(),
         );
 
         $this->repository->save($Student);
+
+        $this->eventBus->dispatch(...$Student->pullEvents());
+
+        return $Student;
     }
 
     /**

@@ -11,7 +11,7 @@ use ProfessorGradingApp\Domain\Common\Exceptions\InvalidWeekdayValue;
  *
  * @package ProfessorGradingApp\Domain\Common\ValueObjects
  */
-enum Weekday : int
+enum Weekday: int
 {
     case MONDAY = 1;
 
@@ -34,16 +34,12 @@ enum Weekday : int
      */
     public static function fromValue(int $value): self
     {
-        return match ($value) {
-            1 => self::MONDAY,
-            2 => self::TUESDAY,
-            3 => self::WEDNESDAY,
-            4 => self::THURSDAY,
-            5 => self::FRIDAY,
-            6 => self::SATURDAY,
-            7 => self::SUNDAY,
-            default => throw new InvalidWeekdayValue($value)
-        };
+        $cases = array_column(self::cases(), 'value');
+
+        if (!in_array($value, $cases, true))
+            throw new InvalidWeekdayValue($value);
+
+        return self::from($value);
     }
 
     /**

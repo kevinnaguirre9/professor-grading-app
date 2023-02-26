@@ -2,9 +2,11 @@
 
 namespace ProfessorGradingApp\Application\Professor\Register;
 
+use ProfessorGradingApp\Domain\Common\ValueObjects\CourseClass\ClassId;
+use ProfessorGradingApp\Domain\Common\ValueObjects\Degree\DegreeId;
+use ProfessorGradingApp\Domain\Common\ValueObjects\Professor\ProfessorId;
 use ProfessorGradingApp\Domain\Professor\Professor;
 use ProfessorGradingApp\Domain\Professor\Repositories\ProfessorRepository;
-use ProfessorGradingApp\Domain\Professor\ValueObjects\{ClassId, DegreeId, ProfessorId};
 
 /**
  * Class RegisterProfessorHandler

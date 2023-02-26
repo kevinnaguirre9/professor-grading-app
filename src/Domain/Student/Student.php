@@ -5,14 +5,18 @@ declare(strict_types=1);
 namespace ProfessorGradingApp\Domain\Student;
 
 use ProfessorGradingApp\Domain\Common\BaseEntity;
+use ProfessorGradingApp\Domain\Common\Exceptions\InvalidUuid;
+use ProfessorGradingApp\Domain\Common\ValueObjects\Degree\DegreeId;
+use ProfessorGradingApp\Domain\Common\ValueObjects\Enrollment\EnrollmentId;
+use ProfessorGradingApp\Domain\Common\ValueObjects\Grade\GradeId;
 use ProfessorGradingApp\Domain\Common\ValueObjects\InstitutionalEmail;
-use ProfessorGradingApp\Domain\Student\ValueObjects\{DegreeId,
-    StudentId,
-    EnrollmentId,
-    GradeId,
+use ProfessorGradingApp\Domain\Student\ValueObjects\{
     NationalIdentificationNumber,
     PersonalEmail,
-    UserId};
+};
+use ProfessorGradingApp\Domain\Common\ValueObjects\Student\StudentId;
+use ProfessorGradingApp\Domain\Common\ValueObjects\User\UserId;
+use ProfessorGradingApp\Domain\Student\Events\StudentRegistered;
 
 /**
  * Class Student
@@ -27,11 +31,11 @@ final class Student extends BaseEntity
      * @param PersonalEmail $personalEmail
      * @param InstitutionalEmail $institutionalEmail
      * @param NationalIdentificationNumber $nationalIdentificationNumber
-     * @param UserId $userId
-     * @param DegreeId[] $degreeIds
-     * @param EnrollmentId[] $enrollmentIds
-     * @param GradeId[] $gradeIds
+     * @param array $degreeIds
+     * @param array $enrollmentIds
+     * @param array $gradeIds
      * @param \DateTimeImmutable $registeredAt
+     * @param UserId|null $userId
      * @param string|null $mobileNumber
      * @param string|null $landlineNumber
      */
@@ -41,10 +45,10 @@ final class Student extends BaseEntity
         private PersonalEmail $personalEmail,
         private readonly InstitutionalEmail $institutionalEmail,
         private NationalIdentificationNumber $nationalIdentificationNumber,
-        private readonly UserId $userId,
         private array $degreeIds,
         private array $enrollmentIds,
         private array $gradeIds,
+        private readonly ?UserId $userId,
         private readonly \DateTimeImmutable $registeredAt,
         private ?string $mobileNumber,
         private ?string $landlineNumber,
@@ -57,14 +61,15 @@ final class Student extends BaseEntity
      * @param PersonalEmail $personalEmail
      * @param InstitutionalEmail $institutionalEmail
      * @param NationalIdentificationNumber $nationalIdentificationNumber
-     * @param UserId $userId
-     * @param DegreeId[] $degreeIds
-     * @param EnrollmentId[] $enrollmentIds
-     * @param GradeId[] $gradeIds
-     * @param \DateTimeImmutable $registeredAt
+     * @param array $degreeIds
+     * @param array $enrollmentIds
+     * @param array $gradeIds
+     * @param UserId|null $userId
      * @param string|null $mobileNumber
      * @param string|null $landlineNumber
+     * @param \DateTimeImmutable $registeredAt
      * @return self
+     * @throws InvalidUuid
      */
     public static function create(
         StudentId $id,
@@ -72,28 +77,32 @@ final class Student extends BaseEntity
         PersonalEmail $personalEmail,
         InstitutionalEmail $institutionalEmail,
         NationalIdentificationNumber $nationalIdentificationNumber,
-        UserId $userId,
         array $degreeIds = [],
         array $enrollmentIds = [],
         array $gradeIds = [],
-        \DateTimeImmutable $registeredAt = new \DateTimeImmutable(),
+        UserId $userId = null,
         ?string $mobileNumber = null,
         ?string $landlineNumber = null,
+        \DateTimeImmutable $registeredAt = new \DateTimeImmutable(),
     ): self {
-        return new self(
+        $Student = new self(
             $id,
             $fullName,
             $personalEmail,
             $institutionalEmail,
             $nationalIdentificationNumber,
-            $userId,
             $degreeIds,
             $enrollmentIds,
             $gradeIds,
+            $userId,
             $registeredAt,
             $mobileNumber,
             $landlineNumber,
         );
+
+        $Student->record(StudentRegistered::fromEntity($Student));
+
+        return $Student;
     }
 
     /**
@@ -142,7 +151,7 @@ final class Student extends BaseEntity
     /**
      * @return InstitutionalEmail
      */
-    public function institutionEmail(): InstitutionalEmail
+    public function institutionalEmail(): InstitutionalEmail
     {
         return $this->institutionalEmail;
     }

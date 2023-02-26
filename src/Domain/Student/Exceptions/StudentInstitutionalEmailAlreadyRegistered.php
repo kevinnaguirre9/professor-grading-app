@@ -31,7 +31,7 @@ final class StudentInstitutionalEmailAlreadyRegistered extends AbstractCoreExcep
      */
     public function title(): string
     {
-        return 'Cannot register student';
+        return 'Cannot register student.';
     }
 
     /**

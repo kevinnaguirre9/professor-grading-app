@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ProfessorGradingApp\Domain\User\Exceptions;
 
 use ProfessorGradingApp\Domain\Common\Exceptions\AbstractCoreException;
@@ -20,7 +22,7 @@ final class UserWithGivenEmailAlreadyRegistered extends AbstractCoreException
      */
     public function __construct(string $email)
     {
-        $this->errorDetail = sprintf("%s %s <%s>", $this->title(), $this->detail(), $email);
+        $this->errorDetail = "The user email <$email> is already in use.";
 
         parent::__construct();
     }
@@ -30,7 +32,7 @@ final class UserWithGivenEmailAlreadyRegistered extends AbstractCoreException
      */
     public function title(): string
     {
-        return 'Cannot create user.';
+        return 'User cannot be registered.';
     }
 
     /**

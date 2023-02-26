@@ -4,15 +4,18 @@ declare(strict_types=1);
 
 namespace ProfessorGradingApp\Domain\Tutorship;
 
-use ProfessorGradingApp\Domain\Tutorship\ValueObjects\{AcademicPeriodId, AdvisorId, SubjectId, TutorshipId};
+use ProfessorGradingApp\Domain\Tutorship\ValueObjects\{AdvisorId, TutorshipId};
+use ProfessorGradingApp\Domain\Common\BaseEntity;
 use ProfessorGradingApp\Domain\Common\Entities\Schedule;
+use ProfessorGradingApp\Domain\Common\ValueObjects\AcademicPeriod\AcademicPeriodId;
+use ProfessorGradingApp\Domain\Common\ValueObjects\Subject\SubjectId;
 
 /**
  * Class Tutorship
  *
  * @package ProfessorGradingApp\Domain\Tutorship
  */
-final class Tutorship
+final class Tutorship extends BaseEntity
 {
     /**
      * @param TutorshipId $id
@@ -20,14 +23,14 @@ final class Tutorship
      * @param SubjectId $subjectId
      * @param AcademicPeriodId $academicPeriodId
      * @param \DateTimeImmutable $registeredAt
-     * @param Schedule|null $schedule
+     * @param Schedule|null $Schedule
      */
     public function __construct(
         private readonly TutorshipId $id,
         private readonly AdvisorId $advisorId,
         private readonly SubjectId $subjectId,
         private readonly AcademicPeriodId $academicPeriodId,
-        private ?Schedule $schedule,
+        private ?Schedule $Schedule,
         private readonly \DateTimeImmutable $registeredAt,
     ) {
     }
@@ -38,7 +41,7 @@ final class Tutorship
      * @param SubjectId $subjectId
      * @param AcademicPeriodId $academicPeriodId
      * @param \DateTimeImmutable $registeredAt
-     * @param Schedule|null $schedule
+     * @param Schedule|null $Schedule
      * @return self
      */
     public static function create(
@@ -46,10 +49,10 @@ final class Tutorship
         AdvisorId $advisorId,
         SubjectId $subjectId,
         AcademicPeriodId $academicPeriodId,
-        Schedule $schedule = null,
+        Schedule $Schedule = null,
         \DateTimeImmutable $registeredAt = new \DateTimeImmutable(),
     ): self {
-        return new self($id, $advisorId, $subjectId, $academicPeriodId, $schedule, $registeredAt);
+        return new self($id, $advisorId, $subjectId, $academicPeriodId, $Schedule, $registeredAt);
     }
 
     /**
@@ -73,7 +76,7 @@ final class Tutorship
      */
     public function schedule(): ?Schedule
     {
-        return $this->schedule;
+        return $this->Schedule;
     }
 
     /**

@@ -2,10 +2,12 @@
 
 namespace ProfessorGradingApp\Application\Subject\Register;
 
+use ProfessorGradingApp\Domain\Common\ValueObjects\Degree\DegreeId;
+use ProfessorGradingApp\Domain\Common\ValueObjects\Subject\SubjectId;
 use ProfessorGradingApp\Domain\Subject\Exceptions\SubjectAlreadyRegistered;
 use ProfessorGradingApp\Domain\Subject\Repositories\SubjectRepository;
 use ProfessorGradingApp\Domain\Subject\Subject;
-use ProfessorGradingApp\Domain\Subject\ValueObjects\{DegreeId, DegreeLevel, SubjectId};
+use ProfessorGradingApp\Domain\Subject\ValueObjects\DegreeLevel;
 
 /**
  * Class RegisterSubjectHandler
@@ -26,7 +28,7 @@ final class RegisterSubjectHandler
      * @return void
      * @throws SubjectAlreadyRegistered
      */
-    public function __invoke(RegisterSubjectCommand $command) : void
+    public function __invoke(RegisterSubjectCommand $command): void
     {
         $this->ensureSubjectDoesNotExist($command->code());
 
@@ -57,7 +59,7 @@ final class RegisterSubjectHandler
     /**
      * @return \Closure
      */
-    private function degreeLevelBuilder() : \Closure
+    private function degreeLevelBuilder(): \Closure
     {
         return fn($degreeId, $level) => new DegreeLevel(new DegreeId($degreeId), $level);
     }

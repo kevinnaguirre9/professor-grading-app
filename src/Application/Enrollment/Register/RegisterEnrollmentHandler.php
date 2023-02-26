@@ -3,14 +3,13 @@
 namespace ProfessorGradingApp\Application\Enrollment\Register;
 
 use ProfessorGradingApp\Domain\Common\Exceptions\InvalidUuid;
+use ProfessorGradingApp\Domain\Common\ValueObjects\AcademicPeriod\AcademicPeriodId;
+use ProfessorGradingApp\Domain\Common\ValueObjects\CourseClass\ClassId;
+use ProfessorGradingApp\Domain\Common\ValueObjects\Degree\DegreeId;
+use ProfessorGradingApp\Domain\Common\ValueObjects\Enrollment\EnrollmentId;
+use ProfessorGradingApp\Domain\Common\ValueObjects\Student\StudentId;
 use ProfessorGradingApp\Domain\Enrollment\Enrollment;
 use ProfessorGradingApp\Domain\Enrollment\Repositories\EnrollmentRepository;
-use ProfessorGradingApp\Domain\Enrollment\ValueObjects\{
-    AcademicPeriodId,
-    ClassId,
-    DegreeId,
-    EnrollmentId,
-    StudentId};
 
 /**
  * Class RegisterEnrollmentHandler

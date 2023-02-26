@@ -5,8 +5,32 @@ namespace App\Providers;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Illuminate\Support\ServiceProvider;
 use ProfessorGradingApp\Domain\AcademicPeriod\Repositories\AcademicPeriodRepository;
+use ProfessorGradingApp\Domain\ClassInspectionRequest\Repositories\ClassInspectionRequestRepository;
+use ProfessorGradingApp\Domain\CourseClass\Repositories\ClassRepository;
+use ProfessorGradingApp\Domain\Degree\Repositories\DegreeRepository;
+use ProfessorGradingApp\Domain\Enrollment\Repositories\EnrollmentRepository;
+use ProfessorGradingApp\Domain\Grade\Repositories\GradeRepository;
+use ProfessorGradingApp\Domain\Professor\Repositories\ProfessorRepository;
+use ProfessorGradingApp\Domain\Student\Repositories\StudentRepository;
+use ProfessorGradingApp\Domain\Subject\Repositories\SubjectRepository;
+use ProfessorGradingApp\Domain\Supervisor\Repositories\SupervisorRepository;
+use ProfessorGradingApp\Domain\Tutorship\Repositories\TutorshipRepository;
+use ProfessorGradingApp\Domain\User\Contracts\PasswordHashingManager;
+use ProfessorGradingApp\Domain\User\Repositories\UserRepository;
 use ProfessorGradingApp\Infrastructure\AcademicPeriod\Repositories\MongoDbAcademicPeriodRepository;
+use ProfessorGradingApp\Infrastructure\ClassInspectionRequest\Repositories\MongoDbClassInspectionRequestRepository;
 use ProfessorGradingApp\Infrastructure\Common\Doctrine\Factories\DocumentManagerFactory;
+use ProfessorGradingApp\Infrastructure\CourseClass\Repositories\MongoDbClassRepository;
+use ProfessorGradingApp\Infrastructure\Degree\Repositories\MongoDbDegreeRepository;
+use ProfessorGradingApp\Infrastructure\Enrollment\Repositories\MongoDbEnrollmentRepository;
+use ProfessorGradingApp\Infrastructure\Grade\Repositories\MongoDbGradeRepository;
+use ProfessorGradingApp\Infrastructure\Professor\Repositories\MongoDbProfessorRepository;
+use ProfessorGradingApp\Infrastructure\Student\Repositories\MongoDbStudentRepository;
+use ProfessorGradingApp\Infrastructure\Subject\Repositories\MongoDbSubjectRepository;
+use ProfessorGradingApp\Infrastructure\Supervisor\Repositories\MongoDbSupervisorRepository;
+use ProfessorGradingApp\Infrastructure\Tutorship\Repositories\MongoDbTutorshipRepository;
+use ProfessorGradingApp\Infrastructure\User\Repositories\MongoDbUserRepository;
+use ProfessorGradingApp\Infrastructure\User\Services\BcryptPasswordHashingManager;
 
 /**
  * Class AppServiceProvider
@@ -20,10 +44,40 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function register()
+    public function register(): void
     {
         $this->app->singleton(DocumentManager::class, fn() => DocumentManagerFactory::create());
 
         $this->app->bind(AcademicPeriodRepository::class, MongoDbAcademicPeriodRepository::class);
+
+        $this->app->bind(StudentRepository::class, MongoDbStudentRepository::class);
+
+        $this->app->bind(UserRepository::class, MongoDbUserRepository::class);
+
+        $this->app->bind(EnrollmentRepository::class, MongoDbEnrollmentRepository::class);
+
+        $this->app->bind(DegreeRepository::class, MongoDbDegreeRepository::class);
+
+        $this->app->bind(SubjectRepository::class, MongoDbSubjectRepository::class);
+
+        $this->app->bind(ClassRepository::class, MongoDbClassRepository::class);
+
+        $this->app->bind(GradeRepository::class, MongoDbGradeRepository::class);
+
+        $this->app->bind(TutorshipRepository::class, MongoDbTutorshipRepository::class);
+
+        $this->app->bind(ProfessorRepository::class, MongoDbProfessorRepository::class);
+
+        $this->app->bind(SupervisorRepository::class, MongoDbSupervisorRepository::class);
+
+        $this->app->bind(
+            ClassInspectionRequestRepository::class,
+            MongoDbClassInspectionRequestRepository::class
+        );
+
+        $this->app->bind(
+            PasswordHashingManager::class,
+            fn($app) => new BcryptPasswordHashingManager($app['config']['hashing.bcrypt'] ?? [])
+        );
     }
 }

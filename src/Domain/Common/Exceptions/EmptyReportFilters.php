@@ -16,7 +16,7 @@ final class EmptyReportFilters extends AbstractCoreException
      */
     public function title(): string
     {
-        return 'Empty report filters';
+        return 'Empty report filters.';
     }
 
     /**
@@ -24,6 +24,6 @@ final class EmptyReportFilters extends AbstractCoreException
      */
     public function detail(): string
     {
-        return 'Filters must be provided to perform a search';
+        return 'Filters must be provided to perform a search.';
     }
 }

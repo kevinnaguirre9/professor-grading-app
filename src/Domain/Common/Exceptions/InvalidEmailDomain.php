@@ -20,7 +20,7 @@ final class InvalidEmailDomain extends AbstractCoreException
     public function __construct(string $emailDomain, array $allowedDomains)
     {
         $this->errorDetail =  sprintf(
-            'Email domain %s is not allowed. Allowed domains are: %s',
+            'Email domain <%s> is not allowed. Allowed domains are: %s',
             $emailDomain, implode(', ', $allowedDomains)
         );
 
@@ -32,7 +32,7 @@ final class InvalidEmailDomain extends AbstractCoreException
      */
     public function title(): string
     {
-        return 'Invalid email domain';
+        return 'Invalid email domain.';
     }
 
     /**

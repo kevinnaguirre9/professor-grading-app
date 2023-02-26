@@ -50,7 +50,7 @@ abstract class Uuid
     /**
      * @return string
      */
-    public function value() : string
+    public function value(): string
     {
         return $this->value;
     }

@@ -2,8 +2,8 @@
 
 namespace ProfessorGradingApp\Domain\Degree\Repositories;
 
+use ProfessorGradingApp\Domain\Common\ValueObjects\Degree\DegreeId;
 use ProfessorGradingApp\Domain\Degree\Degree;
-use ProfessorGradingApp\Domain\Degree\ValueObjects\DegreeId;
 
 /**
  * Interface DegreeRepository

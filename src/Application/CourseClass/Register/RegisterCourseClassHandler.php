@@ -4,9 +4,13 @@ namespace ProfessorGradingApp\Application\CourseClass\Register;
 
 use ProfessorGradingApp\Domain\Common\Entities\Schedule;
 use ProfessorGradingApp\Domain\Common\Exceptions\InvalidUuid;
+use ProfessorGradingApp\Domain\Common\ValueObjects\AcademicPeriod\AcademicPeriodId;
+use ProfessorGradingApp\Domain\Common\ValueObjects\CourseClass\ClassId;
+use ProfessorGradingApp\Domain\Common\ValueObjects\Degree\DegreeId;
+use ProfessorGradingApp\Domain\Common\ValueObjects\Professor\ProfessorId;
+use ProfessorGradingApp\Domain\Common\ValueObjects\Subject\SubjectId;
 use ProfessorGradingApp\Domain\CourseClass\CourseClass;
-use ProfessorGradingApp\Domain\CourseClass\Repositories\CourseClassRepository;
-use ProfessorGradingApp\Domain\CourseClass\ValueObjects\{AcademicPeriodId, ClassId, DegreeId, ProfessorId, SubjectId};
+use ProfessorGradingApp\Domain\CourseClass\Repositories\ClassRepository;
 
 /**
  * Class RegisterCourseClassHandler
@@ -16,9 +20,9 @@ use ProfessorGradingApp\Domain\CourseClass\ValueObjects\{AcademicPeriodId, Class
 final class RegisterCourseClassHandler
 {
     /**
-     * @param CourseClassRepository $repository
+     * @param ClassRepository $repository
      */
-    public function __construct(private readonly CourseClassRepository $repository)
+    public function __construct(private readonly ClassRepository $repository)
     {
     }
 

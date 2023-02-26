@@ -5,8 +5,8 @@ namespace ProfessorGradingApp\Application\AcademicPeriod\Register;
 use ProfessorGradingApp\Domain\AcademicPeriod\AcademicPeriod;
 use ProfessorGradingApp\Domain\AcademicPeriod\Repositories\AcademicPeriodRepository;
 use ProfessorGradingApp\Domain\AcademicPeriod\Services\ActiveAcademicPeriodDeactivator;
-use ProfessorGradingApp\Domain\AcademicPeriod\ValueObjects\AcademicPeriodId;
 use ProfessorGradingApp\Domain\Common\Exceptions\EmptyReportFilters;
+use ProfessorGradingApp\Domain\Common\ValueObjects\AcademicPeriod\AcademicPeriodId;
 
 /**
  * Class RegisterAcademicPeriodHandler
@@ -34,7 +34,7 @@ final class RegisterAcademicPeriodHandler
      * @return void
      * @throws EmptyReportFilters
      */
-    public function __invoke(RegisterAcademicPeriodCommand $command) : void
+    public function __invoke(RegisterAcademicPeriodCommand $command): void
     {
         $this->activeAcademicPeriodDeactivator->__invoke();
 
