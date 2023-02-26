@@ -6,15 +6,15 @@ use Doctrine\ODM\MongoDB\{LockException, MongoDBException};
 use Doctrine\ODM\MongoDB\Mapping\MappingException;
 use ProfessorGradingApp\Domain\Common\ValueObjects\CourseClass\ClassId;
 use ProfessorGradingApp\Domain\CourseClass\CourseClass;
-use ProfessorGradingApp\Domain\CourseClass\Repositories\CourseClassRepository;
+use ProfessorGradingApp\Domain\CourseClass\Repositories\ClassRepository;
 use ProfessorGradingApp\Infrastructure\Common\Doctrine\Repositories\DoctrineRepository;
 
 /**
- * Class MongoDbCourseClassRepository
+ * Class MongoDbClassRepository
  *
  * @package ProfessorGradingApp\Infrastructure\CourseClass\Repositories
  */
-final class MongoDbCourseClassRepository extends DoctrineRepository implements CourseClassRepository
+final class MongoDbClassRepository extends DoctrineRepository implements ClassRepository
 {
     /**
      * @param CourseClass $CourseClass

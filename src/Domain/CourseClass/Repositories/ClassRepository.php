@@ -6,11 +6,11 @@ use ProfessorGradingApp\Domain\Common\ValueObjects\CourseClass\ClassId;
 use ProfessorGradingApp\Domain\CourseClass\CourseClass;
 
 /**
- * Interface CourseClassRepository
+ * Interface ClassRepository
  *
  * @package ProfessorGradingApp\Domain\CourseClass\Repositories
  */
-interface CourseClassRepository
+interface ClassRepository
 {
     /**
      * @param CourseClass $CourseClass

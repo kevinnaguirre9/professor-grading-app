@@ -51,7 +51,7 @@ abstract class DomainEvent implements Event
     /**
      * @inheritDoc
      */
-    public function getType() : string
+    public function getType(): string
     {
         return static::NAME;
     }

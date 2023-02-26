@@ -37,7 +37,7 @@ final class AcademicPeriodPostController extends Controller
     /**
      * @return string[]
      */
-    private function rules() : array
+    private function rules(): array
     {
         return [
             'name' => 'required|string',

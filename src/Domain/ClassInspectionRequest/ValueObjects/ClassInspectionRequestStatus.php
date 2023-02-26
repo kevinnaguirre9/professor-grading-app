@@ -9,7 +9,7 @@ use ProfessorGradingApp\Domain\ClassInspectionRequest\Exceptions\InvalidClassIns
  *
  * @package ProfessorGradingApp\Domain\ClassInspectionRequest\ValueObjects
  */
-enum ClassInspectionRequestStatus : string
+enum ClassInspectionRequestStatus: string
 {
     case PENDING = 'pending';
 

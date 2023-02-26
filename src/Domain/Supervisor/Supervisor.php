@@ -46,7 +46,7 @@ final class Supervisor extends BaseEntity
         InstitutionalEmail $institutionalEmail,
         UserId $userId,
         \DateTimeImmutable $registeredAt = new \DateTimeImmutable()
-    ) : self {
+    ): self {
         return new self(
             $id,
             $fullName,

@@ -42,7 +42,7 @@ final class ActiveAcademicPeriodDeactivator
     /**
      * @return \Closure
      */
-    private function academicPeriodDeactivator() : \Closure
+    private function academicPeriodDeactivator(): \Closure
     {
         return function (AcademicPeriod $academicPeriod) {
 

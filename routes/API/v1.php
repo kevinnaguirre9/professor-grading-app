@@ -23,3 +23,8 @@ $router->post('/enrollments/files', [
     'uses' => 'Enrollment\EnrollmentsFileImportationPostController',
     'as' => 'enrollments.files.post'
 ]);
+
+$router->post('/grades', [
+    'uses' => 'Grade\GradePostController',
+    'as' => 'grades.post'
+]);

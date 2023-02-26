@@ -49,7 +49,7 @@ final class StudentRegistered extends DomainEvent
      * @return static
      * @throws InvalidUuid
      */
-    public static function fromEntity(Student $student) : self
+    public static function fromEntity(Student $student): self
     {
         return new self(
             $student->id(),

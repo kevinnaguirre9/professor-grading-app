@@ -16,7 +16,7 @@ trait InteractsWithMapper
      * @param string $location
      * @return bool
      */
-    protected static function store(array $mapper, string $location) : bool
+    protected static function store(array $mapper, string $location): bool
     {
         $content = json_encode($mapper, JSON_PRETTY_PRINT);
 

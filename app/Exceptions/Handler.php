@@ -171,7 +171,7 @@ class Handler extends ExceptionHandler
      * @param Throwable $exception
      * @return bool
      */
-    private function isNotFoundException(Throwable $exception) : bool
+    private function isNotFoundException(Throwable $exception): bool
     {
         return collect($this->notFoundExceptions)
             ->contains($this->validateInstanceOf($exception));

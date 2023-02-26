@@ -34,7 +34,7 @@ final class RegisterAcademicPeriodHandler
      * @return void
      * @throws EmptyReportFilters
      */
-    public function __invoke(RegisterAcademicPeriodCommand $command) : void
+    public function __invoke(RegisterAcademicPeriodCommand $command): void
     {
         $this->activeAcademicPeriodDeactivator->__invoke();
 

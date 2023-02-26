@@ -28,7 +28,7 @@ final class RegisterSubjectHandler
      * @return void
      * @throws SubjectAlreadyRegistered
      */
-    public function __invoke(RegisterSubjectCommand $command) : void
+    public function __invoke(RegisterSubjectCommand $command): void
     {
         $this->ensureSubjectDoesNotExist($command->code());
 
@@ -59,7 +59,7 @@ final class RegisterSubjectHandler
     /**
      * @return \Closure
      */
-    private function degreeLevelBuilder() : \Closure
+    private function degreeLevelBuilder(): \Closure
     {
         return fn($degreeId, $level) => new DegreeLevel(new DegreeId($degreeId), $level);
     }

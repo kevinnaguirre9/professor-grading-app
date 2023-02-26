@@ -41,7 +41,7 @@ class Controller extends BaseController
      * @param integer $code
      * @return Response
      */
-    protected function createResponse($resource, int $code = Response::HTTP_OK) : Response
+    protected function createResponse($resource, int $code = Response::HTTP_OK): Response
     {
         return ResourceManager::createResponse(
             $resource,

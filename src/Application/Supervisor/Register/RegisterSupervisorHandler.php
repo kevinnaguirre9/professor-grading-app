@@ -30,7 +30,7 @@ final class RegisterSupervisorHandler
      * @throws InvalidEmailFormat
      * @throws InvalidUuid
      */
-    public function __invoke(RegisterSupervisorCommand $command) : void
+    public function __invoke(RegisterSupervisorCommand $command): void
     {
         $this->ensureSupervisorDoesNotExist(new InstitutionalEmail($command->institutionalEmail()));
 
@@ -48,7 +48,7 @@ final class RegisterSupervisorHandler
      * @param InstitutionalEmail $institutionalEmail
      * @return void
      */
-    private function ensureSupervisorDoesNotExist(InstitutionalEmail $institutionalEmail) : void
+    private function ensureSupervisorDoesNotExist(InstitutionalEmail $institutionalEmail): void
     {
         $supervisor = $this->repository->findByInstitutionalEmail($institutionalEmail);
 

@@ -34,7 +34,7 @@ final class ResourceManager
      *
      * @return Encoder
      */
-    public static function getEncoder() : Encoder
+    public static function getEncoder(): Encoder
     {
         return self::$encoder ?? self::initEncoder()
             ;
@@ -43,7 +43,7 @@ final class ResourceManager
     /**
      * @return Encoder
      */
-    protected static function initEncoder() : Encoder
+    protected static function initEncoder(): Encoder
     {
         self::$encoder = new Encoder();
 
@@ -56,7 +56,7 @@ final class ResourceManager
      * @param $resource
      * @return ResourceInterface
      */
-    protected static function getItem($resource) : ResourceInterface
+    protected static function getItem($resource): ResourceInterface
     {
         $transformer = self::getTransformer($resource) ?: null;
         $type = $transformer?->getType();
@@ -68,7 +68,7 @@ final class ResourceManager
      * @param $resource
      * @return ResourceInterface
      */
-    protected static function getCollection($resource) : ResourceInterface
+    protected static function getCollection($resource): ResourceInterface
     {
         $items = $resource;
 
@@ -145,7 +145,7 @@ final class ResourceManager
         $resource,
         int $code = 200,
         string $type = 'hal+json'
-    ) : Response{
+    ): Response{
 
         return new Response(
             json_encode(self::encode($resource), JSON_UNESCAPED_SLASHES),

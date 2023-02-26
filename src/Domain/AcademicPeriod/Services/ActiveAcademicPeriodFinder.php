@@ -28,7 +28,7 @@ final class ActiveAcademicPeriodFinder
      * @throws ActiveAcademicPeriodNotFound
      * @throws EmptyReportFilters
      */
-    public function __invoke() : AcademicPeriod
+    public function __invoke(): AcademicPeriod
     {
         $criteria = (new AcademicPeriodCriteria)
             ->withIsActiveFilter(true)

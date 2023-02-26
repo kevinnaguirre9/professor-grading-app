@@ -73,7 +73,7 @@ trait IsSerializable
      *
      * @return ReflectionProperty[]
      */
-    protected function getObjectProperties($object) : array
+    protected function getObjectProperties($object): array
     {
         $reflectionClass = new ReflectionClass(get_class($object));
 
@@ -88,7 +88,7 @@ trait IsSerializable
      * @param $object
      * @return mixed
      */
-    protected function getPropertyValue(ReflectionProperty $property, $object) : mixed
+    protected function getPropertyValue(ReflectionProperty $property, $object): mixed
     {
         return $property->isInitialized($object)
             ? $property->getValue($object)
@@ -100,7 +100,7 @@ trait IsSerializable
      * @param string $key
      * @return string
      */
-    protected function camelToSnake(string $key) : string
+    protected function camelToSnake(string $key): string
     {
         return strtolower(preg_replace('/(?<!^)[A-Z]/', '_$0', $key));
     }
@@ -111,7 +111,7 @@ trait IsSerializable
      * @param iterable $elements
      * @return bool
      */
-    protected function containsOnlyObjects(iterable $elements) : bool
+    protected function containsOnlyObjects(iterable $elements): bool
     {
         foreach ($elements as $element)
             if (!is_object($element)) return false;

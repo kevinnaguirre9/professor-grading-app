@@ -10,7 +10,7 @@ use ProfessorGradingApp\Domain\Common\ValueObjects\Degree\DegreeId;
 use ProfessorGradingApp\Domain\Common\ValueObjects\Professor\ProfessorId;
 use ProfessorGradingApp\Domain\Common\ValueObjects\Subject\SubjectId;
 use ProfessorGradingApp\Domain\CourseClass\CourseClass;
-use ProfessorGradingApp\Domain\CourseClass\Repositories\CourseClassRepository;
+use ProfessorGradingApp\Domain\CourseClass\Repositories\ClassRepository;
 
 /**
  * Class RegisterCourseClassHandler
@@ -20,9 +20,9 @@ use ProfessorGradingApp\Domain\CourseClass\Repositories\CourseClassRepository;
 final class RegisterCourseClassHandler
 {
     /**
-     * @param CourseClassRepository $repository
+     * @param ClassRepository $repository
      */
-    public function __construct(private readonly CourseClassRepository $repository)
+    public function __construct(private readonly ClassRepository $repository)
     {
     }
 

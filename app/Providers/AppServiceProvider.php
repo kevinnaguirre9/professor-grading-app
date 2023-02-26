@@ -6,7 +6,7 @@ use Doctrine\ODM\MongoDB\DocumentManager;
 use Illuminate\Support\ServiceProvider;
 use ProfessorGradingApp\Domain\AcademicPeriod\Repositories\AcademicPeriodRepository;
 use ProfessorGradingApp\Domain\ClassInspectionRequest\Repositories\ClassInspectionRequestRepository;
-use ProfessorGradingApp\Domain\CourseClass\Repositories\CourseClassRepository;
+use ProfessorGradingApp\Domain\CourseClass\Repositories\ClassRepository;
 use ProfessorGradingApp\Domain\Degree\Repositories\DegreeRepository;
 use ProfessorGradingApp\Domain\Enrollment\Repositories\EnrollmentRepository;
 use ProfessorGradingApp\Domain\Grade\Repositories\GradeRepository;
@@ -20,7 +20,7 @@ use ProfessorGradingApp\Domain\User\Repositories\UserRepository;
 use ProfessorGradingApp\Infrastructure\AcademicPeriod\Repositories\MongoDbAcademicPeriodRepository;
 use ProfessorGradingApp\Infrastructure\ClassInspectionRequest\Repositories\MongoDbClassInspectionRequestRepository;
 use ProfessorGradingApp\Infrastructure\Common\Doctrine\Factories\DocumentManagerFactory;
-use ProfessorGradingApp\Infrastructure\CourseClass\Repositories\MongoDbCourseClassRepository;
+use ProfessorGradingApp\Infrastructure\CourseClass\Repositories\MongoDbClassRepository;
 use ProfessorGradingApp\Infrastructure\Degree\Repositories\MongoDbDegreeRepository;
 use ProfessorGradingApp\Infrastructure\Enrollment\Repositories\MongoDbEnrollmentRepository;
 use ProfessorGradingApp\Infrastructure\Grade\Repositories\MongoDbGradeRepository;
@@ -60,7 +60,7 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->bind(SubjectRepository::class, MongoDbSubjectRepository::class);
 
-        $this->app->bind(CourseClassRepository::class, MongoDbCourseClassRepository::class);
+        $this->app->bind(ClassRepository::class, MongoDbClassRepository::class);
 
         $this->app->bind(GradeRepository::class, MongoDbGradeRepository::class);
 

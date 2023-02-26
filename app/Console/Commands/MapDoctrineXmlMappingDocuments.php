@@ -33,7 +33,7 @@ final class MapDoctrineXmlMappingDocuments extends Command
     /**
      * @return void
      */
-    public function handle() : void
+    public function handle(): void
     {
         $path = 'src';
 

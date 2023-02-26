@@ -25,7 +25,7 @@ final class RegisterDegreeHandler
      * @param RegisterDegreeCommand $command
      * @return void
      */
-    public function __invoke(RegisterDegreeCommand $command) : void
+    public function __invoke(RegisterDegreeCommand $command): void
     {
         $subjectIds = array_map($this->subjectIdBuilder(), $command->subjectIds());
 

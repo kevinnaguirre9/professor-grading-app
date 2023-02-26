@@ -11,7 +11,7 @@ use ProfessorGradingApp\Domain\Common\Exceptions\InvalidWeekdayValue;
  *
  * @package ProfessorGradingApp\Domain\Common\ValueObjects
  */
-enum Weekday : int
+enum Weekday: int
 {
     case MONDAY = 1;
 
