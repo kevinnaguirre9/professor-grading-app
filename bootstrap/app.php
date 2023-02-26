@@ -65,6 +65,8 @@ $app->configure('database');
 
 $app->configure('schemas');
 
+$app->configure('queue');
+
 /*
 |--------------------------------------------------------------------------
 | Register Middleware
@@ -102,6 +104,12 @@ $app->register(App\Providers\AppServiceProvider::class);
 $app->register(App\Providers\EventServiceProvider::class);
 
 $app->register(App\Providers\CommandBusServiceProvider::class);
+
+$app->register(Jenssegers\Mongodb\MongodbServiceProvider::class);
+
+$app->make('queue');
+
+$app->register(Jenssegers\Mongodb\MongodbQueueServiceProvider::class);
 
 /*
 |--------------------------------------------------------------------------

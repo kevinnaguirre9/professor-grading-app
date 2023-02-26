@@ -30,7 +30,9 @@ RUN composer install --prefer-dist --optimize-autoloader --no-dev \
     && php artisan doctrine:xml-documents:map
 
 RUN chmod -R 775 storage \
-    && chown -R www-data:www-data storage
+    && chown -R www-data:www-data storage \
+    && chmod -R 775 src/Infrastructure/Common/Doctrine/Hydrators \
+    && chown -R www-data:www-data src/Infrastructure/Common/Doctrine/Hydrators
 
 EXPOSE 8080
 

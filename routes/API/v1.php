@@ -18,3 +18,8 @@ $router->post('/students', [
     'uses' => 'Student\StudentPostController',
     'as' => 'students.post'
 ]);
+
+$router->post('/enrollments/files', [
+    'uses' => 'Enrollment\EnrollmentsFileImportationPostController',
+    'as' => 'enrollments.files.post'
+]);
