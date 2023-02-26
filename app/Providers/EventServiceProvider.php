@@ -3,7 +3,14 @@
 namespace App\Providers;
 
 use Laravel\Lumen\Providers\EventServiceProvider as ServiceProvider;
+use ProfessorGradingApp\Domain\Common\Events\EventBus as EventBusInterface;
+use ProfessorGradingApp\Infrastructure\Common\Bus\Events\EventBus as InfrastructureEventBus;
 
+/**
+ * Class EventServiceProvider
+ *
+ * @package App\Providers
+ */
 class EventServiceProvider extends ServiceProvider
 {
     /**
@@ -16,6 +23,14 @@ class EventServiceProvider extends ServiceProvider
             \App\Listeners\ExampleListener::class,
         ],
     ];
+
+    /**
+     * @inheritdoc
+     */
+    public function register()
+    {
+        $this->app->bind(EventBusInterface::class, fn($app) => new InfrastructureEventBus($app['events']));
+    }
 
     /**
      * Determine if events and listeners should be automatically discovered.
