@@ -3,19 +3,20 @@
 namespace ProfessorGradingApp\Infrastructure\User\Services;
 
 use Carbon\CarbonImmutable;
-use Firebase\JWT\JWT;
+use Firebase\JWT\{JWT, Key};
 use ProfessorGradingApp\Domain\Common\ValueObjects\Uuid;
-use ProfessorGradingApp\Domain\User\Contracts\JwtTokenGenerator as JwtTokenGeneratorInterface;
+use ProfessorGradingApp\Domain\User\Contracts\JwtTokenManager as JwtTokenManagerInterface;
+use ProfessorGradingApp\Domain\User\Exceptions\InvalidToken;
 use ProfessorGradingApp\Domain\User\User;
 
 /**
- * Class JwtTokenGenerator
+ * Class JwtTokenManager
  *
  * @package ProfessorGradingApp\Infrastructure\User\Services
  */
-final class JwtTokenGenerator implements JwtTokenGeneratorInterface
+final class JwtTokenManager implements JwtTokenManagerInterface
 {
-    private const algorithm = 'HS256';
+    private const ALGORITHM = 'HS256';
 
     /**
      * @inheritdoc
@@ -26,7 +27,7 @@ final class JwtTokenGenerator implements JwtTokenGeneratorInterface
 
         $time = $today->getTimestamp();
 
-        $expireAt = $today->addMinutes(config('jwt.expire'))->getTimestamp();
+        $expireAt = $today->addMinutes(config('jwt.exp'))->getTimestamp();
 
         $claims = [
             'sub' => (string) $User->id(),
@@ -46,7 +47,27 @@ final class JwtTokenGenerator implements JwtTokenGeneratorInterface
         return JWT::encode(
             $claims,
             config('jwt.secret'),
-            self::algorithm
+            self::ALGORITHM
         );
+    }
+
+    /**
+     * @inheritdoc
+     * @throws InvalidToken
+     */
+    public function decode(string $token): array
+    {
+        try {
+
+            return (array) JWT::decode(
+                $token,
+                new Key(config('jwt.secret'), self::ALGORITHM),
+            );
+
+        } catch (\Exception $exception) {
+
+            //TODO: manage errors message according to the error type
+            throw new InvalidToken($exception->getMessage());
+        }
     }
 }

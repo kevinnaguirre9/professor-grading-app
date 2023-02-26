@@ -34,6 +34,7 @@ final class StudentRegisteredProcessor
             $createUserCommand =  new CreateUserCommand(
                 data_get($payload, 'student.institutional_email'),
                 data_get($payload, 'student.national_identification_number'),
+                data_get($payload, 'student.full_name'),
                 Role::STUDENT->value()
             );
 

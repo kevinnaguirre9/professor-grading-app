@@ -7,11 +7,11 @@ namespace ProfessorGradingApp\Domain\User\Contracts;
 use ProfessorGradingApp\Domain\User\User;
 
 /**
- * Interface JwtTokenGenerator
+ * Interface JwtTokenManager
  *
  * @package ProfessorGradingApp\Domain\User\Contracts
  */
-interface JwtTokenGenerator
+interface JwtTokenManager
 {
     /**
      * Generates a JWT token for the given user.
@@ -20,4 +20,13 @@ interface JwtTokenGenerator
      * @return string
      */
     public function generate(User $User): string;
+
+    /**
+     * Decodes the given JWT token.
+     *
+     * @param string $token
+     * @return array
+     */
+    public function decode(string $token): array;
+
 }

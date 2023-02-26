@@ -9,6 +9,7 @@
         <id strategy="NONE" type="user_id" />
         <field field-name="email" name="email" type="user_email" />
         <field field-name="password" name="password" type="user_password" />
+        <field field-name="fullName" name="full_name" type="string" />
         <field field-name="role" name="role" type="user_role" />
         <field field-name="isActive" name="is_active" type="bool" />
         <field field-name="registeredAt" name="registered_at" type="date_immutable" />

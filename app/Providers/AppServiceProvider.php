@@ -15,7 +15,7 @@ use ProfessorGradingApp\Domain\Student\Repositories\StudentRepository;
 use ProfessorGradingApp\Domain\Subject\Repositories\SubjectRepository;
 use ProfessorGradingApp\Domain\Supervisor\Repositories\SupervisorRepository;
 use ProfessorGradingApp\Domain\Tutorship\Repositories\TutorshipRepository;
-use ProfessorGradingApp\Domain\User\Contracts\JwtTokenGenerator;
+use ProfessorGradingApp\Domain\User\Contracts\JwtTokenManager;
 use ProfessorGradingApp\Domain\User\Contracts\PasswordHashingManager;
 use ProfessorGradingApp\Domain\User\Repositories\UserRepository;
 use ProfessorGradingApp\Infrastructure\AcademicPeriod\Repositories\MongoDbAcademicPeriodRepository;
@@ -32,7 +32,7 @@ use ProfessorGradingApp\Infrastructure\Supervisor\Repositories\MongoDbSupervisor
 use ProfessorGradingApp\Infrastructure\Tutorship\Repositories\MongoDbTutorshipRepository;
 use ProfessorGradingApp\Infrastructure\User\Repositories\MongoDbUserRepository;
 use ProfessorGradingApp\Infrastructure\User\Services\BcryptPasswordHashingManager;
-use ProfessorGradingApp\Infrastructure\User\Services\JwtTokenGenerator as InfrastructureJwtTokenGenerator;
+use ProfessorGradingApp\Infrastructure\User\Services\JwtTokenManager as InfrastructureJwtTokenGenerator;
 
 /**
  * Class AppServiceProvider
@@ -82,6 +82,6 @@ class AppServiceProvider extends ServiceProvider
             fn($app) => new BcryptPasswordHashingManager($app['config']['hashing.bcrypt'] ?? [])
         );
 
-        $this->app->singleton(JwtTokenGenerator::class, InfrastructureJwtTokenGenerator::class);
+        $this->app->singleton(JwtTokenManager::class, InfrastructureJwtTokenGenerator::class);
     }
 }

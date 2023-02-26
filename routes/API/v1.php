@@ -13,6 +13,10 @@ $router->post('/auth/sign-in', [
     'as' => 'auth.sign-in.post'
 ]);
 
+$router->get('/account', [
+    'uses' => 'Auth\AccountGetController',
+    'as' => 'account.get'
+]);
 
 $router->post('/academic-periods', [
     'uses' => 'AcademicPeriod\AcademicPeriodPostController',
