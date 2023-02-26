@@ -26,8 +26,8 @@ final class StudentPostController extends Controller
 
         $registerStudentCommand = new RegisterStudentCommand(
             fullName: $request->input('full_name'),
-            institutionalEmail: $request->input('institutional_email'),
             personalEmail: $request->input('personal_email'),
+            institutionalEmail: $request->input('institutional_email'),
             nationalIdentificationNumber: $request->input('identification_card'),
             mobileNumber: $request->input('mobile_number'),
             landlineNumber: $request->input('landline_number'),

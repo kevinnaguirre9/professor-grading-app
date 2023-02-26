@@ -13,8 +13,8 @@ final class RegisterStudentCommand implements Command
 {
     /**
      * @param string $fullName
-     * @param string $institutionalEmail
      * @param string $personalEmail
+     * @param string $institutionalEmail
      * @param string $nationalIdentificationNumber
      * @param array $degreeIds
      * @param array $enrollmentIds
@@ -24,8 +24,8 @@ final class RegisterStudentCommand implements Command
      */
     public function __construct(
         private string $fullName,
-        private string $institutionalEmail,
         private string $personalEmail,
+        private string $institutionalEmail,
         private string $nationalIdentificationNumber,
         private array $degreeIds = [],
         private array $enrollmentIds = [],

@@ -15,7 +15,7 @@ abstract class DomainEvent implements Event
     /**
      * @var String
      */
-    public const NAME = 'event';
+    protected const NAME = 'event';
 
     /**
      * @var EventId

@@ -19,8 +19,8 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        \App\Events\ExampleEvent::class => [
-            \App\Listeners\ExampleListener::class,
+        \ProfessorGradingApp\Domain\Student\Events\StudentRegistered::class => [
+            \App\Processors\StudentRegisteredProcessor::class,
         ],
     ];
 
@@ -29,7 +29,10 @@ class EventServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind(EventBusInterface::class, fn($app) => new InfrastructureEventBus($app['events']));
+        $this->app->bind(
+            EventBusInterface::class,
+            fn($app) => new InfrastructureEventBus($app['events'])
+        );
     }
 
     /**

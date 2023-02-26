@@ -5,6 +5,7 @@ namespace ProfessorGradingApp\Application\Student\Register;
 use ProfessorGradingApp\Domain\Common\Exceptions\{InvalidEmailFormat, InvalidEmailDomain, InvalidUuid};
 use ProfessorGradingApp\Application\User\Register\CreateUserCommand;
 use ProfessorGradingApp\Application\User\Register\CreateUserHandler;
+use ProfessorGradingApp\Domain\Common\Events\EventBus;
 use ProfessorGradingApp\Domain\Common\ValueObjects\InstitutionalEmail;
 use ProfessorGradingApp\Domain\Common\ValueObjects\Student\StudentId;
 use ProfessorGradingApp\Domain\Common\ValueObjects\User\UserId;
@@ -26,11 +27,11 @@ final class RegisterStudentHandler
 {
     /**
      * @param StudentRepository $repository
-     * @param CreateUserHandler $userCreator
+     * @param EventBus $eventBus
      */
     public function __construct(
         private readonly StudentRepository $repository,
-        private readonly CreateUserHandler $userCreator,
+        private readonly EventBus $eventBus,
     ) {
     }
 
@@ -42,7 +43,6 @@ final class RegisterStudentHandler
      * @throws InvalidUuid
      * @throws StudentInstitutionalEmailAlreadyRegistered
      * @throws StudentNationalIdentificationNumberAlreadyRegistered
-     * @throws UserWithGivenEmailAlreadyRegistered
      */
     public function __invoke(RegisterStudentCommand $command): Student
     {
@@ -56,26 +56,19 @@ final class RegisterStudentHandler
 
         $this->ensureStudentNationalIdentificationNumberDoesNotExists($nationalIdentificationNumber);
 
-        $createUserCommand = new CreateUserCommand(
-            $command->institutionalEmail(),
-            $command->nationalIdentificationNumber(),
-            Role::STUDENT->value()
-        );
-
-        $User = $this->userCreator->__invoke($createUserCommand);
-
         $Student = Student::create(
             id: new StudentId(),
             fullName: $command->fullName(),
             personalEmail: new PersonalEmail($command->personalEmail()),
             institutionalEmail: $institutionalEmail,
             nationalIdentificationNumber: $nationalIdentificationNumber,
-            userId: new UserId($User->id()),
             mobileNumber: $command->mobileNumber(),
             landlineNumber: $command->landlineNumber(),
         );
 
         $this->repository->save($Student);
+
+        $this->eventBus->dispatch(...$Student->pullEvents());
 
         return $Student;
     }
