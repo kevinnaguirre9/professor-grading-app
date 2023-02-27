@@ -27,7 +27,7 @@ interface TutorshipRepository
 
     /**
      * @param Criteria $criteria
-     * @return Tutorship[]
+     * @return iterable
      */
-    public function search(Criteria $criteria): array;
+    public function search(Criteria $criteria): iterable;
 }

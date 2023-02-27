@@ -41,7 +41,8 @@ class AuthServiceProvider extends ServiceProvider
 
         $this->app['auth']->viaRequest('api', function ($request) {
 
-            //TODO: If we want to be SOLID to the moon and back, this should go in something like an Action
+            //TODO: This is not very SOLID from myself
+            // but this will do the work for now
             $bearerToken = $request->bearerToken();
 //
             /** @var UserFinder $userFinder */

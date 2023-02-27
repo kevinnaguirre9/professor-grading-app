@@ -2,6 +2,7 @@
 
 namespace ProfessorGradingApp\Infrastructure\Tutorship\Repositories;
 
+use Illuminate\Pagination\LengthAwarePaginator;
 use Doctrine\ODM\MongoDB\{LockException, MongoDBException};
 use Doctrine\ODM\MongoDB\Mapping\MappingException;
 use ProfessorGradingApp\Domain\Common\Criteria\Criteria;
@@ -41,14 +42,35 @@ final class MongoDbTutorshipRepository extends DoctrineRepository implements Tut
 
     /**
      * @param Criteria $criteria
-     * @return array|Tutorship[]
+     * @return iterable
      */
-    public function search(Criteria $criteria): array
+    public function search(Criteria $criteria): iterable
     {
         $doctrineCriteria = DoctrineCriteriaConverter::convert($criteria);
 
-        return $this->repository(Tutorship::class)
+        //Just getting all the records that match the criteria without pagination
+        $doctrineCriteria->setFirstResult(null);
+        $doctrineCriteria->setMaxResults(null);
+
+        $totalTutorships = $this->repository(Tutorship::class)
+            ->matching($doctrineCriteria)
+            ->count();
+
+        //Now we paginate the results
+        $doctrineCriteria->setFirstResult($criteria->offset());
+        $doctrineCriteria->setMaxResults($criteria->limit());
+
+        $page = ($criteria->offset() / $criteria->limit()) + 1;
+
+        $tutorships =  $this->repository(Tutorship::class)
             ->matching($doctrineCriteria)
             ->toArray();
+
+        return new LengthAwarePaginator(
+            $tutorships,
+            $totalTutorships,
+            $criteria->limit(),
+            $page
+        );
     }
 }

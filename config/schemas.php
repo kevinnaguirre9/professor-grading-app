@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Resources\Schemas\TutorshipSchema;
+use ProfessorGradingApp\Domain\Tutorship\Tutorship;
+
 return [
 
     /*
@@ -11,5 +14,7 @@ return [
     | to generate JSON:API Resources
     |
     */
+
+    Tutorship::class => TutorshipSchema::class,
 
 ];
