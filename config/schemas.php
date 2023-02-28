@@ -1,5 +1,12 @@
 <?php
 
+use App\Http\Resources\Schemas\StudentTransformer;
+use App\Http\Resources\Schemas\SubjectTransformer;
+use App\Http\Resources\Schemas\TutorshipSchema;
+use ProfessorGradingApp\Domain\Student\Student;
+use ProfessorGradingApp\Domain\Subject\Subject;
+use ProfessorGradingApp\Domain\Tutorship\Tutorship;
+
 return [
 
     /*
@@ -12,4 +19,7 @@ return [
     |
     */
 
+    Tutorship::class => TutorshipSchema::class,
+    Student::class => StudentTransformer::class,
+    Subject::class => SubjectTransformer::class,
 ];

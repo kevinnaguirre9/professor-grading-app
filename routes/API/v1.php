@@ -37,3 +37,13 @@ $router->post('/grades', [
     'uses' => 'Grade\GradePostController',
     'as' => 'grades.post'
 ]);
+
+$router->post('/tutorships', [
+    'uses' => 'Tutorship\TutorshipPostController',
+    'as' => 'tutorships.post'
+]);
+
+$router->get('/tutorships', [
+    'uses' => 'Tutorship\TutorshipsGetController',
+    'as' => 'tutorships.get'
+]);

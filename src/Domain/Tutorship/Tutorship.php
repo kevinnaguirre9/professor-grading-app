@@ -110,4 +110,16 @@ final class Tutorship extends BaseEntity
     {
         return $this->registeredAt;
     }
+
+    public function toPrimitives(): array
+    {
+        return [
+            'id' => (string) $this->id(),
+            'advisor_id' => (string) $this->advisorId(),
+            'subject_id' => (string) $this->subjectId(),
+            'academic_period_id' => (string) $this->academicPeriodId(),
+//            'schedule' => $this->schedule()?->toPrimitives(),
+            'registered_at' => $this->registeredAt()->format('Y-m-d H:i:s'),
+        ];
+    }
 }

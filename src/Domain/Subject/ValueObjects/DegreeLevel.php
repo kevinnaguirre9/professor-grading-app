@@ -38,4 +38,15 @@ final class DegreeLevel
     {
         return $this->level;
     }
+
+    /**
+     * @return array
+     */
+    public function toPrimitives(): array
+    {
+        return [
+            'degree_id' => (string) $this->degreeId,
+            'level' => $this->level,
+        ];
+    }
 }
