@@ -11,6 +11,7 @@
         <field field-name="password" name="password" type="user_password" />
         <field field-name="fullName" name="full_name" type="string" />
         <field field-name="role" name="role" type="user_role" />
+        <field field-name="authenticatableId" name="authenticatable_id" type="authenticatable_id" />
         <field field-name="isActive" name="is_active" type="bool" />
         <field field-name="registeredAt" name="registered_at" type="date_immutable" />
         <field field-name="updatedAt" name="updated_at" type="date_immutable" />

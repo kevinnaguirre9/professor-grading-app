@@ -35,7 +35,8 @@ final class StudentRegisteredProcessor
                 data_get($payload, 'student.institutional_email'),
                 data_get($payload, 'student.national_identification_number'),
                 data_get($payload, 'student.full_name'),
-                Role::STUDENT->value()
+                Role::STUDENT->value(),
+                data_get($payload, 'student.id')
             );
 
             /** @var User $User */

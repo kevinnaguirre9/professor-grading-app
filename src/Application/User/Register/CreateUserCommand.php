@@ -16,12 +16,14 @@ final class CreateUserCommand implements Command
      * @param string $password
      * @param string $fullName
      * @param string $role
+     * @param string $authenticatableId
      */
     public function __construct(
         private readonly string $email,
         private readonly string $password,
         private readonly string $fullName,
         private readonly string $role,
+        private readonly string $authenticatableId,
     ) {
     }
 
@@ -55,5 +57,13 @@ final class CreateUserCommand implements Command
     public function role(): string
     {
         return $this->role;
+    }
+
+    /**
+     * @return string
+     */
+    public function authenticatableId(): string
+    {
+        return $this->authenticatableId;
     }
 }

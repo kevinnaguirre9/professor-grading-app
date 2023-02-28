@@ -7,7 +7,7 @@ namespace ProfessorGradingApp\Domain\User;
 use ProfessorGradingApp\Domain\Common\BaseEntity;
 use ProfessorGradingApp\Domain\Common\ValueObjects\User\UserId;
 use ProfessorGradingApp\Domain\User\Contracts\PasswordHashingManager;
-use ProfessorGradingApp\Domain\User\ValueObjects\{Role, UserEmail, UserPassword};
+use ProfessorGradingApp\Domain\User\ValueObjects\{AuthenticatableId, Role, UserEmail, UserPassword};
 
 /**
  * Class User
@@ -22,6 +22,7 @@ final class User extends BaseEntity
      * @param UserPassword $password
      * @param string $fullName
      * @param Role $role
+     * @param AuthenticatableId $authenticatableId
      * @param bool $isActive
      * @param \DateTimeImmutable $registeredAt
      * @param \DateTimeImmutable|null $updatedAt
@@ -32,6 +33,7 @@ final class User extends BaseEntity
         private UserPassword $password,
         private string $fullName,
         private readonly Role $role,
+        private readonly AuthenticatableId $authenticatableId,
         private bool $isActive,
         private readonly \DateTimeImmutable $registeredAt,
         private ?\DateTimeImmutable $updatedAt = null,
@@ -44,6 +46,7 @@ final class User extends BaseEntity
      * @param UserPassword $password
      * @param string $fullName
      * @param Role $role
+     * @param AuthenticatableId $authenticatableId
      * @param bool $isActive
      * @param \DateTimeImmutable $registeredAt
      * @return static
@@ -54,6 +57,7 @@ final class User extends BaseEntity
         UserPassword $password,
         string $fullName,
         Role $role,
+        AuthenticatableId $authenticatableId,
         bool $isActive = true,
         \DateTimeImmutable $registeredAt = new \DateTimeImmutable(),
     ): self {
@@ -63,6 +67,7 @@ final class User extends BaseEntity
             $password,
             $fullName,
             $role,
+            $authenticatableId,
             $isActive,
             $registeredAt,
         );
@@ -118,6 +123,14 @@ final class User extends BaseEntity
     public function isSupervisor(): bool
     {
         return $this->role->isSupervisor();
+    }
+
+    /**
+     * @return AuthenticatableId
+     */
+    public function authenticatableId(): AuthenticatableId
+    {
+        return $this->authenticatableId;
     }
 
     /**

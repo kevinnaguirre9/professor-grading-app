@@ -96,4 +96,17 @@ final class Supervisor extends BaseEntity
         return $this->registeredAt;
     }
 
+    /**
+     * @return array
+     */
+    public function toPrimitives(): array
+    {
+        return [
+            'full_name' => $this->fullName(),
+            'institutional_email' => (string)$this->institutionalEmail(),
+            'user_id' => (string) $this->userId(),
+            'registered_at' => $this->registeredAt()->format('Y-m-d H:i:s'),
+        ];
+    }
+
 }
