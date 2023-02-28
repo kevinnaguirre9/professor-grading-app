@@ -2,17 +2,20 @@
 
 namespace App\Providers;
 
-use Illuminate\Auth\GenericUser;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 use ProfessorGradingApp\Domain\Common\Exceptions\InvalidUuid;
 use ProfessorGradingApp\Domain\Common\ValueObjects\User\UserId;
 use ProfessorGradingApp\Domain\User\Contracts\JwtTokenManager;
-use ProfessorGradingApp\Domain\User\Exceptions\UserNotRegistered;
 use ProfessorGradingApp\Domain\User\Services\UserFinder;
-use Symfony\Component\VarDumper\VarDumper;
+use ProfessorGradingApp\Infrastructure\Common\Auth\GenericUserBuilder;
 
+/**
+ * Class AuthServiceProvider
+ *
+ * @package App\Providers
+ */
 class AuthServiceProvider extends ServiceProvider
 {
     /**
@@ -60,13 +63,10 @@ class AuthServiceProvider extends ServiceProvider
             if(! $User)
                 return null;
 
-            return new GenericUser(
-                [
-                    'id' => (string) $User->id(),
-                    'name' => $User->fullName(),
-                    'email' => (string) $User->email(),
-                ]
-            );
+            /** @var GenericUserBuilder $GenericUserBuilder */
+            $GenericUserBuilder = $this->app->make(GenericUserBuilder::class);
+
+            return $GenericUserBuilder->__invoke($User);
         });
     }
 }

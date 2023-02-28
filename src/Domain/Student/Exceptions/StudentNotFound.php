@@ -17,11 +17,13 @@ final class StudentNotFound extends AbstractCoreException
     private string $errorDetail;
 
     /**
-     * @param StudentId $studentId
+     * @param StudentId|null $studentId
      */
-    public function __construct(StudentId $studentId)
+    public function __construct(StudentId $studentId = null)
     {
-        $this->errorDetail = "Student with id $studentId not found.";
+        $this->errorDetail = $studentId
+            ? "Student with id $studentId not found."
+            : 'Student not found.';
 
         parent::__construct();
     }

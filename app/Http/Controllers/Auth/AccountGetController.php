@@ -15,23 +15,13 @@ use Symfony\Component\HttpFoundation\Response;
 final class AccountGetController extends Controller
 {
     /**
-     * @return JsonResponse
+     * @return Response
      */
-    public function __invoke(): JsonResponse
+    public function __invoke(): Response
     {
         /** @var GenericUser $User */
         $User = auth()->user();
 
-        //TODO: use schemas for sending Student or Supervisor information along with their resources links
-        return response()->json(
-            [
-                'user' => [
-                    'id'        => $User->id,
-                    'name'      => $User->name,
-                    'email'     => $User->email,
-                ],
-            ],
-            Response::HTTP_OK
-        );
+        return $this->createResponse($User);
     }
 }

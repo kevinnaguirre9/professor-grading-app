@@ -2,13 +2,13 @@
 
 namespace ProfessorGradingApp\Application\User\Register;
 
-use ProfessorGradingApp\Domain\Common\Exceptions\{InvalidEmailFormat, InvalidEmailDomain};
+use ProfessorGradingApp\Domain\Common\Exceptions\{InvalidEmailFormat, InvalidEmailDomain, InvalidUuid};
 use ProfessorGradingApp\Domain\Common\ValueObjects\User\UserId;
 use ProfessorGradingApp\Domain\User\Contracts\PasswordHashingManager;
 use ProfessorGradingApp\Domain\User\Exceptions\UserWithGivenEmailAlreadyRegistered;
 use ProfessorGradingApp\Domain\User\Repositories\UserRepository;
 use ProfessorGradingApp\Domain\User\User;
-use ProfessorGradingApp\Domain\User\ValueObjects\{Role, UserEmail, UserPassword};
+use ProfessorGradingApp\Domain\User\ValueObjects\{AuthenticatableId, Role, UserEmail, UserPassword};
 
 /**
  * Class CreateUserHandler
@@ -33,6 +33,7 @@ final class CreateUserHandler
      * @throws InvalidEmailFormat
      * @throws UserWithGivenEmailAlreadyRegistered
      * @throws InvalidEmailDomain
+     * @throws InvalidUuid
      */
     public function __invoke(CreateUserCommand $command): User
     {
@@ -48,7 +49,8 @@ final class CreateUserHandler
             new UserEmail($command->email()),
             new UserPassword($hashedPassword),
             $command->fullName(),
-            $role
+            $role,
+            new AuthenticatableId($command->authenticatableId()),
         );
 
         $this->repository->save($User);

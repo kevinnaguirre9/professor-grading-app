@@ -37,5 +37,4 @@ interface StudentRepository
      * @return Student|null
      */
     public function findByNationalIdentificationNumber(NationalIdentificationNumber $identificationNumber): ?Student;
-
 }
