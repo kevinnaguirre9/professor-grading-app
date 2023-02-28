@@ -99,23 +99,7 @@ final class HalSerializer extends SerializerAbstract
      */
     public function includedData(ResourceInterface $resource, array $data): array
     {
-        $serializedData = [];
-
-        foreach ($data as $value) {
-            foreach ($value as $includeKey => $includeObject) {
-                if (empty($includeObject)) {
-                    continue;
-                }
-
-                $serializedData[$includeKey] = $includeObject;
-            }
-        }
-
-        if (empty($serializedData)) {
-            return [];
-        }
-
-        return ['_embedded' => $serializedData];
+        return $data;
     }
 
     /**
@@ -129,7 +113,7 @@ final class HalSerializer extends SerializerAbstract
             return $transformedData;
         }
 
-        return array_merge($transformedData, ['_embedded' => $includedData]);
+        return array_merge($transformedData, $includedData);
     }
 
     /**

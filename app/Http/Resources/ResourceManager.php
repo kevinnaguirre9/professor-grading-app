@@ -36,8 +36,7 @@ final class ResourceManager
      */
     public static function getEncoder(): Encoder
     {
-        return self::$encoder ?? self::initEncoder()
-            ;
+        return self::$encoder ?? self::initEncoder();
     }
 
     /**
@@ -46,6 +45,9 @@ final class ResourceManager
     protected static function initEncoder(): Encoder
     {
         self::$encoder = new Encoder();
+
+        if (request()->has('include'))
+            self::$encoder->parseIncludes(request()->query('include'));
 
         self::$transformers = config('schemas');
 

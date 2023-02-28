@@ -96,4 +96,19 @@ final class Subject extends BaseEntity
     {
         return $this->registeredAt;
     }
+
+    /**
+     * @return array
+     */
+    public function toPrimitives(): array
+    {
+        return [
+            'code' => $this->code(),
+            'name' => $this->name(),
+            'degrees_level' => array_map(
+                fn(DegreeLevel $degreeLevel) => $degreeLevel->toPrimitives(), $this->degreesLevel()
+            ),
+            'registered_at' => $this->registeredAt()->format('Y-m-d H:i:s'),
+        ];
+    }
 }

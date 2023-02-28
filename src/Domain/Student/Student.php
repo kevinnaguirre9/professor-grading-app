@@ -236,4 +236,31 @@ final class Student extends BaseEntity
     {
         return $this->registeredAt;
     }
+
+    /**
+     * @return array
+     */
+    public function toPrimitives(): array
+    {
+        return [
+            'id' => (string) $this->id(),
+            'full_name' => $this->fullName(),
+            'personal_email' => (string) $this->personalEmail(),
+            'institutional_email' => (string) $this->institutionalEmail(),
+            'national_identification_number' => $this->nationalIdentificationNumber(),
+            'degree_ids' => array_map(
+                fn(DegreeId $degreeId) => $degreeId->value(), $this->degreeIds()
+            ),
+            'enrollment_ids' => array_map(
+                fn(EnrollmentId $enrollmentId) => $enrollmentId->value(), $this->enrollmentIds()
+            ),
+            'grade_ids' => array_map(
+                fn(GradeId $gradeId) => $gradeId->value(), $this->gradeIds()
+            ),
+            'user_id' => (string) $this->userId(),
+            'mobile_number' => $this->mobileNumber(),
+            'landline_number' => $this->landlineNumber(),
+            'registered_at' => $this->registrationDate()->format('Y-m-d H:i:s'),
+        ];
+    }
 }
