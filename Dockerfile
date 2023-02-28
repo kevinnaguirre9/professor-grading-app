@@ -1,7 +1,8 @@
 FROM php:8.1-fpm-alpine3.17
 
 RUN apk add --no-cache gcc g++ autoconf make pkgconfig git openssl \
-    libressl curl-dev zip unzip supervisor nginx bash
+    libressl curl-dev zip unzip supervisor nginx bash \
+    libpng-dev libzip libzip-dev
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
@@ -9,6 +10,9 @@ ENV COMPOSER_ALLOW_SUPERUSER=1
 
 RUN pecl install mongodb \
     && docker-php-ext-enable mongodb
+
+RUN docker-php-ext-install gd
+RUN docker-php-ext-install zip
 
 # Nginx and PHP default configuration files.
 COPY ./etc/nginx/nginx.conf /etc/nginx/nginx.conf
