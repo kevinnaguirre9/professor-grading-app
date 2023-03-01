@@ -13,8 +13,8 @@
         "league/flysystem": "^3.12",
         "league/fractal": "^0.20.1",
         "league/tactician": "^1.1",
+        "maatwebsite/excel": "^3.1",
         "nyholm/psr7": "^1.5",
-        "phpoffice/phpspreadsheet": "^1.28",
         "ramsey/uuid": "^4.7",
         "spatie/laravel-data": "^2.2"
     },
