@@ -111,8 +111,6 @@ $app->register(Jenssegers\Mongodb\MongodbServiceProvider::class);
 
 $app->make('queue');
 
-$app->register(Maatwebsite\Excel\ExcelServiceProvider::class,);
-
 $app->register(Jenssegers\Mongodb\MongodbQueueServiceProvider::class);
 
 /*

@@ -2,9 +2,9 @@
 
 namespace App\Jobs;
 
-use App\Imports\EnrollmentsImport;
+use App\Imports\EnrollmentsImporter;
 use Illuminate\Support\Facades\Storage;
-use Maatwebsite\Excel\Facades\Excel;
+use Psr\Log\LoggerInterface;
 
 /**
  * Class CreateEnrollmentsFromFile
@@ -20,11 +20,11 @@ final class CreateEnrollmentsFromFile extends Job
     {
     }
 
-    public function __invoke(): void
+    public function __invoke(LoggerInterface $logger, EnrollmentsImporter $importer): void
     {
-        Excel::import(new EnrollmentsImport, Storage::path($this->enrollmentsFilePath));
+        $logger->info('Creating enrollments from file...');
 
-        //TODO: send email to user
+        $importer->__invoke(Storage::path($this->enrollmentsFilePath));
 
         //Deletes file
 //        Storage::delete($this->enrollmentsFilePath);
