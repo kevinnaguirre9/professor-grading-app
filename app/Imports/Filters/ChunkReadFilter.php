@@ -34,7 +34,6 @@ final class ChunkReadFilter implements IReadFilter
      */
     public function readCell($columnAddress, $row, $worksheetName = ''): bool
     {
-        //Only read the heading row, and the configured rows
         return (($row == 1) || ($row >= $this->startRow && $row < $this->endRow));
     }
 }

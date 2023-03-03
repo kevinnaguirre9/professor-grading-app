@@ -4,9 +4,9 @@ namespace App\Imports;
 
 use App\Imports\Filters\ChunkReadFilter;
 use Doctrine\ODM\MongoDB\DocumentManager;
-use MongoDB\Database;
+use MongoDB\Collection;
 use PhpOffice\PhpSpreadsheet\IOFactory;
-use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
+use PhpOffice\PhpSpreadsheet\Reader\Exception;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -16,12 +16,22 @@ use Psr\Log\LoggerInterface;
  */
 final class EnrollmentsImporter
 {
+    /**
+     * Define how many rows we want to read for each "chunk"
+     */
     private const CHUNK_SIZE = 100;
 
     /**
-     * @var Database
+     * The Excel file headers
      */
-    private Database $connection;
+    private static array $headers;
+
+    /**
+     * @var Collection
+     */
+    private Collection $connection;
+
+    private const COLLECTION_NAME = 'enrollments_bible';
 
     /**
      * @param DocumentManager $documentManager
@@ -34,58 +44,66 @@ final class EnrollmentsImporter
         $this->setDatabaseConnection();
     }
 
-
+    /**
+     * @param string $fileLocation
+     * @return void
+     * @throws Exception
+     */
     public function __invoke(string $fileLocation): void
     {
-       $this->logger->debug('Loading file');
-
-       $readerType = IOFactory::identify($fileLocation);
+        $readerType = IOFactory::identify($fileLocation);
 
         $reader = IOFactory::createReader($readerType);
 
         $worksheetData = $reader->listWorksheetInfo($fileLocation);
 
-        //Just getting total rows from first worksheet
         $totalRows = data_get($worksheetData, '0.totalRows');
 
-        // Define how many rows we want to read for each "chunk"
-        $chunkSize = 20;
-
-        // Create a new Instance of our Read Filter
         $chunkFilter = new ChunkReadFilter();
 
-        // Tell the Reader that we want to use the Read Filter that we've Instantiated
         $reader->setReadFilter($chunkFilter);
 
-        // Loop to read our worksheet in "chunk size" blocks
-        for ($startRow = 2; $startRow <= $totalRows; $startRow += $chunkSize) {
+        for ($startRow = 2; $startRow <= $totalRows; $startRow += self::CHUNK_SIZE) {
 
-             $this->logger->debug(
-                 'Loading WorkSheet using configurable filter for headings row 1 and for rows '
-                 . $startRow .
-                 ' to ' .
-                 ($startRow + $chunkSize - 1)
-             );
+            $this->logger->debug(
+                sprintf('Reading rows %s to %s', $startRow, ($startRow + self::CHUNK_SIZE - 1))
+            );
 
-            // Tell the Read Filter, the limits on which rows we want to read this iteration
-            $chunkFilter->setRows($startRow, $chunkSize);
+            $chunkFilter->setRows($startRow, self::CHUNK_SIZE);
 
-//            $reader->setReadFilter($chunkFilter);
-//
-//            // Load only the rows that match our filter from $inputFileName to a PhpSpreadsheet Object
             $spreadsheet = $reader->load($fileLocation);
-//
-//            // Do some processing here
+
             $sheetData = $spreadsheet->getActiveSheet()->toArray();
 
-            $headers = array_shift($sheetData);
+            $this->setMappedHeaderKeys($sheetData);
 
-            $data = array_map(function ($row) use ($headers) {
-                return array_combine($headers, $row);
-            }, $sheetData);
+            $enrollment = array_map($this->recordsWithKeyTransformer(), $sheetData);
 
-            print_r($data);
+            $this->connection->insertMany($enrollment);
         }
+    }
+
+    /**
+     * @param array $sheetData
+     * @return void
+     */
+    private function setMappedHeaderKeys(array $sheetData): void
+    {
+        if (!empty(self::$headers))
+            return;
+
+        $rawHeaders = array_shift($sheetData);
+
+        //TODO: Map headers to database fields in a human-readable format
+        self::$headers = array_map('strtolower', $rawHeaders);
+    }
+
+    /**
+     * @return \Closure
+     */
+    private function recordsWithKeyTransformer(): \Closure
+    {
+        return fn($row) => array_combine(self::$headers, array_values($row));
     }
 
     /**
@@ -93,12 +111,13 @@ final class EnrollmentsImporter
      */
     private function setDatabaseConnection(): void
     {
+        //TODO: probably a InteractsWithDatabase trait would be better
         $database = $this->documentManager
             ->getConfiguration()
             ->getDefaultDB();
 
         $this->connection = $this->documentManager
             ->getClient()
-            ->selectDatabase($database);
+            ->selectCollection($database, self::COLLECTION_NAME);
     }
 }
