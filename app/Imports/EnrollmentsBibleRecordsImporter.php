@@ -2,8 +2,7 @@
 
 namespace App\Imports;
 
-use Doctrine\ODM\MongoDB\DocumentManager;
-use MongoDB\Collection;
+use ProfessorGradingApp\Infrastructure\Common\Doctrine\Concerns\InteractsWithDatabaseCollection;
 use Psr\Log\LoggerInterface;
 use Spatie\SimpleExcel\SimpleExcelReader;
 
@@ -14,22 +13,16 @@ use Spatie\SimpleExcel\SimpleExcelReader;
  */
 final class EnrollmentsBibleRecordsImporter
 {
-    /**
-     * @var Collection
-     */
-    private Collection $collection;
+    use InteractsWithDatabaseCollection;
 
     private const COLLECTION_NAME = 'enrollments_bible';
 
     /**
-     * @param DocumentManager $documentManager
      * @param LoggerInterface $logger
      */
-    public function __construct(
-        private readonly DocumentManager $documentManager,
-        private readonly LoggerInterface $logger,
-    ) {
-        $this->setDatabaseConnection();
+    public function __construct(private readonly LoggerInterface $logger)
+    {
+        $this->selectCollection(self::COLLECTION_NAME);
     }
 
     /**
@@ -67,20 +60,5 @@ final class EnrollmentsBibleRecordsImporter
         return function (array $rowProperties) {
             $this->collection->insertOne($rowProperties);
         };
-    }
-
-    /**
-     * @return void
-     */
-    private function setDatabaseConnection(): void
-    {
-        //TODO: probably a InteractsWithDatabase trait would be better
-        $database = $this->documentManager
-            ->getConfiguration()
-            ->getDefaultDB();
-
-        $this->collection = $this->documentManager
-            ->getClient()
-            ->selectCollection($database, self::COLLECTION_NAME);
     }
 }

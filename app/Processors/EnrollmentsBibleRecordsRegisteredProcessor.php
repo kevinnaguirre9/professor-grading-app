@@ -5,6 +5,7 @@ namespace App\Processors;
 use App\Events\EnrollmentsBibleRecordsRegistered;
 use App\Processors\Concerns\ProcessesMessage;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use ProfessorGradingApp\Infrastructure\Common\Doctrine\Concerns\InteractsWithDatabaseCollection;
 
 /**
  * Class EnrollmentsBibleRecordsRegisteredProcessor
@@ -13,7 +14,9 @@ use Illuminate\Contracts\Queue\ShouldQueue;
  */
 final class EnrollmentsBibleRecordsRegisteredProcessor implements ShouldQueue
 {
-    use ProcessesMessage;
+    use ProcessesMessage, InteractsWithDatabaseCollection;
+
+    private const COLLECTION_NAME = 'enrollments_bible';
 
     /**
      * @param EnrollmentsBibleRecordsRegistered $event
@@ -22,6 +25,8 @@ final class EnrollmentsBibleRecordsRegisteredProcessor implements ShouldQueue
     public function __invoke(EnrollmentsBibleRecordsRegistered $event): void
     {
         $this->logger->info('Just about to create current academic period core records...');
+
+        $this->selectCollection(self::COLLECTION_NAME);
 
         //STEPS:
 
