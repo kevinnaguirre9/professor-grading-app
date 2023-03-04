@@ -38,7 +38,7 @@ return [
             'driver' => 'mongodb',
             'table' => env('QUEUE_TABLE', 'jobs'),
             'queue' => 'files',
-            'retry_after' => 90,
+            'retry_after' => 360, // 6 minutes, timeout is 5 minutes
             'after_commit' => false,
         ],
 
@@ -81,7 +81,7 @@ return [
 
     'failed' => [
         'driver' => env('QUEUE_FAILED_DRIVER', 'database-uuids'),
-        'database' => env('DB_CONNECTION', 'mysql'),
+        'database' => env('DB_CONNECTION', 'mongodb'),
         'table' => env('QUEUE_FAILED_TABLE', 'failed_jobs'),
     ],
 

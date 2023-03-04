@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Imports\EnrollmentsImporter;
 use Illuminate\Support\Facades\Storage;
 use Psr\Log\LoggerInterface;
 
@@ -20,24 +21,20 @@ final class CreateEnrollmentsFromFile extends Job
     }
 
     /**
+     * @param LoggerInterface $logger
+     * @param EnrollmentsImporter $importer
      * @return void
      */
-    public function __invoke(): void
+    public function __invoke(LoggerInterface $logger, EnrollmentsImporter $importer): void
     {
-        $logger = app(LoggerInterface::class);
+        $logger->info('Creating enrollments from file...');
 
-        $logger->info('CREATING ENROLLMENTS FROM FILE...');
-
-        $logger->info('PATH IS: ' . $this->enrollmentsFilePath);
-
-        $logger->info(
-            Storage::exists($this->enrollmentsFilePath) ? 'FILE EXISTS' : 'FILE DOES NOT EXIST'
-        );
-
-        $logger->info('ENROLLMENTS CREATED FROM FILE');
-
-        $logger->info('DELETING FILE...');
+        $importer->__invoke(Storage::path($this->enrollmentsFilePath));
 
         Storage::delete($this->enrollmentsFilePath);
+
+        $logger->info('Enrollments created from file!');
+
+        //TODO: DISPATCH EVENT TO CREATE MASTER RECORDS USING APPLICATION SERVICES
     }
 }

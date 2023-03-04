@@ -48,11 +48,9 @@ final class EnrollmentsFileImportationPostController extends Controller
         try {
             $enrollmentsFile = request()->file('enrollments_file');
 
-            $enrollmentsFilePath = self::BASE_PATH . DIRECTORY_SEPARATOR . $enrollmentsFile->hashName();
-
-            $enrollmentsFile->storeAs(self::BASE_PATH, $enrollmentsFile->hashName());
-
-            return $enrollmentsFilePath;
+            return $enrollmentsFile->storeAs(
+                self::BASE_PATH, $enrollmentsFile->getClientOriginalName()
+            );
 
         } catch (\Exception $e) {
 

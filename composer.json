@@ -15,7 +15,8 @@
         "league/tactician": "^1.1",
         "nyholm/psr7": "^1.5",
         "ramsey/uuid": "^4.7",
-        "spatie/laravel-data": "^2.2"
+        "spatie/laravel-data": "^2.2",
+        "spatie/simple-excel": "^3.1"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",

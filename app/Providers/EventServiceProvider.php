@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Events\EnrollmentsBibleRecordsRegistered;
 use Laravel\Lumen\Providers\EventServiceProvider as ServiceProvider;
 use ProfessorGradingApp\Domain\Common\Events\EventBus as EventBusInterface;
 use ProfessorGradingApp\Infrastructure\Common\Bus\Events\EventBus as InfrastructureEventBus;
@@ -22,6 +23,9 @@ class EventServiceProvider extends ServiceProvider
         \ProfessorGradingApp\Domain\Student\Events\StudentRegistered::class => [
             \App\Processors\StudentRegisteredProcessor::class,
         ],
+//        \App\Events\EnrollmentsBibleRecordsRegistered::class => [
+//            \App\Processors\EnrollmentsBibleRecordsRegisteredProcessor::class,
+//        ],
     ];
 
     /**
