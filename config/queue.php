@@ -38,7 +38,7 @@ return [
             'driver' => 'mongodb',
             'table' => env('QUEUE_TABLE', 'jobs'),
             'queue' => 'files',
-            'retry_after' => 3900, // 65 minutes, timeouts at 60 minutes (see supervisor.conf)
+            'retry_after' => 360, // 6 minutes, timeout is 5 minutes
             'after_commit' => false,
         ],
 

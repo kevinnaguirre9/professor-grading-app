@@ -20,13 +20,21 @@ final class CreateEnrollmentsFromFile extends Job
     {
     }
 
+    /**
+     * @param LoggerInterface $logger
+     * @param EnrollmentsImporter $importer
+     * @return void
+     */
     public function __invoke(LoggerInterface $logger, EnrollmentsImporter $importer): void
     {
         $logger->info('Creating enrollments from file...');
 
         $importer->__invoke(Storage::path($this->enrollmentsFilePath));
 
-        //Deletes file
-//        Storage::delete($this->enrollmentsFilePath);
+        Storage::delete($this->enrollmentsFilePath);
+
+        $logger->info('Enrollments created from file!');
+
+        //TODO: DISPATCH EVENT TO CREATE MASTER RECORDS USING APPLICATION SERVICES
     }
 }

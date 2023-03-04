@@ -2,12 +2,10 @@
 
 namespace App\Imports;
 
-use App\Imports\Filters\ChunkReadFilter;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use MongoDB\Collection;
-use PhpOffice\PhpSpreadsheet\IOFactory;
-use PhpOffice\PhpSpreadsheet\Reader\Exception;
 use Psr\Log\LoggerInterface;
+use Spatie\SimpleExcel\SimpleExcelReader;
 
 /**
  * Class EnrollmentsImporter
@@ -17,19 +15,9 @@ use Psr\Log\LoggerInterface;
 final class EnrollmentsImporter
 {
     /**
-     * Define how many rows we want to read for each "chunk"
-     */
-    private const CHUNK_SIZE = 100;
-
-    /**
-     * The Excel file headers
-     */
-    private static array $headers;
-
-    /**
      * @var Collection
      */
-    private Collection $connection;
+    private Collection $collection;
 
     private const COLLECTION_NAME = 'enrollments_bible';
 
@@ -38,72 +26,47 @@ final class EnrollmentsImporter
      * @param LoggerInterface $logger
      */
     public function __construct(
-        private DocumentManager $documentManager,
-        private LoggerInterface $logger,
+        private readonly DocumentManager $documentManager,
+        private readonly LoggerInterface $logger,
     ) {
         $this->setDatabaseConnection();
     }
 
     /**
+     * Save enrollments from file to database
+     *
      * @param string $fileLocation
      * @return void
-     * @throws Exception
      */
     public function __invoke(string $fileLocation): void
     {
-        $readerType = IOFactory::identify($fileLocation);
+        try {
+            $rows = SimpleExcelReader::create($fileLocation)
+                ->formatHeadersUsing(fn(string $header) => strtolower($header))
+                ->getRows();
 
-        $reader = IOFactory::createReader($readerType);
+            $rows->each($this->enrollmentsRegister());
 
-        $worksheetData = $reader->listWorksheetInfo($fileLocation);
+        } catch (\Exception $e) {
 
-        $totalRows = data_get($worksheetData, '0.totalRows');
-
-        $chunkFilter = new ChunkReadFilter();
-
-        $reader->setReadFilter($chunkFilter);
-
-        for ($startRow = 2; $startRow <= $totalRows; $startRow += self::CHUNK_SIZE) {
-
-            $this->logger->debug(
-                sprintf('Reading rows %s to %s', $startRow, ($startRow + self::CHUNK_SIZE - 1))
+            $this->logger->error(
+                sprintf('Importation process has some errors: %s ', $e->getMessage())
             );
 
-            $chunkFilter->setRows($startRow, self::CHUNK_SIZE);
+            $this->logger->error('Rolling back importation process...');
 
-            $spreadsheet = $reader->load($fileLocation);
-
-            $sheetData = $spreadsheet->getActiveSheet()->toArray();
-
-            $this->setMappedHeaderKeys($sheetData);
-
-            $enrollment = array_map($this->recordsWithKeyTransformer(), $sheetData);
-
-            $this->connection->insertMany($enrollment);
+            $this->collection->drop();
         }
-    }
-
-    /**
-     * @param array $sheetData
-     * @return void
-     */
-    private function setMappedHeaderKeys(array $sheetData): void
-    {
-        if (!empty(self::$headers))
-            return;
-
-        $rawHeaders = array_shift($sheetData);
-
-        //TODO: Map headers to database fields in a human-readable format
-        self::$headers = array_map('strtolower', $rawHeaders);
     }
 
     /**
      * @return \Closure
      */
-    private function recordsWithKeyTransformer(): \Closure
+    private function enrollmentsRegister(): \Closure
     {
-        return fn($row) => array_combine(self::$headers, array_values($row));
+        return function (array $rowProperties) {
+            $this->collection->insertOne($rowProperties);
+        };
     }
 
     /**
@@ -116,7 +79,7 @@ final class EnrollmentsImporter
             ->getConfiguration()
             ->getDefaultDB();
 
-        $this->connection = $this->documentManager
+        $this->collection = $this->documentManager
             ->getClient()
             ->selectCollection($database, self::COLLECTION_NAME);
     }
