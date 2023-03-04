@@ -23,9 +23,9 @@ class EventServiceProvider extends ServiceProvider
         \ProfessorGradingApp\Domain\Student\Events\StudentRegistered::class => [
             \App\Processors\StudentRegisteredProcessor::class,
         ],
-//        \App\Events\EnrollmentsBibleRecordsRegistered::class => [
-//            \App\Processors\EnrollmentsBibleRecordsRegisteredProcessor::class,
-//        ],
+        \App\Events\EnrollmentsBibleRecordsRegistered::class => [
+            \App\Processors\EnrollmentsBibleRecordsRegisteredProcessor::class,
+        ],
     ];
 
     /**

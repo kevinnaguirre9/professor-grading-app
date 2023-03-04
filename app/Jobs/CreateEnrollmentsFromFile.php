@@ -2,7 +2,8 @@
 
 namespace App\Jobs;
 
-use App\Imports\EnrollmentsImporter;
+use App\Events\EnrollmentsBibleRecordsRegistered;
+use App\Imports\EnrollmentsBibleRecordsImporter;
 use Illuminate\Support\Facades\Storage;
 use Psr\Log\LoggerInterface;
 
@@ -21,20 +22,20 @@ final class CreateEnrollmentsFromFile extends Job
     }
 
     /**
+     * @param EnrollmentsBibleRecordsImporter $importer
      * @param LoggerInterface $logger
-     * @param EnrollmentsImporter $importer
      * @return void
      */
-    public function __invoke(LoggerInterface $logger, EnrollmentsImporter $importer): void
+    public function __invoke(EnrollmentsBibleRecordsImporter $importer, LoggerInterface $logger): void
     {
-        $logger->info('Creating enrollments from file...');
+        $logger->info('Registering enrollments bible from file...');
 
         $importer->__invoke(Storage::path($this->enrollmentsFilePath));
 
         Storage::delete($this->enrollmentsFilePath);
 
-        $logger->info('Enrollments created from file!');
+        $logger->info('Enrollments bible records created from file!');
 
-        //TODO: DISPATCH EVENT TO CREATE MASTER RECORDS USING APPLICATION SERVICES
+        event(new EnrollmentsBibleRecordsRegistered);
     }
 }

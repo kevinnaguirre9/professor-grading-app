@@ -8,11 +8,11 @@ use Psr\Log\LoggerInterface;
 use Spatie\SimpleExcel\SimpleExcelReader;
 
 /**
- * Class EnrollmentsImporter
+ * Class EnrollmentsBibleRecordsImporter
  *
  * @package App\Imports
  */
-final class EnrollmentsImporter
+final class EnrollmentsBibleRecordsImporter
 {
     /**
      * @var Collection
@@ -45,7 +45,7 @@ final class EnrollmentsImporter
                 ->formatHeadersUsing(fn(string $header) => strtolower($header))
                 ->getRows();
 
-            $rows->each($this->enrollmentsRegister());
+            $rows->each($this->enrollmentsBibleRegistrar());
 
         } catch (\Exception $e) {
 
@@ -62,7 +62,7 @@ final class EnrollmentsImporter
     /**
      * @return \Closure
      */
-    private function enrollmentsRegister(): \Closure
+    private function enrollmentsBibleRegistrar(): \Closure
     {
         return function (array $rowProperties) {
             $this->collection->insertOne($rowProperties);
