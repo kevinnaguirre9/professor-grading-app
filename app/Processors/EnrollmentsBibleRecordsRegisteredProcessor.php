@@ -4,6 +4,7 @@ namespace App\Processors;
 
 use App\Actions\CoreRecordsRegistration\RegisterAcademicPeriod;
 use App\Actions\CoreRecordsRegistration\RegisterDegrees;
+use App\Actions\CoreRecordsRegistration\RegisterProfessors;
 use App\Actions\CoreRecordsRegistration\RegisterStudents;
 use App\Actions\CoreRecordsRegistration\RegisterSubjects;
 use App\Events\EnrollmentsBibleRecordsRegistered;
@@ -60,7 +61,7 @@ final class EnrollmentsBibleRecordsRegisteredProcessor implements ShouldQueue
             RegisterDegrees::class,
             RegisterSubjects::class,
             RegisterStudents::class,
-//            RegisterProfessors::class,
+            RegisterProfessors::class,
             //Create Classes
             //Create Enrollments
         ]);

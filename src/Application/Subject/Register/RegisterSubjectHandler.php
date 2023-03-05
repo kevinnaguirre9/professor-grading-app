@@ -25,12 +25,13 @@ final class RegisterSubjectHandler
 
     /**
      * @param RegisterSubjectCommand $command
-     * @return void
+     * @return Subject
      * @throws SubjectAlreadyRegistered
      */
-    public function __invoke(RegisterSubjectCommand $command): void
+    public function __invoke(RegisterSubjectCommand $command): Subject
     {
-        $this->ensureSubjectDoesNotExist($command->code());
+        if ($Subject = $this->repository->findByCode($command->code()))
+            return $Subject;
 
         $degreesLevel = array_map($this->degreeLevelBuilder(), $command->degreesLevel());
 
@@ -43,6 +44,7 @@ final class RegisterSubjectHandler
 
         $this->repository->save($Subject);
 
+        return $Subject;
     }
 
     /**
