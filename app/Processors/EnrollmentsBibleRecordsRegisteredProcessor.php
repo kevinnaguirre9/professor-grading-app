@@ -2,10 +2,12 @@
 
 namespace App\Processors;
 
+use App\Actions\{AssignSubjectDegreeLevels, CreateAcademicPeriod, RegisterDegrees, RegisterSubjects};
 use App\Events\EnrollmentsBibleRecordsRegistered;
-use App\Processors\Concerns\ProcessesMessage;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use ProfessorGradingApp\Infrastructure\Common\Doctrine\Concerns\InteractsWithDatabaseCollection;
+use Illuminate\Pipeline\Pipeline;
+use MongoDB\Collection;
+use ProfessorGradingApp\Infrastructure\Common\Concerns\{InteractsWithDatabaseCollection, LogsMessage};
 
 /**
  * Class EnrollmentsBibleRecordsRegisteredProcessor
@@ -14,8 +16,11 @@ use ProfessorGradingApp\Infrastructure\Common\Doctrine\Concerns\InteractsWithDat
  */
 final class EnrollmentsBibleRecordsRegisteredProcessor implements ShouldQueue
 {
-    use ProcessesMessage, InteractsWithDatabaseCollection;
+    use InteractsWithDatabaseCollection, LogsMessage;
 
+    /**
+     * Enrollments bible collection name
+     */
     private const COLLECTION_NAME = 'enrollments_bible';
 
     /**
@@ -24,29 +29,77 @@ final class EnrollmentsBibleRecordsRegisteredProcessor implements ShouldQueue
      */
     public function __invoke(EnrollmentsBibleRecordsRegistered $event): void
     {
-        $this->logger->info('Just about to create current academic period core records...');
+        try {
+            $this->selectCollection(self::COLLECTION_NAME);
 
-        $this->selectCollection(self::COLLECTION_NAME);
+            $this->pipeline($this->collection)
+                ->then($this->onSuccess());
 
-        //STEPS:
+        } catch (\Throwable $e) {
 
-        //Create Academic Periods
+            $this->log('Error processing enrollments bible records: ' . $e->getMessage());
 
-        //Create Degrees
+            call_user_func($this->sendFailureImportationEmail());
+        }
+    }
 
-        //Create Subjects
+    /**
+     * @param Collection $collection
+     * @return Pipeline
+     */
+    private function pipeline(Collection $collection): Pipeline
+    {
+        /** @var Pipeline $Pipeline */
+        $Pipeline = app(Pipeline::class);
 
-        //Create Students
+        return $Pipeline->send($collection)->through([
+            CreateAcademicPeriod::class,
+            RegisterDegrees::class,
+            RegisterSubjects::class,
+            AssignSubjectDegreeLevels::class,
+            //Create Students
+            //Create Professors
+            //Create Classes
+            //Create Enrollments
+        ]);
+    }
 
-        //Create Professors
+    /**
+     * @return \Closure
+     */
+    private function onSuccess(): \Closure
+    {
+        return function() {
+            $callbacks = [$this->dropCollection(), $this->sendSuccessImportationEmail()];
 
-        //Create Classes
+            foreach ($callbacks as $callback)
+                $callback();
+        };
+    }
 
-        //Create Enrollments
+    /**
+     * @return \Closure
+     */
+    private function dropCollection(): \Closure
+    {
+        return fn() => $this->collection->drop();
+    }
 
-        //TODO: Option 1: just call the registrar service
-        //TODO: Option 2: do everything here, instantiating commands and using the command bus
+    /**
+     * @return \Closure
+     */
+    private function sendSuccessImportationEmail(): \Closure
+    {
+        //TODO: dispatch event to send email
+        return fn() => $this->log('Email sent!');
+    }
 
-        $this->logger->info('Current academic period core records created!');
+    /**
+     * @return \Closure
+     */
+    private function sendFailureImportationEmail(): \Closure
+    {
+        //TODO: dispatch event to send email
+        return fn() => $this->log('Failure Email sent!');
     }
 }

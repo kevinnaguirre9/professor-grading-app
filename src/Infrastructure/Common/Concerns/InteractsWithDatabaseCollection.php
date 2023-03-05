@@ -1,6 +1,6 @@
 <?php
 
-namespace ProfessorGradingApp\Infrastructure\Common\Doctrine\Concerns;
+namespace ProfessorGradingApp\Infrastructure\Common\Concerns;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
 use MongoDB\Collection;
@@ -8,7 +8,7 @@ use MongoDB\Collection;
 /**
  * Trait InteractsWithDatabaseCollection
  *
- * @package ProfessorGradingApp\Infrastructure\Common\Doctrine\Concerns
+ * @package ProfessorGradingApp\Infrastructure\Common\Concerns
  */
 trait InteractsWithDatabaseCollection
 {

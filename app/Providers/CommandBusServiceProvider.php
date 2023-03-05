@@ -19,7 +19,7 @@ class CommandBusServiceProvider  extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind(
+        $this->app->singleton(
             'League\Tactician\CommandBus', function ($app) {
                 return (new CommandBusFactory)($app);
             }

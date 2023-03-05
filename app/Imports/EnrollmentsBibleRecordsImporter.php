@@ -2,7 +2,7 @@
 
 namespace App\Imports;
 
-use ProfessorGradingApp\Infrastructure\Common\Doctrine\Concerns\InteractsWithDatabaseCollection;
+use ProfessorGradingApp\Infrastructure\Common\Concerns\InteractsWithDatabaseCollection;
 use Psr\Log\LoggerInterface;
 use Spatie\SimpleExcel\SimpleExcelReader;
 
@@ -26,7 +26,7 @@ final class EnrollmentsBibleRecordsImporter
     }
 
     /**
-     * Save enrollments from file to database
+     * Register enrollments bible from file to database
      *
      * @param string $fileLocation
      * @return void
@@ -35,7 +35,7 @@ final class EnrollmentsBibleRecordsImporter
     {
         try {
             $rows = SimpleExcelReader::create($fileLocation)
-                ->formatHeadersUsing(fn(string $header) => strtolower($header))
+                ->useHeaders($this->customHeaders())
                 ->getRows();
 
             $rows->each($this->enrollmentsBibleRegistrar());
@@ -43,10 +43,8 @@ final class EnrollmentsBibleRecordsImporter
         } catch (\Exception $e) {
 
             $this->logger->error(
-                sprintf('Importation process has some errors: %s ', $e->getMessage())
+                sprintf('Rolling back. Importation process has errors: %s ', $e->getMessage())
             );
-
-            $this->logger->error('Rolling back importation process...');
 
             $this->collection->drop();
         }
@@ -60,5 +58,37 @@ final class EnrollmentsBibleRecordsImporter
         return function (array $rowProperties) {
             $this->collection->insertOne($rowProperties);
         };
+    }
+
+    /**
+     * @return string[]
+     */
+    private function customHeaders(): array
+    {
+        return [
+            'headquarter',
+            'campus',
+            'subject_degree_taken',
+            'student_degree_followed',
+            'academic_period',
+            'national_identification_number',
+            'student_full_name',
+            'semester_level',
+            'subject_code',
+            'subject_name',
+            'class_group_number',
+            'class_group',
+            'final_grade',
+            'times',
+            'professor_full_name',
+            'weekday_number',
+            'weekday_name',
+            'start_class_time',
+            'end_class_time',
+            'student_personal_email',
+            'student_institutional_email',
+            'student_mobile_phone',
+            'student_landline_phone',
+        ];
     }
 }

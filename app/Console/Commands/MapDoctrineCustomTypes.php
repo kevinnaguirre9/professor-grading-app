@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use ProfessorGradingApp\Infrastructure\Common\Doctrine\Concerns\InteractsWithMapper;
+use ProfessorGradingApp\Infrastructure\Common\Concerns\InteractsWithMapper;
 use ProfessorGradingApp\Infrastructure\Common\Doctrine\Contracts\DoctrineCustomType;
 use ReflectionClass;
 use ReflectionException;

@@ -5,7 +5,7 @@ namespace App\Jobs;
 use App\Events\EnrollmentsBibleRecordsRegistered;
 use App\Imports\EnrollmentsBibleRecordsImporter;
 use Illuminate\Support\Facades\Storage;
-use Psr\Log\LoggerInterface;
+use ProfessorGradingApp\Infrastructure\Common\Concerns\LogsMessage;
 
 /**
  * Class CreateEnrollmentsFromFile
@@ -14,6 +14,8 @@ use Psr\Log\LoggerInterface;
  */
 final class CreateEnrollmentsFromFile extends Job
 {
+    use LogsMessage;
+
     /**
      * @param string $enrollmentsFilePath
      */
@@ -23,18 +25,17 @@ final class CreateEnrollmentsFromFile extends Job
 
     /**
      * @param EnrollmentsBibleRecordsImporter $importer
-     * @param LoggerInterface $logger
      * @return void
      */
-    public function __invoke(EnrollmentsBibleRecordsImporter $importer, LoggerInterface $logger): void
+    public function __invoke(EnrollmentsBibleRecordsImporter $importer): void
     {
-        $logger->info('Registering enrollments bible from file...');
+        $this->log('Registering enrollments bible from file...');
 
         $importer->__invoke(Storage::path($this->enrollmentsFilePath));
 
         Storage::delete($this->enrollmentsFilePath);
 
-        $logger->info('Enrollments bible records created from file!');
+        $this->log('Enrollments bible records created from file!');
 
         event(new EnrollmentsBibleRecordsRegistered);
     }

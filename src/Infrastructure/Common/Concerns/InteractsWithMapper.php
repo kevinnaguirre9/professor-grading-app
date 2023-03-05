@@ -1,13 +1,13 @@
 <?php
 
-namespace ProfessorGradingApp\Infrastructure\Common\Doctrine\Concerns;
+namespace ProfessorGradingApp\Infrastructure\Common\Concerns;
 
 use Illuminate\Support\Facades\Storage;
 
 /**
  * Trait InteractsWithMapper
  *
- * @package App\Console
+ * @package ProfessorGradingApp\Infrastructure\Common\Concerns
  */
 trait InteractsWithMapper
 {
