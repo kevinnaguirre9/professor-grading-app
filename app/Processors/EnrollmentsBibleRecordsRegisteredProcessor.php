@@ -2,7 +2,7 @@
 
 namespace App\Processors;
 
-use App\Actions\{AssignSubjectDegreeLevels, CreateAcademicPeriod, RegisterDegrees, RegisterSubjects};
+use App\Actions\{CreateAcademicPeriod, RegisterDegrees, RegisterSubjects};
 use App\Events\EnrollmentsBibleRecordsRegistered;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Pipeline\Pipeline;
@@ -56,7 +56,6 @@ final class EnrollmentsBibleRecordsRegisteredProcessor implements ShouldQueue
             CreateAcademicPeriod::class,
             RegisterDegrees::class,
             RegisterSubjects::class,
-            AssignSubjectDegreeLevels::class,
             //Create Students
             //Create Professors
             //Create Classes
@@ -70,7 +69,8 @@ final class EnrollmentsBibleRecordsRegisteredProcessor implements ShouldQueue
     private function onSuccess(): \Closure
     {
         return function() {
-            $callbacks = [$this->dropCollection(), $this->sendSuccessImportationEmail()];
+//            $callbacks = [$this->dropCollection(), $this->sendSuccessImportationEmail()];
+            $callbacks = [$this->sendSuccessImportationEmail()];
 
             foreach ($callbacks as $callback)
                 $callback();

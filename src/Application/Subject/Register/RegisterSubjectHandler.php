@@ -61,6 +61,9 @@ final class RegisterSubjectHandler
      */
     private function degreeLevelBuilder(): \Closure
     {
-        return fn($degreeId, $level) => new DegreeLevel(new DegreeId($degreeId), $level);
+        return fn($degreeLevel) => new DegreeLevel(
+            new DegreeId($degreeLevel['degree_id']),
+            $degreeLevel['level']
+        );
     }
 }
