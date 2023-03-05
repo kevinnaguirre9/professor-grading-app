@@ -41,8 +41,6 @@ final class RegisterStudentHandler
      * @throws InvalidEmailDomain
      * @throws InvalidEmailFormat
      * @throws InvalidUuid
-     * @throws StudentInstitutionalEmailAlreadyRegistered
-     * @throws StudentNationalIdentificationNumberAlreadyRegistered
      */
     public function __invoke(RegisterStudentCommand $command): Student
     {
@@ -52,16 +50,26 @@ final class RegisterStudentHandler
             $command->nationalIdentificationNumber()
         );
 
-        $this->ensureInstitutionalEmailIsNotInUse($institutionalEmail);
+        if($Student = $this->repository->findByInstitutionalEmail($institutionalEmail)) {
 
-        $this->ensureStudentNationalIdentificationNumberDoesNotExists($nationalIdentificationNumber);
+            $command->personalEmail() && $Student
+                ->updatePersonalEmail(new PersonalEmail($command->personalEmail()));
+
+            $command->mobileNumber() && $Student->updateMobileNumber($command->mobileNumber());
+
+            $command->landlineNumber() && $Student->updateLandlineNumber($command->landlineNumber());
+
+            $this->repository->save($Student);
+
+            return $Student;
+        }
 
         $Student = Student::create(
             id: new StudentId(),
             fullName: $command->fullName(),
-            personalEmail: new PersonalEmail($command->personalEmail()),
             institutionalEmail: $institutionalEmail,
             nationalIdentificationNumber: $nationalIdentificationNumber,
+            personalEmail: $command->personalEmail() ? new PersonalEmail($command->personalEmail()) : null,
             mobileNumber: $command->mobileNumber(),
             landlineNumber: $command->landlineNumber(),
         );

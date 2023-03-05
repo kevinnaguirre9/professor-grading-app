@@ -18,12 +18,12 @@ final class StudentRegistered extends DomainEvent
     /**
      * @param string $id
      * @param string $fullName
-     * @param string $personalEmail
      * @param string $institutionalEmail
      * @param string $nationalIdentificationNumber
-     * @param string $mobileNumber
-     * @param string $landlineNumber
      * @param string $registeredAt
+     * @param string|null $personalEmail
+     * @param string|null $mobileNumber
+     * @param string|null $landlineNumber
      * @param string|null $eventId
      * @param string|null $firedAt
      * @throws InvalidUuid
@@ -31,12 +31,12 @@ final class StudentRegistered extends DomainEvent
     public function __construct(
         private readonly string $id,
         private readonly string $fullName,
-        private readonly string $personalEmail,
         private readonly string $institutionalEmail,
         private readonly string $nationalIdentificationNumber,
-        private readonly string $mobileNumber,
-        private readonly string $landlineNumber,
         private readonly string $registeredAt,
+        private readonly ?string $personalEmail,
+        private readonly ?string $mobileNumber,
+        private readonly ?string $landlineNumber,
         ?string $eventId = null,
         ?string $firedAt = null,
     ) {
@@ -54,12 +54,12 @@ final class StudentRegistered extends DomainEvent
         return new self(
             $student->id(),
             $student->fullName(),
-            $student->personalEmail(),
             $student->institutionalEmail(),
             $student->nationalIdentificationNumber(),
+            $student->registrationDate()->format('Y-m-d H:i:s'),
+            $student->personalEmail(),
             $student->mobileNumber(),
             $student->landlineNumber(),
-            $student->registrationDate()->format('Y-m-d H:i:s'),
         );
     }
 

@@ -13,13 +13,13 @@ trait HandlesCommand
 {
     /**
      * @param $command
-     * @return void
+     * @return mixed
      */
-    public function handleCommand($command): void
+    public function handleCommand($command): mixed
     {
         /** @var CommandBus $commandBus */
         $commandBus = app('League\Tactician\CommandBus');
 
-        $commandBus->handle($command);
+        return $commandBus->handle($command);
     }
 }

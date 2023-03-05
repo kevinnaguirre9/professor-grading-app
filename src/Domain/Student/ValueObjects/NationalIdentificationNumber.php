@@ -20,7 +20,7 @@ final class NationalIdentificationNumber extends StringValueObject
      */
     public function __construct(string $value)
     {
-        $this->validate($value);
+//        $this->validate($value);
 
         parent::__construct($value);
     }

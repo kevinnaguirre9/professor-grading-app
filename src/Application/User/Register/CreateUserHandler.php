@@ -37,8 +37,10 @@ final class CreateUserHandler
      */
     public function __invoke(CreateUserCommand $command): User
     {
-        if($this->repository->findByEmail(new UserEmail($command->email())))
-            throw new UserWithGivenEmailAlreadyRegistered($command->email());
+        if($User = $this->repository->findByEmail(new UserEmail($command->email()))) {
+//            throw new UserWithGivenEmailAlreadyRegistered($command->email());
+            return $User;
+        }
 
         $role = Role::from($command->role());
 

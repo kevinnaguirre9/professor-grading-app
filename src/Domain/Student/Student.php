@@ -28,13 +28,13 @@ final class Student extends BaseEntity
     /**
      * @param StudentId $id
      * @param string $fullName
-     * @param PersonalEmail $personalEmail
      * @param InstitutionalEmail $institutionalEmail
      * @param NationalIdentificationNumber $nationalIdentificationNumber
      * @param array $degreeIds
      * @param array $enrollmentIds
      * @param array $gradeIds
      * @param \DateTimeImmutable $registeredAt
+     * @param PersonalEmail|null $personalEmail
      * @param UserId|null $userId
      * @param string|null $mobileNumber
      * @param string|null $landlineNumber
@@ -42,14 +42,14 @@ final class Student extends BaseEntity
     public function __construct(
         private readonly StudentId $id,
         private string $fullName,
-        private PersonalEmail $personalEmail,
         private readonly InstitutionalEmail $institutionalEmail,
         private NationalIdentificationNumber $nationalIdentificationNumber,
         private array $degreeIds,
         private array $enrollmentIds,
         private array $gradeIds,
-        private ?UserId $userId,
         private readonly \DateTimeImmutable $registeredAt,
+        private ?PersonalEmail $personalEmail,
+        private ?UserId $userId,
         private ?string $mobileNumber,
         private ?string $landlineNumber,
     ) {
@@ -58,7 +58,7 @@ final class Student extends BaseEntity
     /**
      * @param StudentId $id
      * @param string $fullName
-     * @param PersonalEmail $personalEmail
+     * @param PersonalEmail|null $personalEmail
      * @param InstitutionalEmail $institutionalEmail
      * @param NationalIdentificationNumber $nationalIdentificationNumber
      * @param array $degreeIds
@@ -74,12 +74,12 @@ final class Student extends BaseEntity
     public static function create(
         StudentId $id,
         string $fullName,
-        PersonalEmail $personalEmail,
         InstitutionalEmail $institutionalEmail,
         NationalIdentificationNumber $nationalIdentificationNumber,
         array $degreeIds = [],
         array $enrollmentIds = [],
         array $gradeIds = [],
+        ?PersonalEmail $personalEmail = null,
         UserId $userId = null,
         ?string $mobileNumber = null,
         ?string $landlineNumber = null,
@@ -88,14 +88,14 @@ final class Student extends BaseEntity
         $Student = new self(
             $id,
             $fullName,
-            $personalEmail,
             $institutionalEmail,
             $nationalIdentificationNumber,
             $degreeIds,
             $enrollmentIds,
             $gradeIds,
-            $userId,
             $registeredAt,
+            $personalEmail,
+            $userId,
             $mobileNumber,
             $landlineNumber,
         );
@@ -142,6 +142,33 @@ final class Student extends BaseEntity
     }
 
     /**
+     * @param PersonalEmail $personalEmail
+     * @return void
+     */
+    public function updatePersonalEmail(PersonalEmail $personalEmail): void
+    {
+        $this->personalEmail = $personalEmail;
+    }
+
+    /**
+     * @param string $mobileNumber
+     * @return void
+     */
+    public function updateMobileNumber(string $mobileNumber): void
+    {
+        $this->mobileNumber = $mobileNumber;
+    }
+
+    /**
+     * @param string $landlineNumber
+     * @return void
+     */
+    public function updateLandlineNumber(string $landlineNumber): void
+    {
+        $this->landlineNumber = $landlineNumber;
+    }
+
+    /**
      * @return StudentId
      */
     public function id(): StudentId
@@ -166,9 +193,9 @@ final class Student extends BaseEntity
     }
 
     /**
-     * @return PersonalEmail
+     * @return PersonalEmail|null
      */
-    public function personalEmail(): PersonalEmail
+    public function personalEmail(): ?PersonalEmail
     {
         return $this->personalEmail;
     }
@@ -182,9 +209,9 @@ final class Student extends BaseEntity
     }
 
     /**
-     * @return UserId
+     * @return UserId|null
      */
-    public function userId(): UserId
+    public function userId(): ?UserId
     {
         return $this->userId;
     }
