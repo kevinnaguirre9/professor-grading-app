@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Actions;
+namespace App\Actions\CoreRecordsRegistration;
 
 use MongoDB\Collection;
 use ProfessorGradingApp\Application\Degree\Register\RegisterDegreeCommand;
@@ -10,26 +10,25 @@ use ProfessorGradingApp\Infrastructure\Common\Concerns\LogsMessage;
 /**
  * Class RegisterDegrees
  *
- * @package App\Actions
+ * @package App\Actions\CoreRecordsRegistration
  */
-final class RegisterDegrees
+final class RegisterDegrees implements CoreRecordsRegistrationPipelineStage
 {
     use HandlesCommand, LogsMessage;
 
     /**
-     * @param Collection $collection
-     * @param $next
-     * @return mixed
+     * @inheritDoc
      */
-    public function __invoke(Collection $collection, $next): mixed
+    public function handle(Collection $enrollmentsBibleCollection, $next): mixed
     {
         $this->log('Registering degrees...');
 
-        $degrees = $collection->distinct('student_degree_followed');
+        $degrees = $enrollmentsBibleCollection
+            ->distinct('student_degree_followed');
 
         foreach ($degrees as $degree)
             $this->handleCommand(new RegisterDegreeCommand($degree));
 
-        return $next($collection);
+        return $next($enrollmentsBibleCollection);
     }
 }

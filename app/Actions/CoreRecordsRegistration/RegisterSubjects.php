@@ -1,42 +1,45 @@
 <?php
 
-namespace App\Actions;
+namespace App\Actions\CoreRecordsRegistration;
 
 use MongoDB\Collection;
 use ProfessorGradingApp\Application\Subject\Register\RegisterSubjectCommand;
 use ProfessorGradingApp\Domain\Degree\Repositories\DegreeRepository;
-use ProfessorGradingApp\Infrastructure\Common\Concerns\HandlesCommand;
-use ProfessorGradingApp\Infrastructure\Common\Concerns\LogsMessage;
+use ProfessorGradingApp\Infrastructure\Common\Concerns\{HandlesCommand, LogsMessage};
 
 /**
  * Class RegisterSubjects
  *
- * @package App\Actions
+ * @package App\Actions\CoreRecordsRegistration
  */
-final class RegisterSubjects
+final class RegisterSubjects implements CoreRecordsRegistrationPipelineStage
 {
     use HandlesCommand, LogsMessage;
 
+    /**
+     * @param DegreeRepository $degreeRepository
+     */
     public function __construct(private readonly DegreeRepository $degreeRepository)
     {
     }
 
     /**
-     * @param Collection $collection
-     * @param $next
-     * @return mixed
+     * @inheritDoc
      */
-    public function __invoke(Collection $collection, $next): mixed
+    public function handle(Collection $enrollmentsBibleCollection, $next): mixed
     {
         $this->log('Registering subjects...');
 
-        $subjects = $this->fetchSubjects($collection);
+        $subjects = $this->fetchSubjects($enrollmentsBibleCollection);
 
         foreach ($subjects as $subject) {
 
             $subjectCode = data_get($subject, '_id.subject_code');
 
-            $subjectDegrees = $this->fetchSubjectDegrees($collection, $subjectCode);
+            $subjectDegrees = $this->fetchSubjectDegrees(
+                $enrollmentsBibleCollection,
+                $subjectCode
+            );
 
             $this->handleCommand(new RegisterSubjectCommand(
                 $subjectCode,
@@ -45,7 +48,7 @@ final class RegisterSubjects
             ));
         }
 
-        return $next($collection);
+        return $next($enrollmentsBibleCollection);
     }
 
     /**

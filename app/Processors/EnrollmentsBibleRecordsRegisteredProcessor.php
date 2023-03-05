@@ -2,7 +2,10 @@
 
 namespace App\Processors;
 
-use App\Actions\{CreateAcademicPeriod, RegisterDegrees, RegisterSubjects};
+use App\Actions\CoreRecordsRegistration\RegisterAcademicPeriod;
+use App\Actions\CoreRecordsRegistration\RegisterDegrees;
+use App\Actions\CoreRecordsRegistration\RegisterProfessors;
+use App\Actions\CoreRecordsRegistration\RegisterSubjects;
 use App\Events\EnrollmentsBibleRecordsRegistered;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Pipeline\Pipeline;
@@ -53,11 +56,11 @@ final class EnrollmentsBibleRecordsRegisteredProcessor implements ShouldQueue
         $Pipeline = app(Pipeline::class);
 
         return $Pipeline->send($collection)->through([
-            CreateAcademicPeriod::class,
+            RegisterAcademicPeriod::class,
             RegisterDegrees::class,
             RegisterSubjects::class,
             //Create Students
-            //Create Professors
+            RegisterProfessors::class,
             //Create Classes
             //Create Enrollments
         ]);
