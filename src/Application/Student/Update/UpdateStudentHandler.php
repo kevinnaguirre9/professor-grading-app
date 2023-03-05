@@ -32,6 +32,11 @@ final class UpdateStudentHandler
             new StudentId($command->studentId())
         );
 
+        $UserId = new UserId($command->userId());
+
+        if ($Student->userId()?->equals($UserId))
+            return;
+
         $Student->updateUserId(
             new UserId($command->userId())
         );

@@ -17,7 +17,7 @@ final class RegisterSubjectCommand
     public function __construct(
         private readonly string $code,
         private readonly string $name,
-        private readonly array  $degreesLevel = [],
+        private readonly array $degreesLevel = [],
     ) {
     }
 

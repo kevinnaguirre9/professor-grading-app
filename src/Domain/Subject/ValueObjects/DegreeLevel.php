@@ -19,7 +19,7 @@ final class DegreeLevel
      */
     public function __construct(
         private readonly DegreeId $degreeId,
-        private readonly int      $level,
+        private readonly int $level,
     ) {
     }
 

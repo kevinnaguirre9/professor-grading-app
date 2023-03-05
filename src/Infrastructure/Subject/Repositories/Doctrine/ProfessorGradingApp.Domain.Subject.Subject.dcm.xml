@@ -7,7 +7,7 @@
 
     <document name="ProfessorGradingApp\Domain\Subject\Subject" collection="subjects">
         <id strategy="NONE" type="subject_id" />
-        <field field-name="code" name="code" type="string" />
+        <field field-name="code" name="code" type="string" unique="true"/>
         <field field-name="name" name="name" type="string" />
         <embed-many
             field-name="degreesLevel"

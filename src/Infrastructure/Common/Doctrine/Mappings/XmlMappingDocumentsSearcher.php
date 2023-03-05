@@ -2,7 +2,7 @@
 
 namespace ProfessorGradingApp\Infrastructure\Common\Doctrine\Mappings;
 
-use ProfessorGradingApp\Infrastructure\Common\Doctrine\Concerns\InteractsWithMapper;
+use ProfessorGradingApp\Infrastructure\Common\Concerns\InteractsWithMapper;
 
 /**
  * Class XmlMappingDocumentsSearcher

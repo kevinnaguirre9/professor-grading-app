@@ -6,6 +6,7 @@ namespace ProfessorGradingApp\Domain\Subject;
 
 use ProfessorGradingApp\Domain\Common\BaseEntity;
 use ProfessorGradingApp\Domain\Subject\ValueObjects\{DegreeLevel};
+use ProfessorGradingApp\Domain\Common\ValueObjects\Degree\DegreeId;
 use ProfessorGradingApp\Domain\Common\ValueObjects\Subject\SubjectId;
 
 /**
@@ -26,7 +27,7 @@ final class Subject extends BaseEntity
         private readonly SubjectId $id,
         private readonly string $code,
         private string $name,
-        private array $degreesLevel,
+        private iterable $degreesLevel,
         private readonly \DateTimeImmutable $registeredAt,
     ) {
     }
@@ -42,7 +43,7 @@ final class Subject extends BaseEntity
         SubjectId $id,
         string $code,
         string $name,
-        array $degreesLevel = [],
+        iterable $degreesLevel = [],
     ): self {
         return new self($id, $code, $name, $degreesLevel, new \DateTimeImmutable());
     }
@@ -82,9 +83,9 @@ final class Subject extends BaseEntity
     }
 
     /**
-     * @return array
+     * @return iterable
      */
-    public function degreesLevel(): array
+    public function degreesLevel(): iterable
     {
         return $this->degreesLevel;
     }
@@ -106,7 +107,7 @@ final class Subject extends BaseEntity
             'code' => $this->code(),
             'name' => $this->name(),
             'degrees_level' => array_map(
-                fn(DegreeLevel $degreeLevel) => $degreeLevel->toPrimitives(), $this->degreesLevel()
+                fn(DegreeLevel $degreeLevel) => $degreeLevel->toPrimitives(), (array) $this->degreesLevel()
             ),
             'registered_at' => $this->registeredAt()->format('Y-m-d H:i:s'),
         ];

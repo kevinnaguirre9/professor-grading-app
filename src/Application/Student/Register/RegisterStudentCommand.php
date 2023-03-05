@@ -13,7 +13,7 @@ final class RegisterStudentCommand implements Command
 {
     /**
      * @param string $fullName
-     * @param string $personalEmail
+     * @param string|null $personalEmail
      * @param string $institutionalEmail
      * @param string $nationalIdentificationNumber
      * @param array $degreeIds
@@ -24,9 +24,9 @@ final class RegisterStudentCommand implements Command
      */
     public function __construct(
         private string $fullName,
-        private string $personalEmail,
         private string $institutionalEmail,
         private string $nationalIdentificationNumber,
+        private ?string $personalEmail = null,
         private array $degreeIds = [],
         private array $enrollmentIds = [],
         private array $gradeIds = [],
@@ -44,9 +44,9 @@ final class RegisterStudentCommand implements Command
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function personalEmail(): string
+    public function personalEmail(): ?string
     {
         return $this->personalEmail;
     }

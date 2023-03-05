@@ -23,4 +23,10 @@ interface DegreeRepository
      * @return Degree|null
      */
     public function find(DegreeId $id): ?Degree;
+
+    /**
+     * @param string $name
+     * @return Degree|null
+     */
+    public function findByName(string $name): ?Degree;
 }

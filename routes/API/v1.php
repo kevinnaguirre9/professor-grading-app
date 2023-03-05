@@ -47,3 +47,8 @@ $router->get('/tutorships', [
     'uses' => 'Tutorship\TutorshipsGetController',
     'as' => 'tutorships.get'
 ]);
+
+$router->get('/core-test', [
+    'uses' => 'CoreTestController',
+    'as' => 'core-test.get'
+]);

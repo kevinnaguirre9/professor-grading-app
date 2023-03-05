@@ -24,7 +24,7 @@ final class Degree extends BaseEntity
     public function __construct(
         private readonly DegreeId $id,
         private readonly string $name,
-        private array $subjectIds,
+        private iterable $subjectIds,
         private readonly \DateTimeImmutable $registeredAt,
     ) {
     }
@@ -38,7 +38,7 @@ final class Degree extends BaseEntity
     public static function create(
         DegreeId $id,
         string $name,
-        array $subjectIds = [],
+        iterable $subjectIds = [],
     ): self {
         return new self($id, $name, $subjectIds, new \DateTimeImmutable());
     }
@@ -71,7 +71,7 @@ final class Degree extends BaseEntity
     /**
      * @return SubjectId[]
      */
-    public function subjectIds(): array
+    public function subjectIds(): iterable
     {
         return $this->subjectIds;
     }

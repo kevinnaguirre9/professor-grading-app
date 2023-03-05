@@ -36,4 +36,13 @@ final class MongoDbDegreeRepository extends DoctrineRepository implements Degree
     {
         return $this->repository(Degree::class)->find($id);
     }
+
+    /**
+     * @param string $name
+     * @return Degree|null
+     */
+    public function findByName(string $name): ?Degree
+    {
+        return $this->repository(Degree::class)->findOneBy(['name' => $name]);
+    }
 }

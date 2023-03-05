@@ -3,7 +3,7 @@
 namespace ProfessorGradingApp\Infrastructure\Common\Doctrine\CustomTypes;
 
 use Doctrine\ODM\MongoDB\Types\Type;
-use ProfessorGradingApp\Infrastructure\Common\Doctrine\Concerns\InteractsWithMapper;
+use ProfessorGradingApp\Infrastructure\Common\Concerns\InteractsWithMapper;
 
 /**
  * Class CustomTypesRegistrar
