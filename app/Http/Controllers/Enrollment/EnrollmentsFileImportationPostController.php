@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Enrollment;
 
 use App\Http\Controllers\Controller;
-use App\Jobs\CreateEnrollmentsFromFile;
+use App\Jobs\CreateEnrollmentsBibleFromFile;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Http\{JsonResponse, Request};
 use Symfony\Component\HttpFoundation\Response;
@@ -32,7 +32,7 @@ final class EnrollmentsFileImportationPostController extends Controller
 
         $enrollmentsFilePath = $this->storeFile();
 
-        dispatch(new CreateEnrollmentsFromFile($enrollmentsFilePath));
+        dispatch(new CreateEnrollmentsBibleFromFile($enrollmentsFilePath));
 
         return response()->json([
             'message' => 'Enrollments are being created from file...'

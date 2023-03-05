@@ -8,11 +8,11 @@ use Illuminate\Support\Facades\Storage;
 use ProfessorGradingApp\Infrastructure\Common\Concerns\LogsMessage;
 
 /**
- * Class CreateEnrollmentsFromFile
+ * Class CreateEnrollmentsBibleFromFile
  *
  * @package App\Jobs
  */
-final class CreateEnrollmentsFromFile extends Job
+final class CreateEnrollmentsBibleFromFile extends Job
 {
     use LogsMessage;
 
