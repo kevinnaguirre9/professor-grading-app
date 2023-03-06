@@ -64,7 +64,7 @@ final class EnrollmentsFileImportationPostController extends Controller
     private function rules(): array
     {
         return [
-            'enrollments_file' => 'required|file|mimes:xlsx|max:50000',
+//            'enrollments_file' => 'required|file|mimes:xlsx|max:50000',
         ];
     }
 }
