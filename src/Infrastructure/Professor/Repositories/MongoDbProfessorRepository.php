@@ -36,4 +36,12 @@ final class MongoDbProfessorRepository extends DoctrineRepository implements Pro
     {
         return $this->repository(Professor::class)->find($id);
     }
+
+    /**
+     * @return Professor[]
+     */
+    public function all(): array
+    {
+        return $this->repository(Professor::class)->findAll();
+    }
 }

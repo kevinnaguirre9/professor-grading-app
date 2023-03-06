@@ -3,6 +3,7 @@
 namespace App\Processors;
 
 use App\Actions\CoreRecordsRegistration\RegisterAcademicPeriod;
+use App\Actions\CoreRecordsRegistration\RegisterClasses;
 use App\Actions\CoreRecordsRegistration\RegisterDegrees;
 use App\Actions\CoreRecordsRegistration\RegisterProfessors;
 use App\Actions\CoreRecordsRegistration\RegisterStudents;
@@ -57,12 +58,12 @@ final class EnrollmentsBibleRecordsRegisteredProcessor implements ShouldQueue
         $Pipeline = app(Pipeline::class);
 
         return $Pipeline->send($collection)->through([
-            RegisterAcademicPeriod::class,
-            RegisterDegrees::class,
-            RegisterSubjects::class,
-            RegisterStudents::class,
-            RegisterProfessors::class,
-            //Create Classes
+//            RegisterAcademicPeriod::class,
+//            RegisterDegrees::class,
+//            RegisterSubjects::class,
+//            RegisterStudents::class,
+//            RegisterProfessors::class,
+            RegisterClasses::class,
             //Create Enrollments
         ]);
     }

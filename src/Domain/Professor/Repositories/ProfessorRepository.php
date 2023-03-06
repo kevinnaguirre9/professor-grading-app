@@ -24,4 +24,9 @@ interface ProfessorRepository
      */
     public function find(ProfessorId $id): ?Professor;
 
+    /**
+     * @return Professor[]
+     */
+    public function all(): array;
+
 }
