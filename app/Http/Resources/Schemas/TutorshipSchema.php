@@ -7,8 +7,11 @@ use League\Fractal\TransformerAbstract as Transformer;
 use ProfessorGradingApp\Domain\Common\BaseEntity;
 use ProfessorGradingApp\Domain\Common\Exceptions\InvalidUuid;
 use ProfessorGradingApp\Domain\Common\ValueObjects\Student\StudentId;
+use ProfessorGradingApp\Domain\Common\ValueObjects\Subject\SubjectId;
 use ProfessorGradingApp\Domain\Student\Exceptions\StudentNotFound;
 use ProfessorGradingApp\Domain\Student\Services\StudentFinder;
+use ProfessorGradingApp\Domain\Subject\Exceptions\SubjectNotFountException;
+use ProfessorGradingApp\Domain\Subject\Services\SubjectFinder;
 use ProfessorGradingApp\Domain\Tutorship\Tutorship;
 
 /**
@@ -25,7 +28,7 @@ final class TutorshipSchema extends Transformer
      */
     protected array $availableIncludes = [
         'advisor',
-//        'subject',
+        'subject',
     ];
 
     /**
@@ -35,7 +38,7 @@ final class TutorshipSchema extends Transformer
      */
     protected array $defaultIncludes = [
         'advisor',
-//        'subject',
+        'subject',
     ];
 
     /**
@@ -99,11 +102,22 @@ final class TutorshipSchema extends Transformer
         return $this->item($Student, new StudentTransformer);
     }
 
-//    /**
-//     * Include Subject
-//     */
-//    public function includeSubject(Tutorship $Tutorship): Item
-//    {
-//        return $this->item([], new SubjectTransformer);
-//    }
+    /**
+     * Include Subject
+     * @throws InvalidUuid
+     * @throws SubjectNotFountException
+     */
+    public function includeSubject(Tutorship $Tutorship): Item
+    {
+        $subjectId = $Tutorship->subjectId();
+
+        /** @var SubjectFinder $subjectFinder */
+        $subjectFinder = app(SubjectFinder::class);
+
+        $Subject = $subjectFinder->__invoke(
+            new SubjectId($subjectId)
+        );
+
+        return $this->item($Subject, new SubjectTransformer);
+    }
 }

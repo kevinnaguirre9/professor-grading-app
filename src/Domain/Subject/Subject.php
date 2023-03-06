@@ -104,11 +104,12 @@ final class Subject extends BaseEntity
     public function toPrimitives(): array
     {
         return [
+            'id'   => (string) $this->id(),
             'code' => $this->code(),
             'name' => $this->name(),
-            'degrees_level' => array_map(
-                fn(DegreeLevel $degreeLevel) => $degreeLevel->toPrimitives(), (array) $this->degreesLevel()
-            ),
+//            'degrees_level' => array_map(
+//                fn(DegreeLevel $degreeLevel) => $degreeLevel->toPrimitives(), (array) $this->degreesLevel()
+//            ),
             'registered_at' => $this->registeredAt()->format('Y-m-d H:i:s'),
         ];
     }
