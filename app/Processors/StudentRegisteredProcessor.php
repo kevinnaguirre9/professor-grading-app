@@ -26,7 +26,7 @@ final class StudentRegisteredProcessor
     public function __invoke(StudentRegistered $event): void
     {
         try {
-            $this->logger->info(sprintf('Processing event %s', $event->getType()));
+//            $this->logger->info(sprintf('Processing event %s', $event->getType()));
 
             $payload = $this->getMessagePayload($event);
 

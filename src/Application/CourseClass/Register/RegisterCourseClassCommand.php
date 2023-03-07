@@ -12,7 +12,6 @@ final class RegisterCourseClassCommand
     /**
      * @param string $groupSection
      * @param array $dailySchedules
-     * @param string $academicPeriodId
      * @param string $subjectId
      * @param string $professorId
      * @param array $degreeIds
@@ -22,10 +21,9 @@ final class RegisterCourseClassCommand
     public function __construct(
         private readonly string $groupSection,
         private readonly array $dailySchedules,
-        private readonly string $academicPeriodId,
         private readonly string $subjectId,
         private readonly string $professorId,
-        private readonly array $degreeIds,
+        private readonly array $degreeIds = [],
         private readonly array $studentIds = [],
         private readonly array $gradeIds = [],
     ) {
@@ -45,14 +43,6 @@ final class RegisterCourseClassCommand
     public function dailySchedules(): array
     {
         return $this->dailySchedules;
-    }
-
-    /**
-     * @return string
-     */
-    public function academicPeriodId(): string
-    {
-        return $this->academicPeriodId;
     }
 
     /**

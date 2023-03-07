@@ -18,7 +18,7 @@ final class Schedule extends BaseEntity
      */
     public function __construct(
         private readonly ScheduleId $id,
-        private array $dailySchedules
+        private iterable $dailySchedules
     ) {
     }
 
@@ -69,7 +69,7 @@ final class Schedule extends BaseEntity
     /**
      * @return DailySchedule[]
      */
-    public function getDailySchedules(): array
+    public function getDailySchedules(): iterable
     {
         return $this->dailySchedules;
     }

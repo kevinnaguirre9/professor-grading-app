@@ -39,9 +39,9 @@ final class CourseClass extends BaseEntity
         private readonly AcademicPeriodId $academicPeriodId,
         private readonly SubjectId $subjectId,
         private ProfessorId $professorId,
-        private array $degreeIds,
-        private array $studentIds,
-        private array $gradeIds,
+        private iterable $degreeIds,
+        private iterable $studentIds,
+        private iterable $gradeIds,
         private readonly \DateTimeImmutable $registeredAt,
     ) {
     }
@@ -66,11 +66,12 @@ final class CourseClass extends BaseEntity
         AcademicPeriodId $academicPeriodId,
         SubjectId $subjectId,
         ProfessorId $professorId,
-        array $degreeIds,
-        array $studentIds = [],
-        array $gradeIds = [],
+        iterable $degreeIds = [],
+        iterable $studentIds = [],
+        iterable $gradeIds = [],
         \DateTimeImmutable $registeredAt = new \DateTimeImmutable(),
     ): self {
+        //TODO: register ClassRegistered domain event
         return new self(
             $id,
             $groupSection,
@@ -185,7 +186,7 @@ final class CourseClass extends BaseEntity
     /**
      * @return DegreeId[]
      */
-    public function degreeIds(): array
+    public function degreeIds(): iterable
     {
         return $this->degreeIds;
     }
@@ -193,7 +194,7 @@ final class CourseClass extends BaseEntity
     /**
      * @return GradeId[]
      */
-    public function gradeIds(): array
+    public function gradeIds(): iterable
     {
         return $this->gradeIds;
     }
@@ -201,7 +202,7 @@ final class CourseClass extends BaseEntity
     /**
      * @return StudentId[]
      */
-    public function studentIds(): array
+    public function studentIds(): iterable
     {
         return $this->studentIds;
     }

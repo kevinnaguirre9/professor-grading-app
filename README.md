@@ -25,8 +25,8 @@ Built with the following technologies:
 
 The following commands will generate two json files with the paths where xml mappings an custom types are located so that the Doctrine ODM knows where to look for and register them.
 
-    php artisan doctrine:xml-documents:search
-    php artisan doctrine:custom-types:search
+    php artisan doctrine:xml-documents:map
+    php artisan doctrine:custom-types:map
 
 ## Asynchronous tasks
 

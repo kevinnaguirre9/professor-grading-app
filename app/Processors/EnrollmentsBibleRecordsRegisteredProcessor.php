@@ -58,11 +58,11 @@ final class EnrollmentsBibleRecordsRegisteredProcessor implements ShouldQueue
         $Pipeline = app(Pipeline::class);
 
         return $Pipeline->send($collection)->through([
-//            RegisterAcademicPeriod::class,
-//            RegisterDegrees::class,
-//            RegisterSubjects::class,
-//            RegisterStudents::class,
-//            RegisterProfessors::class,
+            RegisterAcademicPeriod::class,
+            RegisterDegrees::class,
+            RegisterSubjects::class,
+            RegisterStudents::class,
+            RegisterProfessors::class,
             RegisterClasses::class,
             //Create Enrollments
         ]);
